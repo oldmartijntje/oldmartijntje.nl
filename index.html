@@ -4,8 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Professional Portfolio</title>
+    <title>OldMartijntje - Professional Portfolio</title>
     <style>
+        a:link,
+        a:visited,
+        a:active,
+        a {
+            color: #007FFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,18 +26,32 @@
             color: #ffffff;
         }
 
-        .banner {
+        .header {
             width: 100%;
             height: 200px;
-            background-image: url('https://via.placeholder.com/1920x300');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(45deg, #007FFF, #00BFFF, #1E90FF, #4169E1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .banner-content {
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .header-content {
             text-align: center;
             background-color: rgba(0, 0, 0, 0.7);
             padding: 15px;
@@ -105,7 +131,6 @@
             background-color: #005fcc;
         }
 
-        /* Scroll indicators */
         .scroll-indicator {
             position: fixed;
             top: 50%;
@@ -120,10 +145,8 @@
             border: 2px solid #005fcc;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            /* Ensure it appears above other content */
             text-align: center;
             line-height: 1.5;
-            /* Center the text vertically */
             width: 1em;
         }
 
@@ -145,9 +168,8 @@
             display: block;
         }
 
-        /* Hide the scroll indicator on mobile devices */
         @media (max-width: 600px) {
-            .banner {
+            .header {
                 height: 150px;
             }
 
@@ -227,12 +249,67 @@
                 max-height: 80vh;
             }
         }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #1f1f1f;
+            transition: left 0.3s ease;
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #007FFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 2001;
+            border-radius: 5px;
+        }
+
+        .sidebar-content {
+            color: #ffffff;
+        }
+
+        .sidebar-content h2 {
+            margin-left: 2rem;
+        }
+
+        .sidebar h2 {
+            color: #007FFF;
+            margin-top: 0;
+        }
     </style>
 </head>
 
 <body>
-    <header class="banner">
-        <div class="banner-content">
+    <button id="sidebarToggle" class="sidebar-toggle">☰</button>
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="https://github.com/oldmartijntje" target="_blank">Github</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
             <h1>OldMartijntje</h1>
             <p>Software Developer</p>
         </div>
@@ -252,7 +329,6 @@
             <button class="close-btn">&times;</button>
             <div id="overlay-info"></div>
         </div>
-
     </div>
 
     <script>
@@ -313,7 +389,6 @@
                         overlayInfo.innerHTML = `<h2>${title}</h2>`;
                     } else {
                         overlayInfo.innerHTML = `<a href="${link}" target="_blank"><h2>${title}</h2></a>`;
-
                     }
                     overlayInfo.innerHTML += info;
 
@@ -323,7 +398,7 @@
                     if (lastUpdated && lastUpdated !== '' && lastUpdated !== 'undefined') {
                         const date = new Date(lastUpdated);
                         const day = String(date.getDate()).padStart(2, '0');
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
                         const year = date.getFullYear();
                         overlayInfo.innerHTML += `<sub><strong>${day}-${month}-${year}</strong></sub>`;
                     }
@@ -342,7 +417,6 @@
                 }
             });
 
-            // Initial call to update the scroll indicators on page load
             updateScrollIndicators(projectsContainerEl);
         });
 
@@ -363,6 +437,20 @@
             }
         }
 
+        // Sidebar functionality
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside of it
+        document.addEventListener('click', function (event) {
+            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
     </script>
 </body>
 
