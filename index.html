@@ -105,18 +105,24 @@
             background-color: #005fcc;
         }
 
-        /* Scroll indicator */
+        /* Scroll indicators */
         .scroll-indicator {
             position: absolute;
             top: 50%;
-            right: 10px;
             transform: translateY(-50%);
             color: #007FFF;
             font-size: 32px;
-            /* Increase size */
             cursor: pointer;
             display: none;
             padding: 1rem;
+        }
+
+        .scroll-indicator-left {
+            left: 10px;
+        }
+
+        .scroll-indicator-right {
+            right: 10px;
         }
 
         .scroll-indicator:hover {
@@ -224,7 +230,8 @@
         <h2>My Projects</h2>
         <div class="projects-container">
             <div id="projects" class="projects"></div>
-            <div id="scrollIndicator" class="scroll-indicator">&gt;</div> <!-- Updated to ">" and increased size -->
+            <div id="scrollIndicatorLeft" class="scroll-indicator scroll-indicator-left">&lt;</div>
+            <div id="scrollIndicatorRight" class="scroll-indicator scroll-indicator-right">&gt;</div>
         </div>
     </main>
 
@@ -309,108 +316,90 @@
                 link: "https://project5.com",
                 info: `
                     <h2>Project 5 Details</h2>
-                    <img src="https://via.placeholder.com/1400x700" alt="Project 5 Screenshot">
-                    <p>Explore the features and functionalities of Project 5.</p>
+                    <img src="https://via.placeholder.com/1000x500" alt="Project 5 Screenshot">
+                    <p>Project 5 is an innovative solution for modern challenges.</p>
                     <ul>
-                        <li>Customizable themes</li>
-                        <li>Real-time collaboration</li>
-                        <li>Version control system</li>
+                        <li>AI-powered features</li>
+                        <li>Cloud integration</li>
+                        <li>Scalable architecture</li>
                     </ul>
                 `,
-                lastUpdated: "2023-12-15"
-            },
-            {
-                title: "Project 6",
-                image: "https://via.placeholder.com/300x150",
-                link: "https://project6.com",
-                info: `
-                    <h2>Project 6 Details</h2>
-                    <img src="https://via.placeholder.com/1600x800" alt="Project 6 Screenshot">
-                    <p>Discover the innovative solutions offered by Project 6.</p>
-                    <ul>
-                        <li>Blockchain technology</li>
-                        <li>Decentralized applications</li>
-                        <li>Smart contracts</li>
-                    </ul>
-                `,
-                lastUpdated: "2024-01-20"
+                lastUpdated: "2023-12-01"
             }
         ];
 
-        function loadProjects() {
-            const projectsContainer = document.getElementById('projects');
-            testProjects.forEach(project => {
-                const projectElement = document.createElement('div');
-                projectElement.className = 'project';
-                projectElement.innerHTML = `
-                    <img src="${project.image}" alt="${project.title}">
-                    <div class="project-content">
-                        <h3 class="project-title">${project.title}</h3>
-                        <button class="info-btn">More Info</button>
-                    </div>
-                `;
+        const projectsContainer = document.getElementById('projects');
+        const projectsContainerEl = document.querySelector('.projects-container');
+        const overlay = document.getElementById('overlay');
+        const overlayInfo = document.getElementById('overlay-info');
+        const closeBtn = document.querySelector('.close-btn');
+        const scrollIndicatorLeft = document.getElementById('scrollIndicatorLeft');
+        const scrollIndicatorRight = document.getElementById('scrollIndicatorRight');
 
-                const infoBtn = projectElement.querySelector('.info-btn');
-                infoBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showOverlay(project.info);
-                });
+        testProjects.forEach(project => {
+            const projectDiv = document.createElement('div');
+            projectDiv.classList.add('project');
+            projectDiv.innerHTML = `
+                <img src="${project.image}" alt="${project.title}">
+                <div class="project-content">
+                    <h3 class="project-title">${project.title}</h3>
+                    <button class="info-btn" data-info="${encodeURIComponent(project.info)}">More Info</button>
+                </div>
+            `;
+            projectsContainer.appendChild(projectDiv);
+        });
 
-                projectElement.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('info-btn')) {
-                        window.location.href = project.link;
-                    }
-                });
+        projectsContainerEl.addEventListener('scroll', () => {
+            console.log(projectsContainerEl.scrollWidth, projectsContainerEl.clientWidth, projectsContainerEl.scrollLeft);
+            updateScrollIndicators()
+        });
 
-                projectsContainer.appendChild(projectElement);
-            });
+        function updateScrollIndicators() {
+            console.log(projectsContainerEl.scrollLeft, projectsContainerEl.scrollWidth, projectsContainerEl.clientWidth);
+            const scrollLeft = projectsContainerEl.scrollLeft;
+            const maxScrollLeft = projectsContainerEl.scrollWidth - projectsContainerEl.clientWidth;
 
-            // Show scroll indicator if content is overflowed
-            const projectsContainerEl = document.querySelector('.projects-container');
-            const scrollIndicatorEl = document.getElementById('scrollIndicator');
-            if (projectsContainerEl.scrollWidth > projectsContainerEl.clientWidth) {
-                scrollIndicatorEl.classList.add('visible');
+            if (scrollLeft > 20) {
+                scrollIndicatorLeft.classList.add('visible');
+            } else {
+                scrollIndicatorLeft.classList.remove('visible');
             }
 
-            projectsContainerEl.addEventListener('scroll', () => {
-                console.log(projectsContainerEl.scrollWidth, projectsContainerEl.clientWidth, projectsContainerEl.scrollLeft);
-
-                if (projectsContainerEl.scrollLeft > 10) {
-                    scrollIndicatorEl.classList.remove('visible');
-                } else {
-                    scrollIndicatorEl.classList.add('visible');
-                }
-            });
-
-            // Scroll by 100px on click
-            scrollIndicatorEl.addEventListener('click', () => {
-                projectsContainerEl.scrollBy({ left: projectsContainerEl.clientWidth, behavior: 'smooth' });
-            });
+            if (scrollLeft < 20) {
+                scrollIndicatorRight.classList.add('visible');
+            } else {
+                scrollIndicatorRight.classList.remove('visible');
+            }
         }
 
-        function showOverlay(content) {
-            const overlay = document.getElementById('overlay');
-            const overlayInfo = document.getElementById('overlay-info');
-            overlayInfo.innerHTML = content;
-            overlay.style.display = 'block';
-
-            // Ensure images are properly scaled
-            const images = overlayInfo.querySelectorAll('img');
-            images.forEach(img => {
-                img.style.maxWidth = '100%';
-                img.style.height = 'auto';
-            });
-        }
-
-        function closeOverlay() {
-            const overlay = document.getElementById('overlay');
-            overlay.style.display = 'none';
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProjects();
-            document.querySelector('.close-btn').addEventListener('click', closeOverlay);
+        scrollIndicatorLeft.addEventListener('click', () => {
+            projectsContainerEl.scrollBy({ left: -projectsContainerEl.clientWidth, behavior: 'smooth' });
         });
+
+        scrollIndicatorRight.addEventListener('click', () => {
+            projectsContainerEl.scrollBy({ left: projectsContainerEl.clientWidth, behavior: 'smooth' });
+        });
+
+        projectsContainer.addEventListener('click', function (e) {
+            if (e.target.classList.contains('info-btn')) {
+                const info = decodeURIComponent(e.target.dataset.info);
+                overlayInfo.innerHTML = info;
+                overlay.style.display = 'block';
+            }
+        });
+
+        closeBtn.addEventListener('click', function () {
+            overlay.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (e) {
+            if (e.target === overlay) {
+                overlay.style.display = 'none';
+            }
+        });
+
+        // Initial call to update the scroll indicators on page load
+        updateScrollIndicators();
     </script>
 </body>
 
