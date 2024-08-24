@@ -107,14 +107,24 @@
 
         /* Scroll indicators */
         .scroll-indicator {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            color: #007FFF;
-            font-size: 32px;
+            color: #ffffff;
+            font-size: 24px;
             cursor: pointer;
             display: none;
-            padding: 1rem;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #007FFF;
+            border: 2px solid #005fcc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            /* Ensure it appears above other content */
+            text-align: center;
+            line-height: 1.5;
+            /* Center the text vertically */
+            width: 1em;
         }
 
         .scroll-indicator-left {
@@ -126,7 +136,9 @@
         }
 
         .scroll-indicator:hover {
-            color: #005fcc;
+            background-color: #005fcc;
+            border-color: #003d99;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .scroll-indicator.visible {
@@ -350,12 +362,10 @@
         });
 
         projectsContainerEl.addEventListener('scroll', () => {
-            console.log(projectsContainerEl.scrollWidth, projectsContainerEl.clientWidth, projectsContainerEl.scrollLeft);
             updateScrollIndicators()
         });
 
         function updateScrollIndicators() {
-            console.log(projectsContainerEl.scrollLeft, projectsContainerEl.scrollWidth, projectsContainerEl.clientWidth);
             const scrollLeft = projectsContainerEl.scrollLeft;
             const maxScrollLeft = projectsContainerEl.scrollWidth - projectsContainerEl.clientWidth;
 
@@ -365,7 +375,7 @@
                 scrollIndicatorLeft.classList.remove('visible');
             }
 
-            if (scrollLeft < 20) {
+            if ((projectsContainerEl.scrollWidth - projectsContainerEl.clientWidth) - scrollLeft > 20) {
                 scrollIndicatorRight.classList.add('visible');
             } else {
                 scrollIndicatorRight.classList.remove('visible');
