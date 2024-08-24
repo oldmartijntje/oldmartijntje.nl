@@ -233,8 +233,8 @@
 <body>
     <header class="banner">
         <div class="banner-content">
-            <h1>Your Name</h1>
-            <p>Professional Portfolio</p>
+            <h1>OldMartijntje</h1>
+            <p>Software Developer</p>
         </div>
     </header>
 
@@ -273,6 +273,9 @@
             const scrollIndicatorLeft = document.getElementById('scrollIndicatorLeft');
             const scrollIndicatorRight = document.getElementById('scrollIndicatorRight');
 
+            data['projects'].sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated));
+            console.log(data['projects']);
+
             data['projects'].forEach(project => {
                 const projectDiv = document.createElement('div');
                 projectDiv.classList.add('project');
@@ -282,7 +285,7 @@
                 </a>
                 <div class="project-content">
                     <h3 class="project-title">${project.title}</h3>
-                    <button class="info-btn" data-lastUpdated="${project.lastUpdated}" data-info="${encodeURIComponent(project.info)}" data-link="${encodeURIComponent(project.link)}" data-title=${encodeURIComponent(project.title)}>More Info</button>
+                    <button class="info-btn" data-lastUpdated="${encodeURIComponent(project.lastUpdated)}" data-info="${encodeURIComponent(project.info)}" data-link="${encodeURIComponent(project.link)}" data-title=${encodeURIComponent(project.title)}>More Info</button>
                 </div>
             `;
                 projectsContainer.appendChild(projectDiv);
@@ -305,7 +308,7 @@
                     const info = decodeURIComponent(e.target.dataset.info);
                     const link = decodeURIComponent(e.target.dataset.link);
                     const title = decodeURIComponent(e.target.dataset.title);
-                    console.log(link);
+                    const lastUpdated = decodeURIComponent(e.target.dataset.lastupdated);
                     if (!link || link == '' || link == 'undefined') {
                         overlayInfo.innerHTML = `<h2>${title}</h2>`;
                     } else {
@@ -317,8 +320,12 @@
                     if (link && link !== '' && link !== 'undefined') {
                         overlayInfo.innerHTML += `<p>Click <a href="${link}" target="_blank">Here</a> to view the project.</p>`;
                     }
-                    if (e.target.dataset.lastupdated && e.target.dataset.lastupdated !== '' && e.target.dataset.lastupdated !== 'undefined') {
-                        overlayInfo.innerHTML += `<p>${e.target.dataset.lastupdated}</p>`;
+                    if (lastUpdated && lastUpdated !== '' && lastUpdated !== 'undefined') {
+                        const date = new Date(lastUpdated);
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                        const year = date.getFullYear();
+                        overlayInfo.innerHTML += `<sub><strong>${day}-${month}-${year}</strong></sub>`;
                     }
 
                     overlay.style.display = 'block';
