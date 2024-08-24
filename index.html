@@ -272,6 +272,7 @@
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
+            border-right: #005fcc 2px solid;
         }
 
         .sidebar.open {
@@ -365,9 +366,10 @@
                 const projectDiv = document.createElement('div');
                 projectDiv.classList.add('project');
                 projectDiv.innerHTML = `
-                <a href="${project.link}" target="_blank">
+                ${project.link ? `<a href="${project.link}" target="_blank">` : ''}
                     <img src="${project.images[project.tumbnailImageId]}" alt="${project.title}">
-                </a>
+                ${project.link ? `</a>` : ''}
+                
                 <div class="project-content">
                     <h3 class="project-title">${project.title}</h3>
                     <button class="info-btn" data-lastUpdated="${encodeURIComponent(project.lastUpdated)}" data-info="${encodeURIComponent(project.info)}" data-link="${encodeURIComponent(project.link)}" data-title=${encodeURIComponent(project.title)}>More Info</button>
