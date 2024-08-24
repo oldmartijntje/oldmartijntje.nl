@@ -16,7 +16,7 @@
 
         .banner {
             width: 100%;
-            height: 300px;
+            height: 200px;
             background-image: url('https://via.placeholder.com/1920x300');
             background-size: cover;
             background-position: center;
@@ -28,26 +28,29 @@
         .banner-content {
             text-align: center;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 1.8em;
             margin: 0;
         }
 
         main {
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
         }
 
+        .projects-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 20px;
+        }
+
         .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            display: inline-flex;
             gap: 20px;
-            margin-top: 20px;
+            padding: 10px;
         }
 
         .project {
@@ -55,6 +58,8 @@
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.3s ease;
+            width: 250px;
+            flex-shrink: 0;
         }
 
         .project:hover {
@@ -74,6 +79,7 @@
         .project-title {
             margin: 0;
             font-size: 1.2em;
+            white-space: normal;
         }
 
         .info-btn {
@@ -84,6 +90,20 @@
             cursor: pointer;
             margin-top: 10px;
             border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .banner {
+                height: 150px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .project {
+                width: 200px;
+            }
         }
 
         .overlay {
@@ -102,7 +122,8 @@
             background-color: #1f1f1f;
             margin: 50px auto;
             padding: 20px;
-            max-width: 800px;
+            max-width: 90%;
+            width: 600px;
             border-radius: 10px;
             position: relative;
         }
@@ -117,6 +138,35 @@
             border: none;
             color: white;
         }
+
+        #overlay-info {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        #overlay-info img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+
+        #overlay-info h2 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 600px) {
+            .overlay-content {
+                margin: 20px auto;
+                padding: 15px;
+                width: 90%;
+            }
+
+            #overlay-info {
+                max-height: 80vh;
+            }
+        }
     </style>
 </head>
 
@@ -130,7 +180,9 @@
 
     <main>
         <h2>My Projects</h2>
-        <div id="projects" class="projects"></div>
+        <div class="projects-container">
+            <div id="projects" class="projects"></div>
+        </div>
     </main>
 
     <div id="overlay" class="overlay">
@@ -145,25 +197,28 @@
             {
                 title: "Project 1",
                 image: "https://via.placeholder.com/300x150",
+                link: "https://project1.com",
                 info: `
                     <h2>Project 1 Details</h2>
+                    <img src="https://via.placeholder.com/800x400" alt="Project 1 Screenshot">
                     <p>This is a detailed description of Project 1.</p>
                     <ul>
                         <li>Feature 1</li>
                         <li>Feature 2</li>
                         <li>Feature 3</li>
                     </ul>
-                    <a href="#" target="_blank">View Project</a>
+                    <a href="https://project1.com" target="_blank">View Project</a>
                 `,
                 lastUpdated: "2023-08-15"
             },
             {
                 title: "Project 2",
                 image: "https://via.placeholder.com/300x150",
+                link: "https://project2.com",
                 info: `
                     <h2>Project 2 Details</h2>
                     <p>Here's what you need to know about Project 2.</p>
-                    <img src="https://via.placeholder.com/400x200" alt="Project 2 Screenshot">
+                    <img src="https://via.placeholder.com/1200x600" alt="Project 2 Screenshot">
                     <p>Technologies used:</p>
                     <ol>
                         <li>HTML</li>
@@ -172,6 +227,22 @@
                     </ol>
                 `,
                 lastUpdated: "2023-09-20"
+            },
+            {
+                title: "Project 3",
+                image: "https://via.placeholder.com/300x150",
+                link: "https://project3.com",
+                info: `
+                    <h2>Project 3 Details</h2>
+                    <img src="https://via.placeholder.com/600x300" alt="Project 3 Screenshot">
+                    <p>An overview of Project 3 and its key features.</p>
+                    <ul>
+                        <li>Responsive design</li>
+                        <li>API integration</li>
+                        <li>Performance optimization</li>
+                    </ul>
+                `,
+                lastUpdated: "2023-10-05"
             }
         ];
 
@@ -189,7 +260,16 @@
                 `;
 
                 const infoBtn = projectElement.querySelector('.info-btn');
-                infoBtn.addEventListener('click', () => showOverlay(project.info));
+                infoBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showOverlay(project.info);
+                });
+
+                projectElement.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('info-btn')) {
+                        window.location.href = project.link;
+                    }
+                });
 
                 projectsContainer.appendChild(projectElement);
             });
@@ -200,6 +280,13 @@
             const overlayInfo = document.getElementById('overlay-info');
             overlayInfo.innerHTML = content;
             overlay.style.display = 'block';
+
+            // Ensure images are properly scaled
+            const images = overlayInfo.querySelectorAll('img');
+            images.forEach(img => {
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
+            });
         }
 
         function closeOverlay() {
