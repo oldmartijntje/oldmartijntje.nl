@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Professional Portfolio</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        /* Project styles */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .project:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .project img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1rem;
+        }
+
+        .project-title {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .project-info {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .info-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Your Name</h1>
+        <p>Professional Portfolio</p>
+    </header>
+
+    <main>
+        <h2>My Projects</h2>
+        <div id="projects" class="projects"></div>
+    </main>
+
+    <script>
+        // Function to load and display projects
+        async function loadProjects() {
+            try {
+                // const response = await fetch('projects.json');
+                // const projects = await response.json();
+                const projects = [
+                    {
+                        "title": "Project 1",
+                        "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FTF0iV1MfHWU%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=73c84ba8b227ce71f478236eb66494e7dc39e50ce19ac31d95cf9cd9bd50f79a&ipo=images",
+                        "link": "https://project1.com",
+                        "description": "Description of Project 1",
+                        "lastUpdated": "2023-08-15"
+                    },
+                    {
+                        "title": "Project 2",
+                        "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2Ft0oKSt7e-kA%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=ad7ffdda87ed6d686c4e3eedc8f656073583482b6c91903299b74b7f9412286d&ipo=images",
+                        "link": "https://project2.com",
+                        "description": "Description of Project 2",
+                        "lastUpdated": "2023-09-20"
+                    }
+                ]
+
+                // Sort projects by lastUpdated
+                projects.sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated));
+
+                const projectsContainer = document.getElementById('projects');
+                projects.forEach(project => {
+                    const projectElement = document.createElement('div');
+                    projectElement.className = 'project';
+                    projectElement.innerHTML = `
+                        <a href="${project.link}">
+                            <img src="${project.image}" alt="${project.title}">
+                            <div class="project-content">
+                                <h3 class="project-title">${project.title}</h3>
+                                <div class="project-info">
+                                    <p>${project.description}</p>
+                                    <p>Last updated: ${project.lastUpdated}</p>
+                                </div>
+                            </div>
+                        </a>
+                        <button class="info-btn">More Info</button>
+                    `;
+
+                    const infoBtn = projectElement.querySelector('.info-btn');
+                    const projectInfo = projectElement.querySelector('.project-info');
+                    infoBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        projectInfo.style.display = projectInfo.style.display === 'none' ? 'block' : 'none';
+                    });
+
+                    projectsContainer.appendChild(projectElement);
+                });
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Load projects when the page is ready
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+
+</html>
