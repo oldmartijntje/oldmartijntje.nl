@@ -51,3 +51,21 @@
 .imgDiv img {
     margin-bottom: 1rem;
 }
+
+.scrollBar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 1rem 0;
+    display: flex;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-0.5* var(--bs-gutter-x));
+    margin-left: calc(-0.5* var(--bs-gutter-x));
+}
+
+.scrollBar .itemCard {
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)* 0.5);
+    padding-left: calc(var(--bs-gutter-x)* 0.5);
+    margin-top: var(--bs-gutter-y);
+    min-width: 250px;
+}

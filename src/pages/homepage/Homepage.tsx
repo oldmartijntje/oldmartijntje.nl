@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
+import { Container, Col, Card, Button, Modal } from 'react-bootstrap';
 import './Homepage.css';
 
 export interface Project {
@@ -76,9 +76,9 @@ const Homepage: React.FC = () => {
             <main className="py-5">
                 <Container>
                     <h2 className="text-primary mb-4">My Projects</h2>
-                    <Row className="g-4">
+                    <div className="g-4 scrollBar">
                         {projects.map((project, index) => (
-                            <Col key={index} xs={12} sm={6} md={4} lg={3}>
+                            <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                 <Card className="h-100 project-card bg-dark text-white">
                                     <Card.Img variant="top" src={project.images[project.tumbnailImageId]} alt={project.title} onClick={() => {
                                         if (project?.link) {
@@ -100,7 +100,7 @@ const Homepage: React.FC = () => {
                                 </Card>
                             </Col>
                         ))}
-                    </Row>
+                    </div>
                 </Container>
             </main>
 
@@ -113,7 +113,9 @@ const Homepage: React.FC = () => {
                     }}
                         className={(selectedProject?.link ? 'clickable' : '')}
                     >{selectedProject?.title}</Modal.Title>
-                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}></Button>
+                    {/* make the button red */}
+                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}
+                        style={{ backgroundColor: '#2a75fe' }}></Button>
                 </Modal.Header>
                 <Modal.Body>
                     <div dangerouslySetInnerHTML={{ __html: selectedProject?.info || '' }} />
