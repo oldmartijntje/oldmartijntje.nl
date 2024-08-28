@@ -25,9 +25,9 @@ class ServerConnector {
                 console.log('response', response);
                 if (response.status === 429) {
                     localStorage.setItem('rateLimit', Date.now().toString());
+                    onFail(response);
+                    return;
                 }
-                onFail(response);
-                return;
             }
             const data = await response.json();
             if (!data || data.error || data.success === false) {
