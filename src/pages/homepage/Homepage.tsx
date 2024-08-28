@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Card, Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import offlineProjects from '../../assets/json/projects.json';
 import './Homepage.css';
+import ServerConnector from '../../services/ServerConnector';
 
 export interface Project {
     title: string;
@@ -12,12 +13,23 @@ export interface Project {
     images: { [key: string]: string };
 }
 
+function getOfflineProjects(): any[] {
+    let chachedProjects = sessionStorage.getItem('cached-projects');
+    if (chachedProjects) {
+        return JSON.parse(chachedProjects);
+    } else {
+        return offlineProjects; // Show offline projects
+    }
+
+}
+
 const Homepage: React.FC = () => {
     let fetched = false;
     const [projects, setProjects] = useState<Project[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
+    const serverConnector = new ServerConnector();
 
     useEffect(() => {
         if (!fetched) {
@@ -33,47 +45,24 @@ const Homepage: React.FC = () => {
         setProjects(sortedProjects);
     }
 
+
+
     const fetchProjects = async () => {
         const rateLimit = localStorage.getItem('rateLimit')
         if (rateLimit && Date.now() - parseInt(rateLimit) < 60000 * 0) {
-            console.warn('Rate limited, try again later', Date.now() - parseInt(rateLimit));
+            formatProjects(getOfflineProjects());
             setOfflineModeModal(true)
-            let chachedProjects = sessionStorage.getItem('cached-projects');
-            if (chachedProjects) {
-                formatProjects(JSON.parse(chachedProjects));
-            } else {
-                formatProjects(offlineProjects); // Show offline projects
-            }
             return;
         }
         localStorage.removeItem('rateLimit');
-        try {
-            const response = await fetch('https://api.oldmartijntje.nl/getData/projects', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({})
-            });
-            if (!response) {
-                return;
-            }
-            if (response.status !== 200) {
-                console.log('response', response);
-                if (response.status === 429) {
-                    localStorage.setItem('rateLimit', Date.now().toString());
-                }
-                formatProjects(offlineProjects);
-                setOfflineModeModal(true)
-                return;
-            }
-            const data = await response.json();
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', undefined, (data: any) => {
             sessionStorage.setItem('cached-projects', JSON.stringify(data.projects));
-            formatProjects(data.projects); // Show offline projects
+            formatProjects(data.projects);
 
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-        }
+        }, () => {
+            formatProjects(getOfflineProjects());
+            setOfflineModeModal(true)
+        });
     };
 
     const showProjectDetails = (project: Project) => {

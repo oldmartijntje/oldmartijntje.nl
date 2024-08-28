@@ -12,8 +12,7 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         // Simulating login logic
         if (username && password) {
-            localStorage.setItem('user', username);
-            window.location.href = '/';
+
         }
     };
 
