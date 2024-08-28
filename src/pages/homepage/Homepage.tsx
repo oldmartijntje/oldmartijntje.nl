@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Card, Button, Modal } from 'react-bootstrap';
+import { Container, Col, Card, Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
+import offlineProjects from '../../assets/json/projects.json';
 import './Homepage.css';
 
 export interface Project {
@@ -16,6 +17,7 @@ const Homepage: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [offline, setOfflineModeModal] = useState(false);
 
     useEffect(() => {
         if (!fetched) {
@@ -24,10 +26,24 @@ const Homepage: React.FC = () => {
         }
     }, []);
 
+    const formatProjects = (projects: any) => {
+        const sortedProjects = projects.sort((a: Project, b: Project) =>
+            new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+        );
+        setProjects(sortedProjects);
+    }
+
     const fetchProjects = async () => {
         const rateLimit = localStorage.getItem('rateLimit')
         if (rateLimit && Date.now() - parseInt(rateLimit) < 60000 * 0) {
             console.warn('Rate limited, try again later', Date.now() - parseInt(rateLimit));
+            setOfflineModeModal(true)
+            let chachedProjects = sessionStorage.getItem('cached-projects');
+            if (chachedProjects) {
+                formatProjects(JSON.parse(chachedProjects));
+            } else {
+                formatProjects(offlineProjects); // Show offline projects
+            }
             return;
         }
         localStorage.removeItem('rateLimit');
@@ -47,13 +63,14 @@ const Homepage: React.FC = () => {
                 if (response.status === 429) {
                     localStorage.setItem('rateLimit', Date.now().toString());
                 }
+                formatProjects(offlineProjects);
+                setOfflineModeModal(true)
                 return;
             }
             const data = await response.json();
-            const sortedProjects = data.projects.sort((a: Project, b: Project) =>
-                new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
-            );
-            setProjects(sortedProjects);
+            sessionStorage.setItem('cached-projects', JSON.stringify(data.projects));
+            formatProjects(data.projects); // Show offline projects
+
         } catch (error) {
             console.error('Error fetching projects:', error);
         }
@@ -64,6 +81,15 @@ const Homepage: React.FC = () => {
         setShowModal(true);
     };
 
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">No connection.</Popover.Header>
+            <Popover.Body>
+                The backend is currently offline, or has refused our connection attempt. Showing cached projects.
+            </Popover.Body>
+        </Popover>
+    );
+
     return (
         <div className="homepage">
             <header className="header text-center text-white py-5">
@@ -72,10 +98,12 @@ const Homepage: React.FC = () => {
                     <p className="lead">Software Developer</p>
                 </Container>
             </header>
-
             <main className="py-5">
                 <Container>
-                    <h2 className="text-primary mb-4">My Projects</h2>
+                    <h2 className="text-primary mb-4">My Projects  {offline && (<OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                        <Button variant="danger">Offline</Button>
+                    </OverlayTrigger>
+                    )}</h2>
                     <div className="g-4 scrollBar">
                         {projects.map((project, index) => (
                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">

@@ -1,0 +1,94 @@
+[
+    {
+        "_id": {
+            "$oid": "66c9e7aa6f0038c1d8a18650"
+        },
+        "title": "🌵OldMartijntje’s Basement",
+        "images": [
+            "https://i.imgur.com/8exzm25.png",
+            "https://i.imgur.com/cY5b6vw.png"
+        ],
+        "tumbnailImageId": 0,
+        "link": "https://docs.oldmartijntje.nl/",
+        "info": "<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>",
+        "hidden": false,
+        "lastUpdated": {
+            "$date": "2024-08-24T00:00:00.000Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66c9ee3e6f0038c1d8a18651"
+        },
+        "title": "🦖OldMartijntje’s Playground",
+        "images": [
+            "https://i.imgur.com/XpoI9MI.png",
+            "https://i.imgur.com/9YQr4wS.png",
+            "https://i.imgur.com/CoPkGRr.png",
+            "https://i.imgur.com/y1BEHzn.png",
+            "https://i.imgur.com/JfQKZQD.png"
+        ],
+        "tumbnailImageId": 0,
+        "link": "https://oldmartijntje.github.io/outdated-oldmartijntje-website/",
+        "info": "<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>",
+        "hidden": false,
+        "lastUpdated": {
+            "$date": "2024-05-29T00:00:00.000Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66c9f41f6f0038c1d8a18652"
+        },
+        "title": "Chess Simulator 256",
+        "images": [
+            "https://i.imgur.com/voO9uJM.png",
+            "https://i.imgur.com/IubDBSt.png",
+            "https://i.imgur.com/q8WeHBL.png",
+            "https://i.imgur.com/zGDaYs5.png",
+            "https://i.imgur.com/Vt3RHDT.png",
+            "https://i.imgur.com/ngITgkK.png",
+            "https://i.imgur.com/rRWgDMH.png"
+        ],
+        "tumbnailImageId": 3,
+        "link": "https://oldmartijntje.github.io/Totally-Normal-Chess-Simulator/",
+        "info": "<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>",
+        "hidden": false,
+        "lastUpdated": {
+            "$date": "2024-08-16T00:00:00.000Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66c9f6d36f0038c1d8a18653"
+        },
+        "title": "Project Kazamata",
+        "images": [
+            "https://i.imgur.com/4U73m3e.png",
+            "https://i.imgur.com/cTc12QY.png",
+            "https://i.imgur.com/dgz8qD1.png"
+        ],
+        "tumbnailImageId": 0,
+        "link": "https://oldmartijntje.github.io/Project-Kazamata/",
+        "info": "<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>",
+        "hidden": false,
+        "lastUpdated": {
+            "$date": "2024-06-28T00:00:00.000Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66c9f9606f0038c1d8a18654"
+        },
+        "title": "SiSu AI Chatbot",
+        "images": [
+            "https://i.imgur.com/qXjglaH.png"
+        ],
+        "tumbnailImageId": 0,
+        "info": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\r\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie</a>.<br>\r\n                        This chatbot is made using:</p>\r\n                    <ul>\r\n                        <li>PHP</li>\r\n                        <li>ChatGPT</li>\r\n                        <li>Javascript</li>\r\n                    </ul>",
+        "hidden": false,
+        "lastUpdated": {
+            "$date": "2024-08-23T00:00:00.000Z"
+        }
+    }
+]

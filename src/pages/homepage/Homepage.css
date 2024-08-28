@@ -68,4 +68,5 @@
     padding-left: calc(var(--bs-gutter-x)* 0.5);
     margin-top: var(--bs-gutter-y);
     min-width: 250px;
+    flex: 0 1 auto;
 }
