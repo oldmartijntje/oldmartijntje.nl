@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
+import ServerConnector from '../../services/ServerConnector';
 
 
 // LoginPage component
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const serverConnector = new ServerConnector();
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         // Simulating login logic
         if (username && password) {
-
+            serverConnector.loginRequest(username, password, (data: any) => {
+                alert(data.message);
+            },
+                (error: any) => {
+                    alert(error.message);
+                })
         }
     };
 
