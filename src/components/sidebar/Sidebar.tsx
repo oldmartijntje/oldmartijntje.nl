@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
 const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: () => void }) => {
@@ -10,7 +11,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
                 <div className="sidebar-content">
                     <h2>Menu</h2>
                     <ul className="sidebar-menu">
-                        <li><a href="#" target="_blank">Homepage</a></li>
+                        <li><Link to="/">Home</Link></li>
                         <li><a href="https://github.com/oldmartijntje" target="_blank">Github</a></li>
                     </ul>
                 </div>

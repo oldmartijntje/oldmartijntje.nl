@@ -39,3 +39,13 @@
     height: 200px;
     object-fit: cover;
 }
+
+.imgDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.imgDiv,
+.imgDiv img {
+    margin-bottom: 1rem;
+}

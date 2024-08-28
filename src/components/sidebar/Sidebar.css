@@ -62,3 +62,7 @@
 .sidebar-menu a:hover {
     color: #007FFF;
 }
+
+.sidebar-content h2 {
+    margin-left: 1.3rem;
+}

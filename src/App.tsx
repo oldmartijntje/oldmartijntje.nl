@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
 
-const Home = () => <Homepage />;
 const About = () => <div>About</div>;
 const Contact = () => <div>Contact</div>;
 
@@ -28,7 +27,7 @@ const App: React.FC = () => {
                         </ul>
                     </nav>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Homepage />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
                     </Routes>
