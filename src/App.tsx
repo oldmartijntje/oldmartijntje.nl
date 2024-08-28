@@ -6,9 +6,6 @@ import Homepage from './pages/homepage/Homepage';
 import NotFoundPage from './pages/homepage/404/404';
 import './App.css';
 
-const About = () => <div>About</div>;
-const Contact = () => <div>Contact</div>;
-
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -23,9 +20,6 @@ const App: React.FC = () => {
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                        {/* 404 */}
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </div>
