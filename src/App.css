@@ -235,3 +235,28 @@ a:hover {
 .sidebar-menu a:hover {
     color: #007FFF;
 }
+
+.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.modal-body {
+    overflow: hidden;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    width: fit-content;
+}
+
+.imgDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.imgDiv,
+.imgDiv img {
+    margin-bottom: 1rem;
+}

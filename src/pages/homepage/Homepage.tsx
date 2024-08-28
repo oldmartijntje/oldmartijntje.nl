@@ -59,7 +59,13 @@ const Homepage: React.FC = () => {
                         {projects.map((project, index) => (
                             <Col key={index} xs={12} sm={6} md={4} lg={3}>
                                 <Card className="h-100 project-card bg-dark text-white">
-                                    <Card.Img variant="top" src={project.images[project.tumbnailImageId]} alt={project.title} />
+                                    <Card.Img variant="top" src={project.images[project.tumbnailImageId]} alt={project.title} onClick={() => {
+                                        if (project?.link) {
+                                            window.open(project.link, '_blank');
+                                        }
+                                    }} className={
+                                        (project?.link ? 'clickable' : '')
+                                    } />
                                     <Card.Body className="d-flex flex-column">
                                         <Card.Title>{project.title}</Card.Title>
                                         <Button
@@ -78,8 +84,15 @@ const Homepage: React.FC = () => {
             </main>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" contentClassName="bg-dark text-white">
-                <Modal.Header closeButton className="border-secondary">
-                    <Modal.Title>{selectedProject?.title}</Modal.Title>
+                <Modal.Header className="border-secondary">
+                    <Modal.Title onClick={() => {
+                        if (selectedProject?.link) {
+                            window.open(selectedProject.link, '_blank');
+                        }
+                    }}
+                        className={(selectedProject?.link ? 'clickable' : '')}
+                    >{selectedProject?.title}</Modal.Title>
+                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}></Button>
                 </Modal.Header>
                 <Modal.Body>
                     <div dangerouslySetInnerHTML={{ __html: selectedProject?.info || '' }} />
