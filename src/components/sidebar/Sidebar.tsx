@@ -15,6 +15,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/yeet">YEET</Link></li>
+                        <li><Link to="/api-test">api-test</Link></li>
+                        <li><Link to="/user">account</Link></li>
                         <li><a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">Github <i className="bi bi-box-arrow-up-right" style={{ height: '26px' }}></i></a></li>
                     </ul>
                 </div>
