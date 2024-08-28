@@ -137,15 +137,15 @@ const Homepage: React.FC = () => {
                 <Modal.Body>
                     <div dangerouslySetInnerHTML={{ __html: selectedProject?.info || '' }} />
                     {selectedProject?.link && (
-                        <p>
-                            <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="text-primary">
+                        <p className="btn btn-primary">
+                            <a href={selectedProject.link} target="_blank" className="text-light">
                                 View Project
                             </a>
                         </p>
                     )}
                     {selectedProject?.lastUpdated && (
                         <p className="text-muted">
-                            <small>Last updated: {new Date(selectedProject.lastUpdated).toLocaleDateString()}</small>
+                            <small className="text-secondary">Last updated: {new Date(selectedProject.lastUpdated).toLocaleDateString()}</small>
                         </p>
                     )}
                 </Modal.Body>
