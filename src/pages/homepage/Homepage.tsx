@@ -12,15 +12,24 @@ export interface Project {
 }
 
 const Homepage: React.FC = () => {
+    let fetched = false;
     const [projects, setProjects] = useState<Project[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     useEffect(() => {
-        fetchProjects();
+        if (!fetched) {
+            fetched = true;
+            fetchProjects();
+        }
     }, []);
 
     const fetchProjects = async () => {
+        const rateLimit = localStorage.getItem('rateLimit')
+        if (rateLimit && Date.now() - parseInt(rateLimit) < 60000 * 0) {
+            console.warn('Rate limited, try again later', Date.now() - parseInt(rateLimit));
+            return;
+        }
         try {
             const response = await fetch('https://api.oldmartijntje.nl/getData/projects', {
                 method: 'POST',
@@ -29,6 +38,16 @@ const Homepage: React.FC = () => {
                 },
                 body: JSON.stringify({})
             });
+            if (!response) {
+                return;
+            }
+            if (response.status !== 200) {
+                console.log('response', response);
+                if (response.status === 429) {
+                    localStorage.setItem('rateLimit', Date.now().toString());
+                }
+                return;
+            }
             const data = await response.json();
             const sortedProjects = data.projects.sort((a: Project, b: Project) =>
                 new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()

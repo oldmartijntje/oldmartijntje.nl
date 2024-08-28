@@ -12,6 +12,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
                     <h2>Menu</h2>
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
+                        <li><Link to="/yeet">YEET</Link></li>
                         <li><a href="https://github.com/oldmartijntje" target="_blank">Github</a></li>
                     </ul>
                 </div>

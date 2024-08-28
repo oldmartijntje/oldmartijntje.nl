@@ -1,8 +1,10 @@
 // App.js
 import React, { useState } from 'react';
-import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
+import NotFoundPage from './pages/homepage/404/404';
+import './App.css';
 
 const About = () => <div>About</div>;
 const Contact = () => <div>Contact</div>;
@@ -19,17 +21,12 @@ const App: React.FC = () => {
             <div className="app-container">
                 <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}></Sidebar>
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-                    <nav>
-                        <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/about">About</Link></li>
-                            <li><Link to="/contact">Contact</Link></li>
-                        </ul>
-                    </nav>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
+                        {/* 404 */}
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </div>
             </div>
