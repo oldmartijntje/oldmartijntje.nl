@@ -30,6 +30,7 @@ const Homepage: React.FC = () => {
             console.warn('Rate limited, try again later', Date.now() - parseInt(rateLimit));
             return;
         }
+        localStorage.removeItem('rateLimit');
         try {
             const response = await fetch('https://api.oldmartijntje.nl/getData/projects', {
                 method: 'POST',
