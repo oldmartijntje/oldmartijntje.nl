@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Navbar, Nav } from 'react-bootstrap';
-import '../../assets/styling/darkMode.css';
+import '../../assets/styling/darkmode.css';
 
 // UserPage component
 const UserPage: React.FC = () => {

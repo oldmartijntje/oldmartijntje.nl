@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import '../../assets/styling/darkMode.css';
+import '../../assets/styling/darkmode.css';
 
 
 // LoginPage component
