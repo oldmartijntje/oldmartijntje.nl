@@ -50,27 +50,48 @@ class ServerConnector {
     /**
      * Login request
      * 
-     * @param username - username or sessionToken. Grabs sessiontoken from localstorage if undefined
-     * @param password - Password, If undefined => do sessiontoken validation / login instead of username + password
+     * @param username - username.
+     * @param password - Password or sessionToken.
+     * @param loginType - Type of login (password, sessionToken) true for password, false for sessionToken
      * @param onSuccess - Callback function on success
      * @param onFail - Callback function on fail
      */
-    loginRequest = async (username: string | null = null, password: string | null = null, onSuccess: any = () => { }, onFail: any = () => { }) => {
-        const url = 'https://api.oldmartijntje.nl/login';
+    loginRequest = async (username: string | null = null, password: string | null = null, loginType: boolean, onSuccess: any = () => { }, onFail: any = () => { }) => {
+        let url = 'https://api.oldmartijntje.nl/login';
         let body;
         if (!username) {
-            username = this.getUserData().sessionToken;
+            username = this.getUserData().username;
         }
         if (!password) {
-            body = JSON.stringify({ sessionToken: username });
+            if (loginType) {
+                password = 'root';
+            } else {
+                password = this.getUserData().sessionToken;
+            }
+        }
+        if (loginType) {
+            body = JSON.stringify({
+                username: username,
+                password: password
+            });
         } else {
-            body = JSON.stringify({ username, password });
+            body = JSON.stringify({
+                username: username,
+                sessionToken: password
+            });
+            url += '/validateToken';
         }
         this.fetchData(url, 'POST', body, (response: any) => {
             const localStorageData = localStorage.getItem('UserLogin')
             let userData = JSON.parse(localStorageData || '{}');
-            userData.sessionToken = response.sessionToken;
+            if (loginType) {
+                userData.sessionToken = response.sessionToken;
+            } else {
+                userData.sessionToken = password;
+            }
             userData.username = username;
+            userData.role = response.data.role;
+            userData.clearanceLevel = response.data.clearanceLevel;
             localStorage.setItem('UserLogin', JSON.stringify(userData));
             onSuccess(response);
 

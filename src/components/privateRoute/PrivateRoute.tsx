@@ -1,6 +1,6 @@
 // PrivateRoute.tsx
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import LoginPage from '../../pages/loginPage/LoginPage';
 
 interface PrivateRouteProps {
     element: React.ComponentType;  // Use React.ComponentType to accept any React component
@@ -8,7 +8,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Component, isAuthenticated }) => {
-    return isAuthenticated ? <Component /> : <Navigate to="/login" />;
+    return isAuthenticated ? <Component /> : <LoginPage />;
 };
 
 export default PrivateRoute;
