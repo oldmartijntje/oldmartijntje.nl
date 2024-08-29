@@ -6,7 +6,8 @@ import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
 import { NotFoundPage } from './pages/404/404';
 import ApiTestComponent from './pages/apiTesterPage/ApiTestingPage';
-import RegistrationCodeManager from './pages/registrationCodePage/registrationCodePage';
+import RegistrationCodeManager from './pages/BackendDataEditorPages/registrationCodePage';
+import ProjectManager from './pages/BackendDataEditorPages/projectManagerPage';
 import { PrivateRoute, LayeredRoute } from './components/privateRoute/PrivateRoute';
 import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
@@ -81,6 +82,12 @@ const App: React.FC = () => {
             element: RegistrationCodeManager,
             isPrivate: true,
             clearanceLevelNeeded: 4
+        },
+        {
+            path: '/api/projects',
+            element: ProjectManager,
+            isPrivate: true,
+            clearanceLevelNeeded: 5
         },
         {
             path: "signup",

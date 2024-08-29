@@ -37,6 +37,7 @@ const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
                         {userProfile.clearanceLevel >= 4 && (
                             <NavDropdown title="admin" id="basic-nav-dropdown" className="text-light">
                                 {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
+                                {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
                             </NavDropdown>
                         )}
                         {userProfile.clearanceLevel >= 1 && <Link className="nav-link text-light" to="/YEET">404 Page</Link>}
