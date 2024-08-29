@@ -83,7 +83,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         // Submit new code to API here
         const serverConnector = new ServerConnector();
         const body = {
-            "sessionToken": userProfile.sessionToken + 1,
+            "sessionToken": userProfile.sessionToken,
             "clearanceLevel": newCode.clearanceLevel,
             "role": newCode.role,
             "textNote": newCode.textNote
