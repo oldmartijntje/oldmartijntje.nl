@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Navbar, Nav } from 'react-bootstrap'
 import '../../assets/styling/darkmode.css';
 import icon from '../../assets/images/mii.png';
 import { allEvents } from '../../services/EventsSystem';
+import { Link } from 'react-router-dom';
 
 interface UserPageProps {
     userProfile?: any;
@@ -12,6 +13,7 @@ interface UserPageProps {
 const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
     useEffect(() => {
+        console.log(userProfile);
         // Simulating a check for user authentication
 
     }, []);
@@ -32,8 +34,9 @@ const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
+                        {userProfile.clearanceLevel >= 4 && <Link className="nav-link text-light" to="/registerCode">Account Keys</Link>}
+
                         {/* <Nav.Link href="#" className="text-light">Home</Nav.Link>
-                        <Nav.Link href="#" className="text-light">Profile</Nav.Link>
                         <Nav.Link href="#" className="text-light">Settings</Nav.Link>
                         <NavDropdown title={user} id="basic-nav-dropdown" className="text-light">
                             <NavDropdown.Item href="#action/3.1">Account</NavDropdown.Item>

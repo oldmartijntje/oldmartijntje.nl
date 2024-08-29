@@ -22,7 +22,6 @@ class ServerConnector {
                 return;
             }
             if (response.status !== 200) {
-                console.log('response', response);
                 if (response.status === 429) {
                     localStorage.setItem('rateLimit', Date.now().toString());
                     onFail(response);
@@ -39,7 +38,7 @@ class ServerConnector {
                 onFail(data);
                 return;
             }
-            onSuccess(data);
+            onSuccess({ ...data, status: response.status, networkResponse: response });
         } catch (error) {
             console.error('Error fetching data:', error);
             onFail(error);

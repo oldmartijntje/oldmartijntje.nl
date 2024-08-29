@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
 import { NotFoundPage } from './pages/homepage/404/404';
 import ApiTestComponent from './pages/apiTesterPage/ApiTestingPage';
+import RegistrationCodeManager from './pages/registrationCodePage/registrationCodePage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
@@ -30,6 +31,7 @@ const App: React.FC = () => {
         if (savedData && savedData.username && savedData.sessionToken) {
             serverConnector.loginRequest(savedData.username, savedData.sessionToken, false, (data: any) => {
                 console.log(data);
+                data.data.sessionToken = savedData.sessionToken;
                 setIsAuthenticated(true);
                 setClearanceLevel(data.data.clearanceLevel);
                 setUserProfile(data.data);
@@ -45,6 +47,7 @@ const App: React.FC = () => {
         const savedData = ServerConnector.getUserData();
         setClearanceLevel(savedData.clearanceLevel);
         setUserProfile(savedData);
+        allEvents.emit('login', savedData);
     }
 
     const toggleSidebar = () => {
@@ -81,6 +84,20 @@ const App: React.FC = () => {
                                     isAuthenticated={isAuthenticated}
                                     clearanceLevel={clearanceLevel}
                                     clearanceLevelNeeded={0}
+                                    handleLoginFunction={onLogin}
+                                    userProfile={userProfile}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/registerCode"
+                            element={
+                                <PrivateRoute
+                                    key={`${isAuthenticated}-${clearanceLevel}`}  // Ensures re-render when auth status changes
+                                    element={RegistrationCodeManager}
+                                    isAuthenticated={isAuthenticated}
+                                    clearanceLevel={clearanceLevel}
+                                    clearanceLevelNeeded={4}
                                     handleLoginFunction={onLogin}
                                     userProfile={userProfile}
                                 />
