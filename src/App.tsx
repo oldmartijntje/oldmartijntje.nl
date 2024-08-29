@@ -9,22 +9,30 @@ import ApiTestComponent from './pages/apiTesterPage/ApiTestingPage';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
+import { allEvents } from './services/EventsSystem';
 import './App.css';
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [clearanceLevel, setClearanceLevel] = useState(0);
+    const [userProfile, setUserProfile] = useState({});
 
     useEffect(() => {
+        allEvents.on('logout', this, () => {
+            setIsAuthenticated(false);
+            setClearanceLevel(0);
+            setUserProfile({});
+        });
         const serverConnector = new ServerConnector();
         const savedData = ServerConnector.getUserData();
 
-        if (savedData) {
+        if (savedData && savedData.username && savedData.sessionToken) {
             serverConnector.loginRequest(savedData.username, savedData.sessionToken, false, (data: any) => {
                 console.log(data);
                 setIsAuthenticated(true);
                 setClearanceLevel(data.data.clearanceLevel);
+                setUserProfile(data.data);
             }, (error: any) => {
                 console.log(error);
             });
@@ -32,9 +40,11 @@ const App: React.FC = () => {
     }, []); // Empty dependency array ensures this effect runs only once
 
     const onLogin = () => {
+        console.log('Logged in');
         setIsAuthenticated(true);
         const savedData = ServerConnector.getUserData();
         setClearanceLevel(savedData.clearanceLevel);
+        setUserProfile(savedData);
     }
 
     const toggleSidebar = () => {
@@ -58,6 +68,7 @@ const App: React.FC = () => {
                                     clearanceLevel={clearanceLevel}
                                     clearanceLevelNeeded={6}
                                     handleLoginFunction={onLogin}
+                                    userProfile={userProfile}
                                 />
                             }
                         />
@@ -71,6 +82,7 @@ const App: React.FC = () => {
                                     clearanceLevel={clearanceLevel}
                                     clearanceLevelNeeded={0}
                                     handleLoginFunction={onLogin}
+                                    userProfile={userProfile}
                                 />
                             }
                         />

@@ -27,7 +27,12 @@ class ServerConnector {
                     localStorage.setItem('rateLimit', Date.now().toString());
                     onFail(response);
                     return;
+                } else if (response.status === 401) {
+                    localStorage.removeItem('UserLogin');
+                    onFail(response);
+                    return;
                 }
+
             }
             const data = await response.json();
             if (!data || data.error || data.success === false) {
