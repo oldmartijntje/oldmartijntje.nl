@@ -93,7 +93,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 </Col>
             </Row>
             <Row className="mb-4">
-                <Col md={6}>
+                {userProfile.clearanceLevel >= 5 && <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
                             <Card.Title className="text-light">Add New Code</Card.Title>
@@ -133,7 +133,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                             </Form>
                         </Card.Body>
                     </Card>
-                </Col>
+                </Col>}
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
@@ -152,9 +152,9 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <CopyToClipboardButton text={code.code} className="btn btn-secondary" displayText="Copy Account Key" />
                                             <CopyToClipboardButton text={"https://oldmartijntje.nl/#/signup?fillr=" + code.code} className="btn btn-secondary" displayText="Copy Link" />
                                         </div>
-                                        <Button variant="danger" size="sm" onClick={() => handleDelete(code.code)}>
+                                        {userProfile.clearanceLevel >= 5 && <Button variant="danger" size="sm" onClick={() => handleDelete(code.code)}>
                                             Delete
-                                        </Button>
+                                        </Button>}
                                     </Card.Body>
                                 </Card>
                             ))}
