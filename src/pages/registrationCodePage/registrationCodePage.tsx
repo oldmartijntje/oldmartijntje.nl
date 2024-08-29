@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
 import ServerConnector from '../../services/ServerConnector';
+import CopyToClipboardButton from '../../components/buttons/copyToClipboard';
+import { Link } from 'react-router-dom';
 
 
 interface RegistrationCode {
     clearanceLevel: number;
     role?: string;
     code: string;
+    textNote?: string;
 }
 
 interface UserPageProps {
@@ -20,6 +23,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [newCode, setNewCode] = useState<Omit<RegistrationCode, 'code'>>({
         clearanceLevel: 0,
         role: '',
+        textNote: ''
     });
 
     useEffect(() => {
@@ -65,14 +69,15 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const body = {
             "sessionToken": userProfile.sessionToken,
             "clearanceLevel": newCode.clearanceLevel,
-            "role": newCode.role
+            "role": newCode.role,
+            "textNote": newCode.textNote
         }
         serverConnector.fetchData('https://api.oldmartijntje.nl/register/generate', 'POST', JSON.stringify(body), (response: any) => {
             console.log(response);
 
             if (response.status === 200) {
                 setCodes(response.codes);
-                setNewCode({ clearanceLevel: 0, role: '' });
+                setNewCode({ clearanceLevel: 0, role: '', textNote: '' });
             }
         }, (error: any) => {
             console.log(error);
@@ -84,7 +89,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         <Container fluid className="py-4">
             <Row className="mb-4">
                 <Col>
-                    <h1 className="text-center text-light">Registration Code Manager</h1>
+                    <h1 className="text-center text-light">Account Key Manager</h1>
                 </Col>
             </Row>
             <Row className="mb-4">
@@ -110,10 +115,20 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         type="text"
                                         value={newCode.role}
                                         onChange={(e) => setNewCode({ ...newCode, role: e.target.value })}
+                                        placeholder='Optional'
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">TextNote</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={newCode.textNote}
+                                        onChange={(e) => setNewCode({ ...newCode, textNote: e.target.value })}
+                                        placeholder='Optional'
                                     />
                                 </Form.Group>
                                 <Button variant="primary" type="submit">
-                                    Add Code
+                                    Create Account Key
                                 </Button>
                             </Form>
                         </Card.Body>
@@ -127,10 +142,16 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Card key={code.code} className="mb-2">
                                     <Card.Body className="card text-bg-dark">
                                         <Card.Text>
-                                            <strong>Code:</strong> {code.code}<br />
+                                            <strong>Account Key:</strong> {code.code}<br />
                                             <strong>Clearance Level:</strong> {code.clearanceLevel}<br />
-                                            <strong>Role:</strong> {code.role || 'N/A'}
+                                            <strong>Role:</strong> {code.role || 'N/A'} <br />
+                                            <strong>Note:</strong> {code.textNote || 'N/A'}
+                                            <Link className="nav-link link-primary" to={"/signup?fillr=" + code.code}>Redeem Code</Link>
                                         </Card.Text>
+                                        <div className="btn-group" role="group" aria-label="Basic example" style={{ marginBottom: '1rem' }}>
+                                            <CopyToClipboardButton text={code.code} className="btn btn-secondary" displayText="Copy Account Key" />
+                                            <CopyToClipboardButton text={"https://oldmartijntje.nl/#/signup?fillr=" + code.code} className="btn btn-secondary" displayText="Copy Link" />
+                                        </div>
                                         <Button variant="danger" size="sm" onClick={() => handleDelete(code.code)}>
                                             Delete
                                         </Button>

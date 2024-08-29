@@ -12,6 +12,7 @@ import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
 import { allEvents } from './services/EventsSystem';
 import './App.css';
+import SignupPage from './pages/loginPage/SignupPage';
 
 interface RouteData {
     path: string;
@@ -80,6 +81,11 @@ const App: React.FC = () => {
             element: RegistrationCodeManager,
             isPrivate: true,
             clearanceLevelNeeded: 4
+        },
+        {
+            path: "signup",
+            element: SignupPage,
+            isPrivate: false
         },
         { path: '*', element: NotFoundPage, isPrivate: false },
     ];
