@@ -18,7 +18,7 @@ interface UserPageProps {
     userProfile?: any;
 }
 
-const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
+const ProjectManager: React.FC<UserPageProps> = ({ }) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [newProject, setNewProject] = useState<Project>({
         title: '',
@@ -86,7 +86,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const handleDelete = (id: string) => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData(`https://api.example.com/projects/${id}`, 'DELETE', null, (response: any) => {
+        serverConnector.fetchData(`https://api.example.com/projects/${id}`, 'DELETE', '', (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
             } else if (response.status === 401) {
@@ -179,9 +179,14 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         onChange={(e) => setNewProject({ ...newProject, tags: e.target.value.split(',') })}
                                     />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
-                                    {editingProject ? 'Update Project' : 'Create Project'}
-                                </Button>
+                                <div className="btn-group" role="group" aria-label="Basic example">
+                                    <Button variant="primary" type="submit">
+                                        {editingProject ? 'Update Project' : 'Create Project'}
+                                    </Button>
+                                    {editingProject && <Button variant="secondary" onClick={() => setEditingProject(null)}>
+                                        Deselect Project
+                                    </Button>}
+                                </div>
                                 {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
                             </Form>
                         </Card.Body>
@@ -204,12 +209,17 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <strong>Hidden:</strong> {project.hidden ? 'Yes' : 'No'}<br />
                                             <strong>Tags:</strong> {project.tags?.join(', ') || 'N/A'}
                                         </Card.Text>
-                                        <Button variant="primary" size="sm" onClick={() => handleEdit(project)} className="me-2">
-                                            Edit
-                                        </Button>
-                                        <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
-                                            Delete
-                                        </Button>
+                                        <div className="btn-group" role="group" aria-label="Basic example">
+                                            <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
+                                                Edit
+                                            </Button>
+                                            <Button variant="secondary" size="sm" onClick={() => handleEdit(project)}>
+                                                Duplicate
+                                            </Button>
+                                            <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
+                                                Delete
+                                            </Button>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             ))}
