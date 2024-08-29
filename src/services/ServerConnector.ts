@@ -1,3 +1,5 @@
+import { allEvents } from './EventsSystem';
+
 class ServerConnector {
     sessionToken: string | null = null;
 
@@ -21,21 +23,14 @@ class ServerConnector {
             if (!response) {
                 return;
             }
-            if (response.status !== 200) {
-                if (response.status === 429) {
-                    localStorage.setItem('rateLimit', Date.now().toString());
-                    onFail(response);
-                    return;
-                } else if (response.status === 401) {
-                    localStorage.removeItem('UserLogin');
-                    onFail(response);
-                    return;
-                }
-
-            }
             const data = await response.json();
+            if (response.status === 429) {
+                localStorage.setItem('rateLimit', Date.now().toString());
+                onFail({ ...data, status: response.status, networkResponse: response });
+                return;
+            }
             if (!data || data.error || data.success === false) {
-                onFail(data);
+                onFail({ ...data, status: response.status, networkResponse: response });
                 return;
             }
             onSuccess({ ...data, status: response.status, networkResponse: response });
@@ -102,6 +97,7 @@ class ServerConnector {
         }, (response: any) => {
             if (response.status === 401) {
                 localStorage.removeItem('UserLogin');
+                allEvents.emit('logout');
                 onFail(response);
             }
         });

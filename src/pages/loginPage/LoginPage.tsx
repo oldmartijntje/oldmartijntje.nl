@@ -13,6 +13,7 @@ type LoginPageProps = {
 const LoginPage: React.FC<LoginPageProps> = ({ handleFunction }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const serverConnector = new ServerConnector();
 
     const handleLogin = (e: React.FormEvent | null = null, credentialLoginMethod: boolean = true, customPassword: string | undefined = undefined, CustomUsername: string | undefined = undefined) => {
@@ -24,10 +25,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ handleFunction }) => {
 
         // Simulating login logic
         if (password2 && username2) {
-            serverConnector.loginRequest(username2, password2, credentialLoginMethod, () => {
+            serverConnector.loginRequest(username2, password2, credentialLoginMethod, (response: any) => {
                 // navigate to user page with hashrouting
                 // window.location.hash = '/user';
-                handleFunction();
+                if (response.status === 200) {
+                    handleFunction();
+                } else {
+                    console.log(response);
+                    setErrorMessage(response.message);
+                }
             },
                 (error: any) => {
                     alert(error.message);
@@ -75,6 +81,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ handleFunction }) => {
                                 <Link to="/signup"><Button variant="dark" style={{ marginLeft: "1rem" }} >
                                     Sign up
                                 </Button></Link>
+                                {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
                             </Form>
                         </Card.Body>
                     </Card>

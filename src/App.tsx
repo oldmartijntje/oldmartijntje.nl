@@ -31,6 +31,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         allEvents.on('logout', this, () => {
+            console.log('Logging out');
             setIsAuthenticated(false);
             setClearanceLevel(0);
             setUserProfile({});

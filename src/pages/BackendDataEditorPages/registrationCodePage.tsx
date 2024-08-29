@@ -4,6 +4,7 @@ import '../../assets/styling/darkmode.css';
 import ServerConnector from '../../services/ServerConnector';
 import CopyToClipboardButton from '../../components/buttons/copyToClipboard';
 import { Link } from 'react-router-dom';
+import { allEvents } from '../../services/EventsSystem';
 
 
 interface RegistrationCode {
@@ -25,6 +26,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         role: '',
         textNote: ''
     });
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         // Fetch codes from API here
@@ -40,8 +42,15 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
             if (response.status === 200) {
                 setCodes(response.codes);
+            } else if (response.status == 401) {
+                localStorage.removeItem('UserLogin');
+                alert('Session expired. Please log in again.');
+                allEvents.emit('logout');
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
+            setErrorMessage(error.message);
             console.log(error);
         });
 
@@ -56,8 +65,15 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
             if (response.status === 200) {
                 setCodes(response.codes);
+            } else if (response.status == 401) {
+                localStorage.removeItem('UserLogin');
+                alert('Session expired. Please log in again.');
+                allEvents.emit('logout');
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
+            setErrorMessage(error.message);
             console.log(error);
         });
     };
@@ -67,7 +83,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         // Submit new code to API here
         const serverConnector = new ServerConnector();
         const body = {
-            "sessionToken": userProfile.sessionToken,
+            "sessionToken": userProfile.sessionToken + 1,
             "clearanceLevel": newCode.clearanceLevel,
             "role": newCode.role,
             "textNote": newCode.textNote
@@ -78,8 +94,15 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
             if (response.status === 200) {
                 setCodes(response.codes);
                 setNewCode({ clearanceLevel: 0, role: '', textNote: '' });
+            } else if (response.status == 401) {
+                localStorage.removeItem('UserLogin');
+                alert('Session expired. Please log in again.');
+                allEvents.emit('logout');
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
+            setErrorMessage(error.message);
             console.log(error);
         });
 
@@ -130,6 +153,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Button variant="primary" type="submit">
                                     Create Account Key
                                 </Button>
+                                {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
                             </Form>
                         </Card.Body>
                     </Card>
