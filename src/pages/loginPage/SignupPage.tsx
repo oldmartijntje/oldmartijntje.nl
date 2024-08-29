@@ -56,7 +56,9 @@ const SignupPage: React.FC = () => {
                     <h2 className="text-center mb-4">{isFillr ? 'Welcome to M.A.R.A.' : 'Sign up'}</h2>
                     {isFillr && (
                         <p className="text-center mb-4">
-                            You are invited to <span className="text-info" style={{ cursor: 'pointer' }} title="Martijn's Authorized Repository Access">M.A.R.A.</span>
+                            You are invited to <span className="text-info" style={{ cursor: 'pointer' }} onClick={() => {
+                                alert("M.A.R.A.\nMartijn's Authorized Repository Access");
+                            }} title="Martijn's Authorized Repository Access">M.A.R.A.</span>
                             <br />Please fill out this form to create your account.
                         </p>
                     )}
