@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
-import '../../assets/styling/darkmode.css';
 import ServerConnector from '../../services/ServerConnector';
 
 interface Project {
-    _id: string;
+    _id?: string;
     title: string;
     images: string[];
-    thumbnailImageId: number;
+    tumbnailImageId: number;
     link?: string;
     info: string;
     lastUpdated?: Date;
@@ -19,15 +18,16 @@ interface UserPageProps {
     userProfile?: any;
 }
 
-const ProjectManager: React.FC<UserPageProps> = ({ }) => {
+const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [newProject, setNewProject] = useState<Omit<Project, '_id'>>({
+    const [newProject, setNewProject] = useState<Project>({
         title: '',
         images: [],
-        thumbnailImageId: 0,
+        tumbnailImageId: 0,
         info: '',
     });
     const [editingProject, setEditingProject] = useState<Project | null>(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         fetchProjects();
@@ -38,10 +38,22 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
         serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', '', (response: any) => {
             if (response.status === 200) {
                 setProjects(response.projects);
+            } else if (response.status === 401) {
+                handleUnauthorized();
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
-            console.error('Error fetching projects:', error);
+            setErrorMessage(error.message);
+            console.log(error);
         });
+    };
+
+    const handleUnauthorized = () => {
+        localStorage.removeItem('UserLogin');
+        alert('Session expired. Please log in again.');
+        // Assuming you have a logout event
+        // allEvents.emit('logout');
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -49,7 +61,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
         const serverConnector = new ServerConnector();
         const endpoint = editingProject ? `https://api.example.com/projects/${editingProject._id}` : 'https://api.example.com/projects';
         const method = editingProject ? 'PUT' : 'POST';
-        const projectData = editingProject ? { ...editingProject } : { ...newProject };
+        const projectData = editingProject ? { ...editingProject, ...newProject } : newProject;
 
         serverConnector.fetchData(endpoint, method, JSON.stringify(projectData), (response: any) => {
             if (response.status === 200) {
@@ -57,29 +69,40 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                 setNewProject({
                     title: '',
                     images: [],
-                    thumbnailImageId: 0,
+                    tumbnailImageId: 0,
                     info: '',
                 });
                 setEditingProject(null);
+            } else if (response.status === 401) {
+                handleUnauthorized();
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
-            console.error('Error saving project:', error);
+            setErrorMessage(error.message);
+            console.log(error);
         });
     };
 
     const handleDelete = (id: string) => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData(`https://api.example.com/projects/${id}`, 'DELETE', '', (response: any) => {
+        serverConnector.fetchData(`https://api.example.com/projects/${id}`, 'DELETE', null, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
+            } else if (response.status === 401) {
+                handleUnauthorized();
+            } else {
+                setErrorMessage(response.message);
             }
         }, (error: any) => {
-            console.error('Error deleting project:', error);
+            setErrorMessage(error.message);
+            console.log(error);
         });
     };
 
     const handleEdit = (project: Project) => {
         setEditingProject(project);
+        setNewProject(project);
     };
 
     return (
@@ -99,10 +122,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Label className="text-light">Title</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={editingProject ? editingProject.title : newProject.title}
-                                        onChange={(e) => editingProject
-                                            ? setEditingProject({ ...editingProject, title: e.target.value })
-                                            : setNewProject({ ...newProject, title: e.target.value })}
+                                        value={newProject.title}
+                                        onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
                                         required
                                     />
                                 </Form.Group>
@@ -110,13 +131,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Label className="text-light">Images (comma-separated URLs)</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={editingProject ? editingProject.images.join(',') : newProject.images.join(',')}
-                                        onChange={(e) => {
-                                            const images = e.target.value.split(',').map(url => url.trim());
-                                            editingProject
-                                                ? setEditingProject({ ...editingProject, images })
-                                                : setNewProject({ ...newProject, images });
-                                        }}
+                                        value={newProject.images.join(',')}
+                                        onChange={(e) => setNewProject({ ...newProject, images: e.target.value.split(',') })}
                                         required
                                     />
                                 </Form.Group>
@@ -124,10 +140,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Label className="text-light">Thumbnail Image ID</Form.Label>
                                     <Form.Control
                                         type="number"
-                                        value={editingProject ? editingProject.thumbnailImageId : newProject.thumbnailImageId}
-                                        onChange={(e) => editingProject
-                                            ? setEditingProject({ ...editingProject, thumbnailImageId: parseInt(e.target.value) })
-                                            : setNewProject({ ...newProject, thumbnailImageId: parseInt(e.target.value) })}
+                                        value={newProject.tumbnailImageId}
+                                        onChange={(e) => setNewProject({ ...newProject, tumbnailImageId: parseInt(e.target.value) })}
                                         required
                                     />
                                 </Form.Group>
@@ -135,21 +149,16 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Label className="text-light">Link</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={editingProject ? editingProject.link : newProject.link}
-                                        onChange={(e) => editingProject
-                                            ? setEditingProject({ ...editingProject, link: e.target.value })
-                                            : setNewProject({ ...newProject, link: e.target.value })}
+                                        value={newProject.link || ''}
+                                        onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Info</Form.Label>
                                     <Form.Control
                                         as="textarea"
-                                        rows={3}
-                                        value={editingProject ? editingProject.info : newProject.info}
-                                        onChange={(e) => editingProject
-                                            ? setEditingProject({ ...editingProject, info: e.target.value })
-                                            : setNewProject({ ...newProject, info: e.target.value })}
+                                        value={newProject.info}
+                                        onChange={(e) => setNewProject({ ...newProject, info: e.target.value })}
                                         required
                                     />
                                 </Form.Group>
@@ -157,10 +166,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Check
                                         type="checkbox"
                                         label="Hidden"
-                                        checked={editingProject ? editingProject.hidden : newProject.hidden}
-                                        onChange={(e) => editingProject
-                                            ? setEditingProject({ ...editingProject, hidden: e.target.checked })
-                                            : setNewProject({ ...newProject, hidden: e.target.checked })}
+                                        checked={newProject.hidden || false}
+                                        onChange={(e) => setNewProject({ ...newProject, hidden: e.target.checked })}
                                         className="text-light"
                                     />
                                 </Form.Group>
@@ -168,23 +175,14 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Form.Label className="text-light">Tags (comma-separated)</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={editingProject ? editingProject.tags?.join(',') : newProject.tags?.join(',')}
-                                        onChange={(e) => {
-                                            const tags = e.target.value.split(',').map(tag => tag.trim());
-                                            editingProject
-                                                ? setEditingProject({ ...editingProject, tags })
-                                                : setNewProject({ ...newProject, tags });
-                                        }}
+                                        value={newProject.tags?.join(',') || ''}
+                                        onChange={(e) => setNewProject({ ...newProject, tags: e.target.value.split(',') })}
                                     />
                                 </Form.Group>
                                 <Button variant="primary" type="submit">
                                     {editingProject ? 'Update Project' : 'Create Project'}
                                 </Button>
-                                {editingProject && (
-                                    <Button variant="secondary" className="ms-2" onClick={() => setEditingProject(null)}>
-                                        Cancel Edit
-                                    </Button>
-                                )}
+                                {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
                             </Form>
                         </Card.Body>
                     </Card>
@@ -198,8 +196,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Card.Body className="card text-bg-dark">
                                         <Card.Title>{project.title}</Card.Title>
                                         <Card.Text>
-                                            <strong>Images:</strong> {project.images.length} images<br />
-                                            <strong>Thumbnail ID:</strong> {project.thumbnailImageId}<br />
+                                            <strong>Images:</strong> {project.images.length}<br />
+                                            <strong>Thumbnail ID:</strong> {project.tumbnailImageId}<br />
                                             <strong>Link:</strong> {project.link || 'N/A'}<br />
                                             <strong>Info:</strong> {project.info.substring(0, 100)}...<br />
                                             <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
@@ -209,7 +207,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                         <Button variant="primary" size="sm" onClick={() => handleEdit(project)} className="me-2">
                                             Edit
                                         </Button>
-                                        <Button variant="danger" size="sm" onClick={() => handleDelete(project._id)}>
+                                        <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
                                             Delete
                                         </Button>
                                     </Card.Body>
