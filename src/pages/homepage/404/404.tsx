@@ -2,6 +2,10 @@
 import { Link } from 'react-router-dom';
 import './404.css';
 
+type ErrorPageProps = {
+    clearanceLevel: number;
+};
+
 const NotFoundPage = () => {
     return (
         <div className="not-found-container">
@@ -20,4 +24,24 @@ const NotFoundPage = () => {
     );
 };
 
-export default NotFoundPage;
+const UnauthorizedPage: React.FC<ErrorPageProps> = ({ clearanceLevel }) => {
+    return (
+        <div className="not-found-container">
+            <div className="not-found-content">
+                <h1 className="not-found-title">403</h1>
+                <h2 className="not-found-subtitle">Forbidden</h2>
+                <p className="not-found-text">
+                    You do not have clearance to view this page.
+                </p>
+                <p className="not-found-text">
+                    This page requires a clearance level of {(clearanceLevel + 1)}.
+                </p>
+                <Link to="/" className="not-found-link">
+                    Go back to the homepage
+                </Link>
+            </div>
+        </div>
+    );
+}
+
+export { NotFoundPage, UnauthorizedPage };

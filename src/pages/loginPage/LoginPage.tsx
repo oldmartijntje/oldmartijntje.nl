@@ -5,9 +5,12 @@ import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
 import settings from '../../assets/json/settings.json';
 
+type LoginPageProps = {
+    handleFunction: () => void;
+};
 
 // LoginPage component
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC<LoginPageProps> = ({ handleFunction }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const serverConnector = new ServerConnector();
@@ -21,8 +24,10 @@ const LoginPage: React.FC = () => {
 
         // Simulating login logic
         if (password2 && username2) {
-            serverConnector.loginRequest(username2, password2, credentialLoginMethod, (data: any) => {
-                alert(data.message);
+            serverConnector.loginRequest(username2, password2, credentialLoginMethod, () => {
+                // navigate to user page with hashrouting
+                // window.location.hash = '/user';
+                handleFunction();
             },
                 (error: any) => {
                     alert(error.message);

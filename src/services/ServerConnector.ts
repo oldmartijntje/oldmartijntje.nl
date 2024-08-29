@@ -41,7 +41,7 @@ class ServerConnector {
         }
     }
 
-    getUserData = () => {
+    static getUserData = () => {
         const localStorageData = localStorage.getItem('UserLogin')
         let userData = JSON.parse(localStorageData || '{}');
         return userData;
@@ -60,13 +60,13 @@ class ServerConnector {
         let url = 'https://api.oldmartijntje.nl/login';
         let body;
         if (!username) {
-            username = this.getUserData().username;
+            username = ServerConnector.getUserData().username;
         }
         if (!password) {
             if (loginType) {
                 password = 'root';
             } else {
-                password = this.getUserData().sessionToken;
+                password = ServerConnector.getUserData().sessionToken;
             }
         }
         if (loginType) {
@@ -90,8 +90,8 @@ class ServerConnector {
                 userData.sessionToken = password;
             }
             userData.username = username;
-            userData.role = response.data.role;
-            userData.clearanceLevel = response.data.clearanceLevel;
+            userData.role = response.data?.role;
+            userData.clearanceLevel = response.data?.clearanceLevel;
             localStorage.setItem('UserLogin', JSON.stringify(userData));
             onSuccess(response);
 
