@@ -6,7 +6,7 @@ type ErrorPageProps = {
     clearanceLevel: number;
 };
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
     return (
         <div className="not-found-container">
             <div className="not-found-content">

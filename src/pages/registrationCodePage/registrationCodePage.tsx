@@ -25,10 +25,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
     useEffect(() => {
         // Fetch codes from API here
         // For demonstration, we'll use dummy data
-        setCodes([
-            { clearanceLevel: 1, role: 'User', code: 'ABC123' },
-            { clearanceLevel: 2, role: 'Admin', code: 'XYZ789' },
-        ]);
+
         const body = {
             "sessionToken": userProfile.sessionToken
         }
@@ -48,15 +45,39 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const handleDelete = (code: string) => {
         // Delete code from API here
-        setCodes(codes.filter(c => c.code !== code));
+        const serverConnector = new ServerConnector();
+
+        serverConnector.fetchData('https://api.oldmartijntje.nl/register/delete', 'POST', JSON.stringify({ "sessionToken": userProfile.sessionToken, "activationCode": code }), (response: any) => {
+            console.log(response);
+
+            if (response.status === 200) {
+                setCodes(response.codes);
+            }
+        }, (error: any) => {
+            console.log(error);
+        });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Submit new code to API here
-        const generatedCode = Math.random().toString(36).substring(7);
-        setCodes([...codes, { ...newCode, code: generatedCode }]);
-        setNewCode({ clearanceLevel: 0, role: '' });
+        const serverConnector = new ServerConnector();
+        const body = {
+            "sessionToken": userProfile.sessionToken,
+            "clearanceLevel": newCode.clearanceLevel,
+            "role": newCode.role
+        }
+        serverConnector.fetchData('https://api.oldmartijntje.nl/register/generate', 'POST', JSON.stringify(body), (response: any) => {
+            console.log(response);
+
+            if (response.status === 200) {
+                setCodes(response.codes);
+                setNewCode({ clearanceLevel: 0, role: '' });
+            }
+        }, (error: any) => {
+            console.log(error);
+        });
+
     };
 
     return (

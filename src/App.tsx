@@ -4,14 +4,22 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
-import { NotFoundPage } from './pages/homepage/404/404';
+import { NotFoundPage } from './pages/404/404';
 import ApiTestComponent from './pages/apiTesterPage/ApiTestingPage';
 import RegistrationCodeManager from './pages/registrationCodePage/registrationCodePage';
-import PrivateRoute from './components/privateRoute/PrivateRoute';
+import { PrivateRoute, LayeredRoute } from './components/privateRoute/PrivateRoute';
 import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
 import { allEvents } from './services/EventsSystem';
 import './App.css';
+
+interface RouteData {
+    path: string;
+    element: any;
+    isPrivate: boolean;
+    clearanceLevelNeeded?: number;
+}
+
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -42,7 +50,6 @@ const App: React.FC = () => {
     }, []); // Empty dependency array ensures this effect runs only once
 
     const onLogin = () => {
-        console.log('Logged in');
         setIsAuthenticated(true);
         const savedData = ServerConnector.getUserData();
         setClearanceLevel(savedData.clearanceLevel);
@@ -54,56 +61,60 @@ const App: React.FC = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const routesData: RouteData[] = [
+        { path: '/', element: Homepage, isPrivate: false },
+        {
+            path: '/api-test',
+            element: ApiTestComponent,
+            isPrivate: true,
+            clearanceLevelNeeded: 6
+        },
+        {
+            path: '/user',
+            element: UserPage,
+            isPrivate: true,
+            clearanceLevelNeeded: 0
+        },
+        {
+            path: '/registerCode',
+            element: RegistrationCodeManager,
+            isPrivate: true,
+            clearanceLevelNeeded: 4
+        },
+        { path: '*', element: NotFoundPage, isPrivate: false },
+    ];
+
     return (
         <Router>
             <div className="app-container">
                 <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}></Sidebar>
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                     <Routes>
-                        <Route path="/" element={<Homepage />} />
-                        <Route
-                            path="/api-test"
-                            element={
-                                <PrivateRoute
-                                    key={`${isAuthenticated}-${clearanceLevel}`}  // Ensures re-render when auth status changes
-                                    element={ApiTestComponent}
-                                    isAuthenticated={isAuthenticated}
-                                    clearanceLevel={clearanceLevel}
-                                    clearanceLevelNeeded={6}
-                                    handleLoginFunction={onLogin}
-                                    userProfile={userProfile}
+                        {routesData.map((route, index) => (
+                            route.isPrivate ? (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <PrivateRoute
+                                            key={`${isAuthenticated}-${clearanceLevel}`}  // Ensures re-render when auth status changes
+                                            element={route.element}
+                                            isAuthenticated={isAuthenticated}
+                                            clearanceLevel={clearanceLevel}
+                                            clearanceLevelNeeded={route.clearanceLevelNeeded || 0}
+                                            handleLoginFunction={onLogin}
+                                            userProfile={userProfile}
+                                        />
+                                    }
                                 />
-                            }
-                        />
-                        <Route
-                            path="/user"
-                            element={
-                                <PrivateRoute
-                                    key={`${isAuthenticated}-${clearanceLevel}`}  // Ensures re-render when auth status changes
-                                    element={UserPage}
-                                    isAuthenticated={isAuthenticated}
-                                    clearanceLevel={clearanceLevel}
-                                    clearanceLevelNeeded={0}
-                                    handleLoginFunction={onLogin}
-                                    userProfile={userProfile}
+                            ) : (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={<LayeredRoute element={route.element} userProfile={userProfile} />}
                                 />
-                            }
-                        />
-                        <Route
-                            path="/registerCode"
-                            element={
-                                <PrivateRoute
-                                    key={`${isAuthenticated}-${clearanceLevel}`}  // Ensures re-render when auth status changes
-                                    element={RegistrationCodeManager}
-                                    isAuthenticated={isAuthenticated}
-                                    clearanceLevel={clearanceLevel}
-                                    clearanceLevelNeeded={4}
-                                    handleLoginFunction={onLogin}
-                                    userProfile={userProfile}
-                                />
-                            }
-                        />
-                        <Route path="*" element={<NotFoundPage />} />
+                            )
+                        ))}
                     </Routes>
                 </div>
             </div>

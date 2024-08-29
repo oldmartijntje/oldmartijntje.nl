@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Navbar, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
 import icon from '../../assets/images/mii.png';
 import { allEvents } from '../../services/EventsSystem';
@@ -34,14 +34,13 @@ const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        {userProfile.clearanceLevel >= 4 && <Link className="nav-link text-light" to="/registerCode">Account Keys</Link>}
+                        {userProfile.clearanceLevel >= 4 && (
+                            <NavDropdown title="admin" id="basic-nav-dropdown" className="text-light">
+                                {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
+                            </NavDropdown>
+                        )}
+                        {userProfile.clearanceLevel >= 1 && <Link className="nav-link text-light" to="/YEET">404 Page</Link>}
 
-                        {/* <Nav.Link href="#" className="text-light">Home</Nav.Link>
-                        <Nav.Link href="#" className="text-light">Settings</Nav.Link>
-                        <NavDropdown title={user} id="basic-nav-dropdown" className="text-light">
-                            <NavDropdown.Item href="#action/3.1">Account</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Support</NavDropdown.Item>
-                        </NavDropdown> */}
                         <Button variant="danger" className="ml-3" onClick={handleLogout}>Logout</Button>
                     </Nav>
                 </Navbar.Collapse>
