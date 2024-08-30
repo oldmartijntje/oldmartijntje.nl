@@ -99,7 +99,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const serverConnector = new ServerConnector();
         const endpoint = `https://api.oldmartijntje.nl/getData/projects`;
         const method = editingProject ? 'PUT' : 'POST';
-        const projectData = editingProject ? { ...editingProject, ...newProject } : newProject;
+        const projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
+        projectData.sessionToken = userProfile.sessionToken
 
         serverConnector.fetchData(endpoint, method, JSON.stringify(projectData), (response: any) => {
             if (response.status === 200) {
@@ -109,7 +110,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     images: [],
                     tumbnailImageId: 0,
                     info: '',
+                    hidden: false,
                 });
+                setErrorMessage('');
                 setEditingProject(null);
             } else if (response.status === 401) {
                 handleUnauthorized();
@@ -132,6 +135,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         serverConnector.fetchData(url, 'DELETE', undefined, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
+                setErrorMessage('');
             } else if (response.status === 401) {
                 handleUnauthorized();
             } else {
