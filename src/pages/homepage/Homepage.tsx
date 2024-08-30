@@ -13,6 +13,11 @@ export interface Project {
     images: { [key: string]: string };
 }
 
+interface HomepageProps {
+    data?: any;
+}
+
+
 function getOfflineProjects(): any[] {
     let chachedProjects = sessionStorage.getItem('cached-projects');
     if (chachedProjects) {
@@ -23,9 +28,10 @@ function getOfflineProjects(): any[] {
 
 }
 
-const Homepage: React.FC = () => {
+const Homepage: React.FC<HomepageProps> = ({ data }) => {
+    const discovery = data?.title === 'Discovery';
     let fetched = false;
-    const [projects, setProjects] = useState<Project[]>([]);
+    const [mainProjects, setProjects] = useState<Project[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
@@ -88,13 +94,13 @@ const Homepage: React.FC = () => {
                 </Container>
             </header>
             <main className="py-5">
-                <Container>
-                    <h2 className="text-primary mb-4">My Projects  {offline && (<OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                <Container style={{ marginBottom: "1rem" }}>
+                    <h2 className="text-primary">Main Projects {offline && (<OverlayTrigger trigger="click" placement="top" overlay={popover}>
                         <Button variant="danger">Offline</Button>
                     </OverlayTrigger>
                     )}</h2>
                     <div className="g-4 scrollBar">
-                        {projects.map((project, index) => (
+                        {mainProjects.map((project, index) => (
                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                 <Card className="h-100 project-card bg-dark text-white">
                                     <Card.Img variant="top" src={project.images[project.tumbnailImageId]} alt={project.title} onClick={() => {
@@ -119,6 +125,9 @@ const Homepage: React.FC = () => {
                         ))}
                     </div>
                 </Container>
+                {discovery &&
+                    <h1></h1>
+                }
             </main>
 
             <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" contentClassName="bg-dark text-white">

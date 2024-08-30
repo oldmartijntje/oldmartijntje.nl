@@ -10,26 +10,27 @@ interface PrivateRouteProps {
     clearanceLevelNeeded: number;
     handleLoginFunction: () => void;
     userProfile?: any;
+    data?: any;
 }
 
 interface LayeredRouteProps {
     element: any;  // Use React.ComponentType to accept any React component
     userProfile?: any;
+    data?: any;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Component, isAuthenticated, clearanceLevel, clearanceLevelNeeded, handleLoginFunction, userProfile }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Component, isAuthenticated, clearanceLevel, clearanceLevelNeeded, handleLoginFunction, userProfile, data }) => {
     if (!isAuthenticated) {
         return <LoginPage handleFunction={handleLoginFunction} />;
     } else if (clearanceLevelNeeded != null && clearanceLevel != null && clearanceLevel >= clearanceLevelNeeded) {
-        return <Component userProfile={userProfile} />
+        return <Component userProfile={userProfile} data={data} />
     } else {
         return <UnauthorizedPage clearanceLevel={(clearanceLevel)} />
     }
 };
 
-const LayeredRoute: React.FC<LayeredRouteProps> = ({ element: Component, userProfile }) => {
-
-    return <Component userProfile={userProfile} />
+const LayeredRoute: React.FC<LayeredRouteProps> = ({ element: Component, userProfile, data }) => {
+    return <Component userProfile={userProfile} data={data} />
 };
 
 export { PrivateRoute, LayeredRoute };

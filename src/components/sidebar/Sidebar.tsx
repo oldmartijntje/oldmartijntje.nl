@@ -23,6 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar })
                     <h2>Navigator</h2>
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
+                        <li><Link to="/discovery">Discovery</Link></li>
                         {userProfile.clearanceLevel >= 4 && <li><NavDropdown title="admin" id="basic-nav-dropdown" className="text-light">
                             {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item bg-light link-dark" to="/registerCode">Account Keys</Link>}
                             {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item bg-light link-dark" to="/api/projects">Projects</Link>}

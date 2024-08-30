@@ -20,6 +20,7 @@ interface RouteData {
     element: any;
     isPrivate: boolean;
     clearanceLevelNeeded?: number;
+    extraData?: any;
 }
 
 
@@ -65,7 +66,8 @@ const App: React.FC = () => {
     };
 
     const routesData: RouteData[] = [
-        { path: '/', element: Homepage, isPrivate: false },
+        { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home' } },
+        { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery' } },
         {
             path: '/api-test',
             element: ApiTestComponent,
@@ -118,6 +120,7 @@ const App: React.FC = () => {
                                             clearanceLevelNeeded={route.clearanceLevelNeeded || 0}
                                             handleLoginFunction={onLogin}
                                             userProfile={userProfile}
+                                            data={route.extraData}
                                         />
                                     }
                                 />
@@ -125,7 +128,7 @@ const App: React.FC = () => {
                                 <Route
                                     key={index}
                                     path={route.path}
-                                    element={<LayeredRoute element={route.element} userProfile={userProfile} />}
+                                    element={<LayeredRoute element={route.element} userProfile={userProfile} data={route.extraData} />}
                                 />
                             )
                         ))}
