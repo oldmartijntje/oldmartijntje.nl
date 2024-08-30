@@ -23,6 +23,7 @@ interface RouteData {
     extraData?: any;
 }
 
+const randomnessSeed = Math.random() * 10000
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -73,8 +74,8 @@ const App: React.FC = () => {
     };
 
     const routesData: RouteData[] = [
-        { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home', randomnessSeed: Math.random() * 10000 } },
-        { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery', randomnessSeed: Math.random() * 10000 } },
+        { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home', randomnessSeed: randomnessSeed } },
+        { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery', randomnessSeed: randomnessSeed } },
         {
             path: '/api-test',
             element: ApiTestComponent,
