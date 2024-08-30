@@ -1,10 +1,8 @@
 import { allEvents } from './EventsSystem';
 
 class ServerConnector {
-    sessionToken: string | null = null;
 
-    constructor(sessionToken: string | null = null) {
-        this.sessionToken = sessionToken;
+    constructor() {
     }
 
     fetchData = async (url: string, method: string, body: string = '{}', onSuccess: any = () => { }, onFail: any = () => { }) => {

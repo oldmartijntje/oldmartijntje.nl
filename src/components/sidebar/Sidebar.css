@@ -4,17 +4,18 @@
     left: 10px;
     background-color: #007FFF;
     color: white;
-    border: none;
     padding: 10px 15px;
     font-size: 1.2em;
     cursor: pointer;
     z-index: 1001;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    border: #0056b3 solid 2px;
 }
 
 .sidebar-toggle:hover {
     background-color: #0056b3;
+    border: #007FFF solid 2px;
 }
 
 .sidebar {

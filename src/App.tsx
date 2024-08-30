@@ -42,11 +42,18 @@ const App: React.FC = () => {
 
         if (savedData && savedData.username && savedData.sessionToken) {
             serverConnector.loginRequest(savedData.username, savedData.sessionToken, false, (data: any) => {
-                console.log(data);
-                data.data.sessionToken = savedData.sessionToken;
-                setIsAuthenticated(true);
-                setClearanceLevel(data.data.clearanceLevel);
-                setUserProfile(data.data);
+                if (data.status === 200) {
+                    data.data.sessionToken = savedData.sessionToken;
+                    setIsAuthenticated(true);
+                    setClearanceLevel(data.data.clearanceLevel);
+                    setUserProfile(data.data);
+                } else {
+                    setIsAuthenticated(false);
+                    setClearanceLevel(0);
+                    setUserProfile({});
+                    savedData.sessionToken = undefined;
+                    localStorage.setItem('UserLogin', JSON.stringify(savedData));
+                }
             }, (error: any) => {
                 console.log(error);
             });
@@ -66,8 +73,8 @@ const App: React.FC = () => {
     };
 
     const routesData: RouteData[] = [
-        { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home' } },
-        { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery' } },
+        { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home', randomnessSeed: Math.random() * 10000 } },
+        { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery', randomnessSeed: Math.random() * 10000 } },
         {
             path: '/api-test',
             element: ApiTestComponent,

@@ -37,17 +37,6 @@
     padding: 20px;
 }
 
-.sidebar-toggle {
-    position: fixed;
-    left: 10px;
-    top: 10px;
-    z-index: 1001;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -173,22 +162,6 @@ a:hover {
 .table-dark td,
 .table-dark thead th {
     border-color: #2c2c2c;
-}
-
-/* Sidebar styles */
-.sidebar-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background-color: #007FFF;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 1.2em;
-    cursor: pointer;
-    z-index: 1001;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
 .sidebar-toggle:hover {
