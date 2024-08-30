@@ -301,9 +301,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             }}>
                                                 Duplicate
                                             </Button>
-                                            <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
+                                            {userProfile.clearanceLevel >= 6 && <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
                                                 Delete
-                                            </Button>
+                                            </Button>}
                                         </div>
                                     </Card.Body>
                                 </Card>

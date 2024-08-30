@@ -40,8 +40,6 @@ const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
                             </NavDropdown>
                         )}
-                        {userProfile.clearanceLevel >= 1 && <Link className="nav-link text-light" to="/YEET">404 Page</Link>}
-
                         <Button variant="danger" className="ml-3" onClick={handleLogout}>Logout</Button>
                     </Nav>
                 </Navbar.Collapse>

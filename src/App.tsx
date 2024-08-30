@@ -101,7 +101,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app-container">
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}></Sidebar>
+                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userProfile={userProfile}></Sidebar>
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                     <Routes>
                         {routesData.map((route, index) => (
