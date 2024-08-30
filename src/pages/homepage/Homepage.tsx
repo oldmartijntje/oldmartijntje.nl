@@ -55,7 +55,7 @@ const Homepage: React.FC = () => {
             return;
         }
         localStorage.removeItem('rateLimit');
-        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', undefined, (data: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getProjects', 'POST', undefined, (data: any) => {
             sessionStorage.setItem('cached-projects', JSON.stringify(data.projects));
             formatProjects(data.projects);
 

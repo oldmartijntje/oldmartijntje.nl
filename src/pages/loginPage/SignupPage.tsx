@@ -44,7 +44,12 @@ const SignupPage: React.FC = () => {
                 }
 
             }, (error: any) => {
-                console.log(error);
+                console.log(error.message);
+                if (error.message === 'Failed to fetch') {
+                    setErrorMessage('Failed to connect to the server');
+                    return;
+                }
+                setErrorMessage(error.message);
                 // Handle error here
             });
     };
@@ -54,14 +59,18 @@ const SignupPage: React.FC = () => {
             <Card className="w-100 text-bg-dark" style={{ maxWidth: '400px' }}>
                 <Card.Body>
                     <h2 className="text-center mb-4">{isFillr ? 'Welcome to M.A.R.A.' : 'Sign up'}</h2>
-                    {isFillr && (
+                    {isFillr ? (
                         <p className="text-center mb-4">
-                            You are invited to <span className="text-info" style={{ cursor: 'pointer' }} onClick={() => {
+                            You are invited to join <span className="text-info" style={{ cursor: 'pointer' }} onClick={() => {
                                 alert("M.A.R.A.\nMartijn's Authorized Repository Access");
                             }} title="Martijn's Authorized Repository Access">M.A.R.A.</span>
                             <br />Please fill out this form to create your account.
                         </p>
-                    )}
+                    ) :
+                        <p className="text-center mb-4">Please fill out this form to join <span className="text-info" style={{ cursor: 'pointer' }} onClick={() => {
+                            alert("M.A.R.A.\nMartijn's Authorized Repository Access");
+                        }} title="Martijn's Authorized Repository Access">M.A.R.A.</span><br /><br />
+                            Ask your <strong>Supervising Officer</strong> for your Account Key</p>}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="accountKey">
                             <Form.Label>Account Key</Form.Label>

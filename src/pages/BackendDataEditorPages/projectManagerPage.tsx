@@ -38,9 +38,18 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         fetchProjects();
     }, []);
 
+    const isEmptyForm = (project: Project) => {
+        return project.title === '' &&
+            (project.images.length === 0 || (project.images[0] == '' && project.images.length == 1)) &&
+            project.tumbnailImageId === 0 &&
+            (project.link === '' || !project.link) &&
+            (!project.tags || project.tags.length === 0 || (project.tags[0] == '' && project.tags.length == 1)) &&
+            project.info === '';
+    }
+
     const fetchProjects = () => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', JSON.stringify({ hidden: true }), (response: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getProjects', 'POST', JSON.stringify({ hidden: true }), (response: any) => {
             if (response.status === 200) {
                 setProjects(response.projects);
             } else if (response.status === 401) {
@@ -88,7 +97,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const serverConnector = new ServerConnector();
-        const endpoint = editingProject ? `https://api.example.com/projects/${editingProject._id}` : 'https://api.example.com/projects';
+        const endpoint = `https://api.oldmartijntje.nl/getData/projects`;
         const method = editingProject ? 'PUT' : 'POST';
         const projectData = editingProject ? { ...editingProject, ...newProject } : newProject;
 
@@ -119,7 +128,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const url = ServerConnector.encodeQueryData({
             id: id,
             sessionToken: userProfile.sessionToken,
-        }, `https://api.example.com/projects/`);
+        }, `https://api.oldmartijntje.nl/getData/projects`);
         serverConnector.fetchData(url, 'DELETE', undefined, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
@@ -223,7 +232,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Button variant="primary" type="submit">
                                         {editingProject ? 'Update Project' : 'Create Project'}
                                     </Button>
-                                    {editingProject && <Button variant="secondary" onClick={() => {
+                                    {(editingProject || !isEmptyForm(newProject)) && <Button variant="secondary" onClick={() => {
                                         setEditingProject(null)
                                         setNewProject({
                                             title: '',
@@ -236,7 +245,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         })
 
                                     }}>
-                                        Deselect Project
+                                        {editingProject ? "Deselect Project" : 'Clear'}
                                     </Button>}
                                 </div>
                                 {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
@@ -274,7 +283,18 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
                                                 Edit
                                             </Button>
-                                            <Button variant="secondary" size="sm" onClick={() => handleEdit(project)}>
+                                            <Button variant="secondary" size="sm" onClick={() => {
+                                                setEditingProject(null)
+                                                setNewProject({
+                                                    title: project.title,
+                                                    images: project.images,
+                                                    tumbnailImageId: project.tumbnailImageId,
+                                                    info: project.info,
+                                                    lastUpdated: project.lastUpdated,
+                                                    hidden: project.hidden,
+                                                    tags: project.tags,
+                                                });
+                                            }}>
                                                 Duplicate
                                             </Button>
                                             <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
