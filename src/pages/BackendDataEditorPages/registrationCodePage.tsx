@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, NavDropdown, Navbar, Nav } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
 import ServerConnector from '../../services/ServerConnector';
 import CopyToClipboardButton from '../../components/buttons/copyToClipboard';
@@ -21,6 +21,7 @@ interface UserPageProps {
 
 const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [codes, setCodes] = useState<RegistrationCode[]>([]);
+    const [searchFilter, setSearchFilter] = useState('');
     const [newCode, setNewCode] = useState<Omit<RegistrationCode, 'code'>>({
         clearanceLevel: 0,
         role: '',
@@ -55,6 +56,24 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         });
 
     }, []);
+
+    const doesThisProjectMatchSearch = (project: RegistrationCode) => {
+        if (!searchFilter) {
+            return true;
+        }
+        let fitsSearch = true;
+        const search = searchFilter.toLowerCase();
+        const allQueryWords = search.split(' ');
+        allQueryWords.forEach((queryWord) => {
+            if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
+
+
+            } else if (!`${project.clearanceLevel}`.toLowerCase().includes(queryWord) && !project.textNote?.toLowerCase().includes(queryWord) && !project.role?.toLowerCase().includes(queryWord) && !project.code.toLowerCase().includes(queryWord)) {
+                fitsSearch = false;
+            }
+        });
+        return fitsSearch;
+    }
 
     const handleDelete = (code: string) => {
         // Delete code from API here
@@ -110,11 +129,18 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     return (
         <Container fluid className="py-4">
-            <Row className="mb-4">
-                <Col>
-                    <h1 className="text-center text-light">Account Key Manager</h1>
-                </Col>
-            </Row>
+            <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm" style={{ padding: '8px 16px', justifyContent: "center" }}>
+                <Nav className="ml-auto">
+                    <Col className='flex'>
+                        <h1 className="text-center text-light inline"><NavDropdown title="Account Keys" id="basic-nav-dropdown" className="text-light">
+                            {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
+                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
+                        </NavDropdown></h1>
+                        <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
+                    </Col>
+                </Nav>
+            </Navbar>
+
             <Row className="mb-4">
                 {userProfile.clearanceLevel >= 5 && <Col md={6}>
                     <Card className="bg-dark">
@@ -162,7 +188,16 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     <Card className="bg-dark">
                         <Card.Body>
                             <Card.Title className="text-light">Existing Codes</Card.Title>
-                            {codes.map((code) => (
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-light">Search</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={searchFilter}
+                                    onChange={(e) => setSearchFilter(e.target.value)}
+                                    placeholder='Search by clearance level, role, key or note'
+                                />
+                            </Form.Group>
+                            {codes.map((code) => (doesThisProjectMatchSearch(code) &&
                                 <Card key={code.code} className="mb-2">
                                     <Card.Body className="card text-bg-dark">
                                         <Card.Text>

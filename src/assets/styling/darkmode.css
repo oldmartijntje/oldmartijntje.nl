@@ -63,3 +63,11 @@ a:hover {
     opacity: 0.35;
     /* Ensures that the color is fully opaque */
 }
+
+.inline {
+    display: inline;
+}
+
+.flex {
+    display: flex;
+}
