@@ -18,16 +18,20 @@ interface UserPageProps {
     userProfile?: any;
 }
 
-const ProjectManager: React.FC<UserPageProps> = ({ }) => {
+const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [newProject, setNewProject] = useState<Project>({
         title: '',
         images: [],
         tumbnailImageId: 0,
         info: '',
+        lastUpdated: new Date(),
+        hidden: false,
+        tags: [],
     });
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [searchFilter, setSearchFilter] = useState('');
 
     useEffect(() => {
         fetchProjects();
@@ -35,7 +39,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
 
     const fetchProjects = () => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', '', (response: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/projects', 'POST', JSON.stringify({ hidden: true }), (response: any) => {
             if (response.status === 200) {
                 setProjects(response.projects);
             } else if (response.status === 401) {
@@ -55,6 +59,30 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
         // Assuming you have a logout event
         // allEvents.emit('logout');
     };
+
+    const doesThisProjectMatchSearch = (project: Project) => {
+        if (!searchFilter) {
+            return true;
+        }
+        let fitsSearch = true;
+        const search = searchFilter.toLowerCase();
+        const allQueryWords = search.split(' ');
+        allQueryWords.forEach((queryWord) => {
+            if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
+                if (project.hidden && 'hidden'.includes(queryWord)) {
+                    // do nothing
+                } else if (!project.hidden && 'shown'.includes(queryWord)) {
+                    // do nothing
+                } else {
+                    fitsSearch = false;
+                }
+
+            } else if (!project.title.toLowerCase().includes(queryWord) && !project.info.toLowerCase().includes(queryWord) && !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord))) {
+                fitsSearch = false;
+            }
+        });
+        return fitsSearch;
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -86,7 +114,12 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
 
     const handleDelete = (id: string) => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData(`https://api.example.com/projects/${id}`, 'DELETE', '', (response: any) => {
+        console.log(userProfile)
+        const url = ServerConnector.encodeQueryData({
+            id: id,
+            sessionToken: userProfile.sessionToken,
+        }, `https://api.example.com/projects/`);
+        serverConnector.fetchData(url, 'DELETE', undefined, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
             } else if (response.status === 401) {
@@ -95,7 +128,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                 setErrorMessage(response.message);
             }
         }, (error: any) => {
-            setErrorMessage(error.message);
+            alert(error.message);
             console.log(error);
         });
     };
@@ -183,7 +216,19 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                     <Button variant="primary" type="submit">
                                         {editingProject ? 'Update Project' : 'Create Project'}
                                     </Button>
-                                    {editingProject && <Button variant="secondary" onClick={() => setEditingProject(null)}>
+                                    {editingProject && <Button variant="secondary" onClick={() => {
+                                        setEditingProject(null)
+                                        setNewProject({
+                                            title: '',
+                                            images: [],
+                                            tumbnailImageId: 0,
+                                            info: '',
+                                            lastUpdated: new Date(),
+                                            hidden: false,
+                                            tags: [],
+                                        })
+
+                                    }}>
                                         Deselect Project
                                     </Button>}
                                 </div>
@@ -196,7 +241,16 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                     <Card className="bg-dark">
                         <Card.Body>
                             <Card.Title className="text-light">Existing Projects</Card.Title>
-                            {projects.map((project) => (
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-light">Search</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={searchFilter}
+                                    onChange={(e) => setSearchFilter(e.target.value)}
+                                    placeholder='Search by title, info, visibility or tags'
+                                />
+                            </Form.Group>
+                            {projects.map((project) => (doesThisProjectMatchSearch(project) &&
                                 <Card key={project._id} className="mb-2">
                                     <Card.Body className="card text-bg-dark">
                                         <Card.Title>{project.title}</Card.Title>
@@ -206,7 +260,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ }) => {
                                             <strong>Link:</strong> {project.link || 'N/A'}<br />
                                             <strong>Info:</strong> {project.info.substring(0, 100)}...<br />
                                             <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
-                                            <strong>Hidden:</strong> {project.hidden ? 'Yes' : 'No'}<br />
+                                            <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
                                             <strong>Tags:</strong> {project.tags?.join(', ') || 'N/A'}
                                         </Card.Text>
                                         <div className="btn-group" role="group" aria-label="Basic example">

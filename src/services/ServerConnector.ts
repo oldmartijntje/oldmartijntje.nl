@@ -40,6 +40,17 @@ class ServerConnector {
         }
     }
 
+    static encodeQueryData = (data: { [key: string]: string }, url: string) => {
+        let stringData = ''
+        for (let key in data) {
+            if (stringData !== '') {
+                stringData += '&';
+            }
+            stringData += key + '=' + encodeURIComponent(data[key]);
+        }
+        return url + '?' + stringData;
+    }
+
     static getUserData = () => {
         const localStorageData = localStorage.getItem('UserLogin')
         let userData = JSON.parse(localStorageData || '{}');
