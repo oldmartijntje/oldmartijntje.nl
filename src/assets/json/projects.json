@@ -13,8 +13,13 @@
         "info": "<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>",
         "hidden": false,
         "lastUpdated": {
-            "$date": "2024-08-24T00:00:00.000Z"
-        }
+            "$date": "2024-08-30T12:03:02.556Z"
+        },
+        "tags": [
+            "website",
+            "documentation",
+            "favourite"
+        ]
     },
     {
         "_id": {
@@ -33,8 +38,15 @@
         "info": "<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>",
         "hidden": false,
         "lastUpdated": {
-            "$date": "2024-05-29T00:00:00.000Z"
-        }
+            "$date": "2024-08-30T12:10:40.434Z"
+        },
+        "tags": [
+            "website",
+            "favourite",
+            "my-code",
+            "angular",
+            "typescript"
+        ]
     },
     {
         "_id": {
@@ -55,8 +67,13 @@
         "info": "<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>",
         "hidden": false,
         "lastUpdated": {
-            "$date": "2024-08-16T00:00:00.000Z"
-        }
+            "$date": "2024-08-30T12:03:45.462Z"
+        },
+        "tags": [
+            "website",
+            "favourite",
+            "my-code"
+        ]
     },
     {
         "_id": {
@@ -73,8 +90,13 @@
         "info": "<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>",
         "hidden": false,
         "lastUpdated": {
-            "$date": "2024-06-28T00:00:00.000Z"
-        }
+            "$date": "2024-08-30T12:04:03.753Z"
+        },
+        "tags": [
+            "website",
+            "favourite",
+            "my-code"
+        ]
     },
     {
         "_id": {
@@ -88,7 +110,44 @@
         "info": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\r\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie</a>.<br>\r\n                        This chatbot is made using:</p>\r\n                    <ul>\r\n                        <li>PHP</li>\r\n                        <li>ChatGPT</li>\r\n                        <li>Javascript</li>\r\n                    </ul>",
         "hidden": false,
         "lastUpdated": {
-            "$date": "2024-08-23T00:00:00.000Z"
-        }
+            "$date": "2024-08-30T12:11:08.306Z"
+        },
+        "tags": [
+            "website",
+            "favourite",
+            "my-code",
+            "professional",
+            "php"
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "66d1b5f4166278d875e9ce47"
+        },
+        "title": "OldMartijntje's Webcorner💺",
+        "images": [
+            "https://i.imgur.com/fpyjbKy.png",
+            "https://i.imgur.com/wuOGyNu.png",
+            "https://i.imgur.com/pOzGkiq.png",
+            "https://i.imgur.com/s3w3SP9.png"
+        ],
+        "tumbnailImageId": 0,
+        "link": "https://oldmartijntje.nl",
+        "info": "<img src=\"https://i.imgur.com/fpyjbKy.png\" alt=\"Screenshot\">\n<p>This is my main website. Odds are that you are currently already on this website.<br/>\nI use this website to display my projects, Manage my database. etc.<br/>\nIt is the first time that I have used:</p>\n<ol>\n        <li>Node Backend</li>\n        <li>Account system</li>\n        <li>CRUD Editor</li>\n        <li>React</li>\n        <li>Bootstrap</li>\n</ol>\n<p>This website is heavily inspired by things like <a href=\"https://en.wikipedia.org/wiki/Agents_of_S.H.I.E.L.D.\" target=\"_blank\">Marvels S.H.I.E.L.D.</a></p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/wuOGyNu.png\" alt=\"Screenshot\"><sub>Accounts have an Clearance Level.</sub></div>\n<p>\nAn account on this website is invite only, that's why there is an guest account button.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/pOzGkiq.png\" alt=\"Screenshot\"><sub>More Marvel inspired things on the Signup page.</sub></div>\n<p>\nThere are some big plans for this website. But we'll see if it happens or not :3</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/s3w3SP9.png\" alt=\"Screenshot\"><sub>The Register page, if you received <a href=\"https://oldmartijntje.nl/#/signup?fillr=xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\" target=\"_blank\">an invite link</a></sub></div>",
+        "lastUpdated": {
+            "$date": "2024-08-30T12:26:16.222Z"
+        },
+        "hidden": false,
+        "tags": [
+            "website",
+            "favourite",
+            "my-code",
+            "react",
+            "bootstrap",
+            "typescript",
+            "backend",
+            "node"
+        ],
+        "__v": 0
     }
 ]
