@@ -5,6 +5,7 @@ import ServerConnector from '../../services/ServerConnector';
 import CopyToClipboardButton from '../../components/buttons/copyToClipboard';
 import { Link } from 'react-router-dom';
 import { allEvents } from '../../services/EventsSystem';
+import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 
 
 interface RegistrationCode {
@@ -21,7 +22,7 @@ interface UserPageProps {
 
 const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [codes, setCodes] = useState<RegistrationCode[]>([]);
-    const [searchFilter, setSearchFilter] = useState('');
+    const [searchFilter, setSearchFilter] = useState(getSearchFilters('registrationCode') || '');
     const [newCode, setNewCode] = useState<Omit<RegistrationCode, 'code'>>({
         clearanceLevel: 0,
         role: '',
@@ -39,8 +40,6 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
         const serverConnector = new ServerConnector();
         serverConnector.fetchData('https://api.oldmartijntje.nl/register/find', 'POST', JSON.stringify(body), (response: any) => {
-            console.log(response);
-
             if (response.status === 200) {
                 setCodes(response.codes);
             } else if (response.status == 401) {
@@ -64,7 +63,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         let fitsSearch = true;
         const search = searchFilter.toLowerCase();
         const allQueryWords = search.split(' ');
-        allQueryWords.forEach((queryWord) => {
+        allQueryWords.forEach((queryWord: any) => {
             if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
 
 
@@ -193,7 +192,11 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Control
                                     type="text"
                                     value={searchFilter}
-                                    onChange={(e) => setSearchFilter(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setSearchFilters('registrationCode', value)
+                                        setSearchFilter(e.target.value)
+                                    }}
                                     placeholder='Search by clearance level, role, key or note'
                                 />
                             </Form.Group>

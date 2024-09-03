@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Card, Container, Row, Col, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
+import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 
 interface Project {
     _id?: string;
@@ -32,7 +33,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     });
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const [searchFilter, setSearchFilter] = useState('');
+    const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
 
     useEffect(() => {
         fetchProjects();
@@ -77,7 +78,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         let fitsSearch = true;
         const search = searchFilter.toLowerCase();
         const allQueryWords = search.split(' ');
-        allQueryWords.forEach((queryWord) => {
+        allQueryWords.forEach((queryWord: any) => {
             if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
                 if (project.hidden && 'hidden'.includes(queryWord)) {
                     // do nothing
@@ -266,7 +267,11 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Control
                                     type="text"
                                     value={searchFilter}
-                                    onChange={(e) => setSearchFilter(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value
+                                        setSearchFilters('projects', value)
+                                        setSearchFilter(e.target.value)
+                                    }}
                                     placeholder='Search by title, info, visibility or tags'
                                 />
                             </Form.Group>
