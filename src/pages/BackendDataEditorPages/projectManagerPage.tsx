@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, Navbar, Nav, NavDropdown, Modal } from 'react-bootstrap';
 import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
@@ -22,6 +22,15 @@ interface UserPageProps {
 
 const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [previewProject, setNewPreviewProject] = useState<Project>({
+        title: '',
+        images: [],
+        tumbnailImageId: 0,
+        info: '',
+        lastUpdated: new Date(),
+        hidden: false,
+        tags: [],
+    });
     const [newProject, setNewProject] = useState<Project>({
         title: '',
         images: [],
@@ -34,6 +43,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         fetchProjects();
@@ -153,171 +163,218 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         setNewProject(project);
     };
 
-    return (
-        <Container fluid className="py-4">
-            <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm" style={{ padding: '8px 16px', justifyContent: "center" }}>
-                <Nav className="ml-auto">
-                    <Col className='flex'>
-                        <h1 className="text-center text-light inline"><NavDropdown title="Projects" id="basic-nav-dropdown" className="text-light">
-                            {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
-                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
-                        </NavDropdown></h1>
-                        <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
-                    </Col>
-                </Nav>
-            </Navbar>
-            <Row className="mb-4">
-                <Col md={6}>
-                    <Card className="bg-dark">
-                        <Card.Body>
-                            <Card.Title className="text-light">{editingProject ? 'Edit Project' : 'Add New Project'}</Card.Title>
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Title</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={newProject.title}
-                                        onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Images (comma-separated URLs)</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={newProject.images.join(',')}
-                                        onChange={(e) => setNewProject({ ...newProject, images: e.target.value.split(',') })}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Thumbnail Image ID</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        value={newProject.tumbnailImageId}
-                                        onChange={(e) => setNewProject({ ...newProject, tumbnailImageId: parseInt(e.target.value) })}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Link</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={newProject.link || ''}
-                                        onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Info</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        value={newProject.info}
-                                        onChange={(e) => setNewProject({ ...newProject, info: e.target.value })}
-                                        required
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Check
-                                        type="checkbox"
-                                        label="Hidden"
-                                        checked={newProject.hidden || false}
-                                        onChange={(e) => setNewProject({ ...newProject, hidden: e.target.checked })}
-                                        className="text-light"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Tags (comma-separated)</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={newProject.tags?.join(',') || ''}
-                                        onChange={(e) => setNewProject({ ...newProject, tags: e.target.value.split(',') })}
-                                    />
-                                </Form.Group>
-                                <div className="btn-group" role="group" aria-label="Basic example">
-                                    <Button variant="primary" type="submit">
-                                        {editingProject ? 'Update Project' : 'Create Project'}
-                                    </Button>
-                                    {(editingProject || !isEmptyForm(newProject)) && <Button variant="secondary" onClick={() => {
-                                        setEditingProject(null)
-                                        setNewProject({
-                                            title: '',
-                                            images: [],
-                                            tumbnailImageId: 0,
-                                            info: '',
-                                            lastUpdated: new Date(),
-                                            hidden: false,
-                                            tags: [],
-                                        })
+    const showProjectDetails = () => {
+        setShowModal(true);
+    };
 
-                                    }}>
-                                        {editingProject ? "Deselect Project" : 'Clear'}
-                                    </Button>}
-                                </div>
-                                {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
-                            </Form>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={6}>
-                    <Card className="bg-dark">
-                        <Card.Body>
-                            <Card.Title className="text-light">Existing Projects</Card.Title>
-                            <Form.Group className="mb-3">
-                                <Form.Label className="text-light">Search</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={searchFilter}
-                                    onChange={(e) => {
-                                        const value = e.target.value
-                                        setSearchFilters('projects', value)
-                                        setSearchFilter(e.target.value)
-                                    }}
-                                    placeholder='Search by title, info, visibility or tags'
-                                />
-                            </Form.Group>
-                            {projects.map((project) => (doesThisProjectMatchSearch(project) &&
-                                <Card key={project._id} className="mb-2">
-                                    <Card.Body className="card text-bg-dark">
-                                        <Card.Title>{project.title}</Card.Title>
-                                        <Card.Text>
-                                            <strong>Images:</strong> {project.images.length}<br />
-                                            <strong>Thumbnail ID:</strong> {project.tumbnailImageId}<br />
-                                            <strong>Link:</strong> {project.link || 'N/A'}<br />
-                                            <strong>Info:</strong> {project.info.substring(0, 100)}...<br />
-                                            <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
-                                            <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
-                                            <strong>Tags:</strong> {project.tags?.join(', ') || 'N/A'}
-                                        </Card.Text>
-                                        <div className="btn-group" role="group" aria-label="Basic example">
-                                            <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
-                                                Edit
-                                            </Button>
-                                            <Button variant="secondary" size="sm" onClick={() => {
-                                                setEditingProject(null)
-                                                setNewProject({
-                                                    title: project.title,
-                                                    images: project.images,
-                                                    tumbnailImageId: project.tumbnailImageId,
-                                                    info: project.info,
-                                                    lastUpdated: project.lastUpdated,
-                                                    hidden: project.hidden,
-                                                    tags: project.tags,
-                                                });
-                                            }}>
-                                                Duplicate
-                                            </Button>
-                                            {userProfile.clearanceLevel >= 6 && <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
-                                                Delete
-                                            </Button>}
-                                        </div>
-                                    </Card.Body>
-                                </Card>
-                            ))}
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+    return (
+        <div>
+            <Container fluid className="py-4">
+                <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm" style={{ padding: '8px 16px', justifyContent: "center" }}>
+                    <Nav className="ml-auto">
+                        <Col className='flex'>
+                            <h1 className="text-center text-light inline"><NavDropdown title="Projects" id="basic-nav-dropdown" className="text-light">
+                                {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
+                                {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
+                            </NavDropdown></h1>
+                            <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
+                        </Col>
+                    </Nav>
+                </Navbar>
+                <Row className="mb-4">
+                    <Col md={6}>
+                        <Card className="bg-dark">
+                            <Card.Body>
+                                <Card.Title className="text-light">{editingProject ? 'Edit Project' : 'Add New Project'}</Card.Title>
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Title</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={newProject.title}
+                                            onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Images (comma-separated URLs)</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={newProject.images.join(',')}
+                                            onChange={(e) => setNewProject({ ...newProject, images: e.target.value.split(',') })}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Thumbnail Image ID</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={newProject.tumbnailImageId}
+                                            onChange={(e) => setNewProject({ ...newProject, tumbnailImageId: parseInt(e.target.value) })}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Link</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={newProject.link || ''}
+                                            onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Info</Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            value={newProject.info}
+                                            onChange={(e) => setNewProject({ ...newProject, info: e.target.value })}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Hidden"
+                                            checked={newProject.hidden || false}
+                                            onChange={(e) => setNewProject({ ...newProject, hidden: e.target.checked })}
+                                            className="text-light"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Tags (comma-separated)</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={newProject.tags?.join(',') || ''}
+                                            onChange={(e) => setNewProject({ ...newProject, tags: e.target.value.split(',') })}
+                                        />
+                                    </Form.Group>
+                                    <div className="btn-group" role="group" aria-label="Basic example">
+                                        <Button variant="primary" type="submit">
+                                            {editingProject ? 'Update Project' : 'Create Project'}
+                                        </Button>
+                                        {!isEmptyForm(newProject) && <Button variant="info" onClick={() => {
+                                            setNewPreviewProject(newProject)
+                                            showProjectDetails()
+                                        }}>
+                                            Preview
+                                        </Button>}
+                                        {(editingProject || !isEmptyForm(newProject)) && <Button variant="secondary" onClick={() => {
+                                            setEditingProject(null)
+                                            setNewProject({
+                                                title: '',
+                                                images: [],
+                                                tumbnailImageId: 0,
+                                                info: '',
+                                                lastUpdated: new Date(),
+                                                hidden: false,
+                                                tags: [],
+                                            })
+
+                                        }}>
+                                            {editingProject ? "Deselect Project" : 'Clear'}
+                                        </Button>}
+                                    </div>
+                                    {errorMessage && <><br /><Form.Text className="text-danger">{errorMessage}</Form.Text></>}
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={6}>
+                        <Card className="bg-dark">
+                            <Card.Body>
+                                <Card.Title className="text-light">Existing Projects</Card.Title>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">Search</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={searchFilter}
+                                        onChange={(e) => {
+                                            const value = e.target.value
+                                            setSearchFilters('projects', value)
+                                            setSearchFilter(e.target.value)
+                                        }}
+                                        placeholder='Search by title, info, visibility or tags'
+                                    />
+                                </Form.Group>
+                                {projects.map((project) => (doesThisProjectMatchSearch(project) &&
+                                    <Card key={project._id} className="mb-2">
+                                        <Card.Body className="card text-bg-dark">
+                                            <Card.Title>{project.title}</Card.Title>
+                                            <Card.Text>
+                                                <strong>Images:</strong> {project.images.length}<br />
+                                                <strong>Thumbnail ID:</strong> {project.tumbnailImageId}<br />
+                                                <strong>Link:</strong> {project.link || 'N/A'}<br />
+                                                <strong>Info:</strong> {project.info.substring(0, 100)}...<br />
+                                                <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
+                                                <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
+                                                <strong>Tags:</strong> {project.tags?.join(', ') || 'N/A'}
+                                            </Card.Text>
+                                            <div className="btn-group" role="group" aria-label="Basic example">
+                                                <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
+                                                    Edit
+                                                </Button>
+                                                <Button variant="secondary" size="sm" onClick={() => {
+                                                    setEditingProject(null)
+                                                    setNewProject({
+                                                        title: project.title,
+                                                        images: project.images,
+                                                        tumbnailImageId: project.tumbnailImageId,
+                                                        info: project.info,
+                                                        lastUpdated: project.lastUpdated,
+                                                        hidden: project.hidden,
+                                                        tags: project.tags,
+                                                    });
+                                                }}>
+                                                    Duplicate
+                                                </Button>
+                                                <Button variant="info" onClick={() => {
+                                                    setNewPreviewProject(project)
+                                                    showProjectDetails()
+                                                }}>
+                                                    Preview
+                                                </Button>
+                                                {userProfile.clearanceLevel >= 6 && <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
+                                                    Delete
+                                                </Button>}
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" contentClassName="bg-dark text-white">
+                <Modal.Header className="border-secondary">
+                    <Modal.Title onClick={() => {
+                        if (previewProject?.link) {
+                            window.open(previewProject.link, '_blank');
+                        }
+                    }}
+                        className={(previewProject?.link ? 'clickable' : '')}
+                    >{previewProject?.title}</Modal.Title>
+                    {/* make the button red */}
+                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}
+                        style={{ backgroundColor: '#2a75fe' }}></Button>
+                </Modal.Header>
+                <Modal.Body>
+                    <div dangerouslySetInnerHTML={{ __html: previewProject?.info || '' }} />
+                    {previewProject?.link && (
+                        <p className="btn btn-primary">
+                            <a href={previewProject.link} target="_blank" className="text-light">
+                                View Project
+                            </a>
+                        </p>
+                    )}
+                    {previewProject?.lastUpdated && (
+                        <p className="text-muted">
+                            <small className="text-secondary">Last updated: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
+                        </p>
+                    )}
+                </Modal.Body>
+            </Modal>
+        </div>
     );
 };
 
