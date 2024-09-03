@@ -75,6 +75,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         },
         {
             dataList: [...mainProjects],
+            title: 'My Games',
+            appliedFilters: ['game', 'my-code']
+        },
+        {
+            dataList: [...mainProjects],
             title: 'Side Projects',
             appliedFilters: ['side-project']
         },
@@ -226,7 +231,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                     )}
                     {selectedProject?.lastUpdated && (
                         <p className="text-muted">
-                            <small className="text-secondary">Last updated: {new Date(selectedProject.lastUpdated).toLocaleDateString()}</small>
+                            <small className="text-secondary">Last article update: {new Date(selectedProject.lastUpdated).toLocaleDateString()}</small>
                         </p>
                     )}
                 </Modal.Body>

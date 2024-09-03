@@ -369,7 +369,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     )}
                     {previewProject?.lastUpdated && (
                         <p className="text-muted">
-                            <small className="text-secondary">Last updated: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
+                            <small className="text-secondary">Last article update: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
                         </p>
                     )}
                 </Modal.Body>
