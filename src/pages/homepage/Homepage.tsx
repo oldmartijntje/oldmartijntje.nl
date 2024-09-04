@@ -49,6 +49,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
     const [mainBlog, setBlog] = useState<ItemDisplay[]>([]);
     const [mainWebposts, setWebposts] = useState<ItemDisplay[]>([]);
+    const [mainRandomPosts, setRandomPosts] = useState<ItemDisplay[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<ItemDisplay | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
@@ -93,6 +94,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             }),
             title: 'All Projects',
             appliedFilters: []
+        },
+        {
+            dataList: [...mainRandomPosts],
+            title: 'Random Things',
+            appliedFilters: []
         }
     ];
     if (!discovery) {
@@ -115,6 +121,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));
         setBlog(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'blog'));
         setWebposts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'url'));
+        setRandomPosts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'random'));
     }
 
     const filterProjects = (projects: ItemDisplay[], filters: string[]): ItemDisplay[] => {

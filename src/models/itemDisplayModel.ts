@@ -13,6 +13,9 @@ export interface ItemDisplay {
     displayItemType: string;
 }
 
+export const displayItemTypes = ['project', 'blog', 'url', 'random'];
+
+
 export interface InfoPage {
     title: string;
     content: string;

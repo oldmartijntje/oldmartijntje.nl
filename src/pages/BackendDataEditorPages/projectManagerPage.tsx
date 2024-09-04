@@ -4,7 +4,7 @@ import ServerConnector from '../../services/ServerConnector';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 import '../../App.css'
 import { Link } from 'react-router-dom';
-import { InfoPage, ItemDisplay } from '../../models/itemDisplayModel';
+import { displayItemTypes, InfoPage, ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
 
@@ -302,7 +302,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">DisplayItemType</Form.Label>
                                     <Form.Control
-                                        placeholder='Project, Blog, URL'
+                                        placeholder={displayItemTypes.join(', ')}
                                         type="text"
                                         value={newProject.displayItemType || ''}
                                         onChange={(e) => {
