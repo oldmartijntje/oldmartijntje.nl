@@ -13,7 +13,6 @@ interface UserPageProps {
 const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
     useEffect(() => {
-        console.log(userProfile);
         // Simulating a check for user authentication
 
     }, []);
