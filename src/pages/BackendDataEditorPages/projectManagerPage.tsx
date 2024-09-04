@@ -1,37 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col, Navbar, Modal, Tabs, Tab, Nav, NavDropdown } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import ServerConnector from '../../services/ServerConnector';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 import '../../App.css'
 import { Link } from 'react-router-dom';
+import { InfoPage, ItemDisplay } from '../../models/itemDisplayModel';
+import ItemDisplayViewer from '../../components/overlay/itemDisplayViewer';
 
-interface InfoPage {
-    title: string;
-    content: string;
-}
 
-interface Project {
-    _id?: string;
-    title: string;
-    thumbnailImage?: string;
-    description?: string;
-    link?: string;
-    infoPages: InfoPage[];
-    lastUpdated?: Date;
-    hidden: boolean;
-    spoiler: boolean;
-    nsfw: boolean;
-    tags: string[];
-    displayItemType: string;
-}
+
 
 interface UserPageProps {
     userProfile?: any;
 }
 
 const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [newProject, setNewProject] = useState<Project>({
+    const [projects, setProjects] = useState<ItemDisplay[]>([]);
+    const [newProject, setNewProject] = useState<ItemDisplay>({
         title: '',
         thumbnailImage: '',
         description: '',
@@ -43,12 +28,11 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         tags: [],
         displayItemType: 'Project',
     });
-    const [editingProject, setEditingProject] = useState<Project | null>(null);
+    const [editingProject, setEditingProject] = useState<ItemDisplay | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const [activeTab, setActiveTab] = useState(0);
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
     const [showModal, setShowModal] = useState(false);
-    const [previewProject, setPreviewProject] = useState<Project | null>(null);
+    const [previewProject, setPreviewProject] = useState<ItemDisplay | null>(null);
 
     useEffect(() => {
         fetchProjects();
@@ -82,7 +66,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         alert('Session expired. Please log in again.');
     };
 
-    const doesThisProjectMatchSearch = (project: Project) => {
+    const doesThisProjectMatchSearch = (project: ItemDisplay) => {
         if (!searchFilter) {
             return true;
         }
@@ -226,14 +210,13 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         });
     };
 
-    const handleEdit = (project: Project) => {
+    const handleEdit = (project: ItemDisplay) => {
         setEditingProject(project);
         setNewProject(project);
 
     };
 
     const showProjectDetails = () => {
-        setActiveTab(0);
         setShowModal(true);
     };
 
@@ -515,55 +498,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     </Card>
                 </Col>
             </Row>
-            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" contentClassName="bg-dark text-white">
-                <Modal.Header className="border-secondary">
-                    <Modal.Title
-                        onClick={() => {
-                            if (previewProject?.link) {
-                                window.open(previewProject.link, '_blank');
-                            }
-                        }}
-                        className={(previewProject?.link ? 'clickable' : '')}
-                    >
-                        {previewProject?.title}
-                    </Modal.Title>
-                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}
-                        style={{ backgroundColor: '#2a75fe' }}></Button>
-                </Modal.Header>
-                <Modal.Body>
-                    {previewProject?.thumbnailImage && (
-                        <img src={previewProject.thumbnailImage} alt={previewProject.title} className="img-fluid mb-3" />
-                    )}
-                    {previewProject && previewProject.infoPages.length > 1 && <Tabs
-                        activeKey={activeTab}
-                        onSelect={(k) => setActiveTab(Number(k))}
-                        className="mb-3 custom-tabs"
-                    >
-                        {previewProject?.infoPages.map((infoPage, index) => (
-                            <Tab eventKey={index} title={infoPage.title} key={index}>
-                                <div dangerouslySetInnerHTML={{ __html: infoPage.content }} />
-                            </Tab>
-                        ))}
-                    </Tabs> || previewProject?.infoPages.length === 1 && (
-                        <div dangerouslySetInnerHTML={{ __html: previewProject.infoPages[0].content }} />
-                    )}
-
-                </Modal.Body>
-                <Modal.Footer>
-                    {previewProject?.link && (
-                        <p className="btn btn-primary">
-                            <a href={previewProject.link} target="_blank" rel="noopener noreferrer" className="text-light">
-                                Visit URL
-                            </a>
-                        </p>
-                    )}
-                    {previewProject?.lastUpdated && (
-                        <p className="text-muted">
-                            <small className="text-secondary">Last article update: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
-                        </p>
-                    )}
-                </Modal.Footer>
-            </Modal>
+            <ItemDisplayViewer previewProject={previewProject} showModal={showModal} setShowModal={function (bool: boolean): void {
+                setShowModal(bool);
+            }} />
         </Container>
     );
 };

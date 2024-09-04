@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Card, Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
+import { Container, Col, Card, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import offlineProjects from '../../assets/json/projects.json';
 import './Homepage.css';
 import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
-
-export interface Project {
-    title: string;
-    link: string;
-    info: string;
-    lastUpdated: string;
-    tumbnailImageId: string;
-    images: { [key: string]: string };
-    tags?: string[];
-}
+import ItemDisplayViewer from '../../components/overlay/itemDisplayViewer';
+import { ItemDisplay } from '../../models/itemDisplayModel';
 
 interface HomepageProps {
     data?: any;
 }
 
 interface DiscoveryDisplay {
-    dataList: Project[];
+    dataList: ItemDisplay[];
     title: string;
     appliedFilters: string[];
 }
@@ -54,9 +46,9 @@ function getOfflineProjects(): any[] {
 const Homepage: React.FC<HomepageProps> = ({ data }) => {
     const discovery = data?.title === 'Discovery';
     let fetched = false;
-    const [mainProjects, setProjects] = useState<Project[]>([]);
+    const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
     const [showModal, setShowModal] = useState(false);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [selectedProject, setSelectedProject] = useState<ItemDisplay | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
     const serverConnector = new ServerConnector();
     setSeededRandom(data.randomnessSeed);
@@ -103,14 +95,16 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     }, []);
 
     const formatProjects = (projects: any) => {
-        const sortedProjects = projects.sort((a: Project, b: Project) =>
-            new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
-        );
+        const sortedProjects = projects.sort((a: ItemDisplay, b: ItemDisplay) => {
+            const dateA = new Date(a.lastUpdated || 0).getTime();
+            const dateB = new Date(b.lastUpdated || 0).getTime();
+            return dateB - dateA;
+        });
         setProjects(sortedProjects);
     }
 
-    const filterProjects = (projects: Project[], filters: string[]): Project[] => {
-        let filteredProjects: Project[] = [];
+    const filterProjects = (projects: ItemDisplay[], filters: string[]): ItemDisplay[] => {
+        let filteredProjects: ItemDisplay[] = [];
         projects.forEach((project) => {
             let doesHaveAllFilters = true;
             filters.forEach((filter) => {
@@ -134,9 +128,9 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             return;
         }
         localStorage.removeItem('rateLimit');
-        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getProjects', 'POST', undefined, (data: any) => {
-            sessionStorage.setItem('cached-projects', JSON.stringify(data.projects));
-            formatProjects(data.projects);
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getDisplayItems', 'POST', undefined, (data: any) => {
+            sessionStorage.setItem('cached-projects', JSON.stringify(data.displayItems));
+            formatProjects(data.displayItems);
 
         }, () => {
             formatProjects(getOfflineProjects());
@@ -144,7 +138,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         });
     };
 
-    const showProjectDetails = (project: Project) => {
+    const showProjectDetails = (project: ItemDisplay) => {
         setSelectedProject(project);
         setShowModal(true);
     };
@@ -177,7 +171,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                             {filterProjects(row.dataList, row.appliedFilters).map((project, index) => (
                                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                     <Card className="h-100 project-card bg-dark text-white">
-                                        <Card.Img variant="top" src={project.images[project.tumbnailImageId]} alt={project.title} onClick={() => {
+                                        <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
                                             if (project?.link) {
                                                 window.open(project.link, '_blank');
                                             }
@@ -207,35 +201,9 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                 }
             </main>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" contentClassName="bg-dark text-white">
-                <Modal.Header className="border-secondary">
-                    <Modal.Title onClick={() => {
-                        if (selectedProject?.link) {
-                            window.open(selectedProject.link, '_blank');
-                        }
-                    }}
-                        className={(selectedProject?.link ? 'clickable' : '')}
-                    >{selectedProject?.title}</Modal.Title>
-                    {/* make the button red */}
-                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}
-                        style={{ backgroundColor: '#2a75fe' }}></Button>
-                </Modal.Header>
-                <Modal.Body>
-                    <div dangerouslySetInnerHTML={{ __html: selectedProject?.info || '' }} />
-                    {selectedProject?.link && (
-                        <p className="btn btn-primary">
-                            <a href={selectedProject.link} target="_blank" className="text-light">
-                                View Project
-                            </a>
-                        </p>
-                    )}
-                    {selectedProject?.lastUpdated && (
-                        <p className="text-muted">
-                            <small className="text-secondary">Last article update: {new Date(selectedProject.lastUpdated).toLocaleDateString()}</small>
-                        </p>
-                    )}
-                </Modal.Body>
-            </Modal>
+            <ItemDisplayViewer previewProject={selectedProject} showModal={showModal} setShowModal={function (bool: boolean): void {
+                setShowModal(bool);
+            }} />
         </div>
     );
 };
