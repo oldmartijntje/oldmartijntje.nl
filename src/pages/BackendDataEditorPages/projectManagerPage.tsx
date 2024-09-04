@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col, Navbar, Modal, Tabs, Tab } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, Navbar, Modal, Tabs, Tab, Nav, NavDropdown } from 'react-bootstrap';
 import ServerConnector from '../../services/ServerConnector';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 import '../../App.css'
+import { Link } from 'react-router-dom';
 
 interface InfoPage {
     title: string;
@@ -54,7 +55,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     }, []);
 
     const handleInfoPageChange = (index: number, field: keyof InfoPage, value: string) => {
-        const updatedProject = { ...previewProject! };
+        const updatedProject = { ...newProject! };
+
         updatedProject.infoPages[index] = { ...updatedProject.infoPages[index], [field]: value };
         setPreviewProject(updatedProject);
     };
@@ -111,7 +113,13 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 keywordFits = true;
             } else if (project.nsfw && 'nsfw'.includes(queryWord)) {
                 keywordFits = true;
-            } else if (!project.title.toLowerCase().includes(queryWord) && !JSON.stringify(project.infoPages).toLowerCase().includes(queryWord) && !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord))) {
+            } else if (!project.title.toLowerCase().includes(queryWord) &&
+                !JSON.stringify(project.infoPages).toLowerCase().includes(queryWord) &&
+                !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord)) &&
+                !project.displayItemType.toLowerCase().includes(queryWord) &&
+                !project.description?.toLowerCase().includes(queryWord) &&
+                !project.link?.toLowerCase().includes(queryWord)
+            ) {
                 keywordFits = false;
             }
             if (inverse) {
@@ -122,6 +130,44 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
             }
         });
         return fitsSearch;
+    }
+
+    const previewableCheck = () => {
+        let previewable = false
+        if (newProject) {
+            if (newProject.infoPages.length !== 1) {
+                previewable = true
+            } else if (newProject.infoPages[0].title !== "") {
+                previewable = true
+            } else if (newProject.infoPages[0].content !== "") {
+                previewable = true
+            }
+        }
+        return previewable
+    }
+
+    const emptyEditingCheck = () => {
+        let empty = true
+        if (newProject) {
+            if (newProject.title !== "") {
+                empty = false
+            } else if (newProject.thumbnailImage !== "") {
+                empty = false
+            } else if (newProject.description !== "") {
+                empty = false
+            } else if (newProject.link !== "") {
+                empty = false
+            } else if (newProject.infoPages.length !== 1) {
+                empty = false
+            } else if (newProject.infoPages[0].title !== "") {
+                empty = false
+            } else if (newProject.infoPages[0].content !== "") {
+                empty = false
+            } else if (newProject.tags.length !== 0) {
+                empty = false
+            }
+        }
+        return empty
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -144,6 +190,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     spoiler: false,
                     nsfw: false,
                 });
+
                 setErrorMessage('');
                 setEditingProject(null);
             } else if (response.status === 401) {
@@ -182,6 +229,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const handleEdit = (project: Project) => {
         setEditingProject(project);
         setNewProject(project);
+
     };
 
     const showProjectDetails = () => {
@@ -194,30 +242,42 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
             ...newProject,
             infoPages: [...newProject.infoPages, { title: '', content: '' }],
         });
+
     };
 
     const removeInfoPage = (index: number) => {
         const updatedInfoPages = newProject.infoPages.filter((_, i) => i !== index);
         setNewProject({ ...newProject, infoPages: updatedInfoPages });
+
     };
 
     return (
         <Container fluid className="py-4">
-            <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm">
-                {/* ... (Navbar content remains the same) */}
+            <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm" style={{ padding: '8px 16px', justifyContent: "center" }}>
+                <Nav className="ml-auto">
+                    <Col className='flex'>
+                        <h1 className="text-center text-light inline"><NavDropdown title="DisplayItem" id="basic-nav-dropdown" className="text-light">
+                            {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
+                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/DisplayItems">DisplayItems</Link>}
+                        </NavDropdown></h1>
+                        <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
+                    </Col>
+                </Nav>
             </Navbar>
             <Row className="mb-4">
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">{editingProject ? 'Edit Project' : 'Add New Project'}</Card.Title>
+                            <Card.Title className="text-light">{editingProject ? 'Edit DisplayItem' : 'Add New DisplayItem'}</Card.Title>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Title</Form.Label>
                                     <Form.Control
                                         type="text"
                                         value={newProject.title}
-                                        onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, title: e.target.value })
+                                        }}
                                         required
                                     />
                                 </Form.Group>
@@ -226,7 +286,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Form.Control
                                         type="text"
                                         value={newProject.thumbnailImage || ''}
-                                        onChange={(e) => setNewProject({ ...newProject, thumbnailImage: e.target.value })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, thumbnailImage: e.target.value })
+                                        }}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -235,7 +297,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         as="textarea"
                                         rows={3}
                                         value={newProject.description || ''}
-                                        onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, description: e.target.value })
+                                        }}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -243,7 +307,19 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Form.Control
                                         type="text"
                                         value={newProject.link || ''}
-                                        onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, link: e.target.value })
+                                        }}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">DisplayItemType</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={newProject.displayItemType || ''}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, displayItemType: e.target.value })
+                                        }}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -283,7 +359,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         type="checkbox"
                                         label="Hidden"
                                         checked={newProject.hidden}
-                                        onChange={(e) => setNewProject({ ...newProject, hidden: e.target.checked })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, hidden: e.target.checked })
+                                        }}
                                         className="text-light"
                                     />
                                 </Form.Group>
@@ -292,7 +370,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         type="checkbox"
                                         label="Spoiler"
                                         checked={newProject.spoiler}
-                                        onChange={(e) => setNewProject({ ...newProject, spoiler: e.target.checked })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, spoiler: e.target.checked })
+                                        }}
                                         className="text-light"
                                     />
                                 </Form.Group>
@@ -301,7 +381,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         type="checkbox"
                                         label="NSFW"
                                         checked={newProject.nsfw}
-                                        onChange={(e) => setNewProject({ ...newProject, nsfw: e.target.checked })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, nsfw: e.target.checked })
+                                        }}
                                         className="text-light"
                                     />
                                 </Form.Group>
@@ -310,20 +392,22 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Form.Control
                                         type="text"
                                         value={newProject.tags.join(',')}
-                                        onChange={(e) => setNewProject({ ...newProject, tags: e.target.value.split(',') })}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, tags: e.target.value.split(',') })
+                                        }}
                                     />
                                 </Form.Group>
                                 <div className="btn-group" role="group" aria-label="Basic example">
                                     <Button variant="primary" type="submit">
-                                        {editingProject ? 'Update Project' : 'Create Project'}
+                                        {editingProject ? 'Update DisplayItem' : 'Create DisplayItem'}
                                     </Button>
-                                    {true && <Button variant="info" onClick={() => {
+                                    {previewableCheck() && <Button variant="info" onClick={() => {
                                         setPreviewProject(newProject);
                                         showProjectDetails();
                                     }}>
                                         Preview
                                     </Button>}
-                                    {true && <Button variant="secondary" onClick={() => {
+                                    {(!emptyEditingCheck() || editingProject) && <Button variant="secondary" onClick={() => {
                                         setEditingProject(null);
                                         setNewProject({
                                             title: '',
@@ -337,8 +421,9 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             tags: [],
                                             displayItemType: 'Project',
                                         });
+
                                     }}>
-                                        {editingProject ? "Deselect Project" : 'Clear'}
+                                        {editingProject ? "Deselect DisplayItem" : 'Clear'}
                                     </Button>}
                                 </div>
                                 {errorMessage && <Form.Text className="text-danger">{errorMessage}</Form.Text>}
@@ -349,7 +434,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">Existing Projects</Card.Title>
+                            <Card.Title className="text-light">Existing DisplayItems</Card.Title>
                             <Form.Group className="mb-3">
                                 <Form.Label className="text-light">Search</Form.Label>
                                 <Form.Control
@@ -370,6 +455,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         <Card.Text>
                                             <strong>Description:</strong> {project.description || 'N/A'}<br />
                                             <strong>Link:</strong> {project.link || 'N/A'}<br />
+                                            <strong>DisplayItemType:</strong> {project.displayItemType}<br />
                                             <strong>Info Pages:</strong> {project.infoPages.length}<br />
                                             <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
                                             <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
@@ -444,7 +530,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     {previewProject?.link && (
                         <p className="btn btn-primary">
                             <a href={previewProject.link} target="_blank" rel="noopener noreferrer" className="text-light">
-                                View Project
+                                Visit URL
                             </a>
                         </p>
                     )}

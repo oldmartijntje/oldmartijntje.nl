@@ -147,7 +147,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     <Col className='flex'>
                         <h1 className="text-center text-light inline"><NavDropdown title="Account Keys" id="basic-nav-dropdown" className="text-light">
                             {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
-                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/projects">Projects</Link>}
+                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/DisplayItems">DisplayItems</Link>}
                         </NavDropdown></h1>
                         <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
                     </Col>

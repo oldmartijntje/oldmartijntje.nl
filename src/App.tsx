@@ -95,7 +95,7 @@ const App: React.FC = () => {
             clearanceLevelNeeded: 4
         },
         {
-            path: '/api/projects',
+            path: '/api/DisplayItems',
             element: ProjectManager,
             isPrivate: true,
             clearanceLevelNeeded: 5
