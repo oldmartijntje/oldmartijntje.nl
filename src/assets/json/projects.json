@@ -1,7 +1,9 @@
 [
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd08e"
+        },
         "title": "🌵OldMartijntje’s Basement",
-        "tumbnailImage": "https://i.imgur.com/8exzm25.png",
         "link": "https://docs.oldmartijntje.nl/",
         "infoPages": {
             "title": "Main",
@@ -18,11 +20,14 @@
             "documentation",
             "favourite"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/8exzm25.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd08f"
+        },
         "title": "🦖OldMartijntje’s Playground",
-        "tumbnailImage": "https://i.imgur.com/XpoI9MI.png",
         "link": "https://oldmartijntje.github.io/outdated-oldmartijntje-website/",
         "infoPages": {
             "title": "Main",
@@ -41,11 +46,14 @@
             "angular",
             "typescript"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/XpoI9MI.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd090"
+        },
         "title": "Chess Simulator 256",
-        "tumbnailImage": "https://i.imgur.com/zGDaYs5.png",
         "link": "https://oldmartijntje.github.io/Totally-Normal-Chess-Simulator/",
         "infoPages": {
             "title": "Main",
@@ -64,11 +72,14 @@
             "side-project",
             "game"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/zGDaYs5.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd091"
+        },
         "title": "Project Kazamata",
-        "tumbnailImage": "https://i.imgur.com/4U73m3e.png",
         "link": "https://oldmartijntje.github.io/Project-Kazamata/",
         "infoPages": {
             "title": "Main",
@@ -86,11 +97,14 @@
             "my-code",
             "game"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/4U73m3e.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd092"
+        },
         "title": "SiSu AI Chatbot",
-        "tumbnailImage": "https://i.imgur.com/qXjglaH.png",
         "infoPages": {
             "title": "Main",
             "content": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie <img src=\"https://simpelsubsidie.nl/assets/img/logo.webp\" style=\"height:40px!important;\"></a>.<br>\n                        This chatbot is made using:</p>\n                    <ul>\n                        <li>PHP</li>\n                        <li>ChatGPT</li>\n                        <li>Javascript</li>\n                    </ul>"
@@ -108,11 +122,14 @@
             "professional",
             "php"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/qXjglaH.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd093"
+        },
         "title": "OldMartijntje's Webcorner💺",
-        "tumbnailImage": "https://i.imgur.com/fpyjbKy.png",
         "link": "https://oldmartijntje.nl",
         "infoPages": {
             "title": "Main",
@@ -134,11 +151,14 @@
             "backend",
             "node"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/fpyjbKy.png"
     },
     {
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd094"
+        },
         "title": "Project Betacraft Explorer",
-        "tumbnailImage": "https://i.imgur.com/YYmXZZ7.png",
         "link": "https://oldmartijntje.github.io/Project-Betacraft-Explorer/",
         "infoPages": {
             "title": "Main",
@@ -148,24 +168,29 @@
             "$date": "2024-08-30T13:34:21.999Z"
         },
         "hidden": false,
-        "spoiler": false,
+        "spoiler": true,
         "nsfw": false,
         "tags": [
             "minecraft",
             "game",
             "side-project"
         ],
-        "displayItemType": "Project"
+        "displayItemType": "Project",
+        "thumbnailImage": "https://i.imgur.com/YYmXZZ7.png"
     },
     {
-        "title": "Roblox Maze generator",
-        "tumbnailImage": "https://i.imgur.com/zO9lc5k.png",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/zO9lc5k.png\" alt=\"Outside view of the current world generation\">\n<p>The Roblox Maze Generator is my first project using LUA and Roblox. It's an automatic maze generation script with a wide array of settings, ensuring that every maze is unique and fully accessible.</p>\n<ol>\n    <li>Automatic Generation: The script creates mazes without manual input.</li>\n    <li>Full Accessibility: Every location in the maze is always reachable.</li>\n    <li>Biomes: The maze features different themed areas or \"biomes\" with unique generation rules.</li>\n    <li>Randomization: Each generated maze is completely unique.</li>\n    <li>Customizable Settings: Various parameters can be adjusted to change the maze characteristics.</li>\n</ol>\n<p>The maze features different biomes, each with its own generation rules:</p>\n<ul>\n    <li>Hallways: Strict, narrow passages.</li>\n    <li>Rooms: More open areas with randomly placed walls.</li>\n</ul>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/BeZFhpe.png\" alt=\"Inside of the 'rooms' biome\"><sub>A glimpse inside the \"rooms\" biome, showcasing the open areas with random wall placement.</sub></div>\n<p>The development process was filled with interesting challenges and discoveries:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/MFF7yjP.png\" alt=\"Early development screenshot\"><sub>Very early in development, showing the basic structure.</sub></div>\n<p>Initially, the project started with simple hallways, but after a while biomes and other variations have been added.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/xEqq5VX.png\" alt=\"Testing vertical hallways\"><sub>Testing the implementation of vertical hallways, adding a new dimension to the maze.</sub></div>\n<p>One of the key features of the generator is its ability to create multi-level mazes, adding vertical complexity to the traditional 2D maze concept.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/8RFZd1h.png\" alt=\"Lighting bug\"><sub>A funny lighting bug encountered during development, showcasing the unexpected challenges in game development.</sub></div>\n<p>Like any development project, there were interesting bugs along the way. Some, like this lighting issue, created unexpectedly beautiful results!</p>\n<p>Future plans for the Roblox Maze Generator include:</p>\n<ul>\n    <li>Adding \"monsters\" to increase challenge and excitement.</li>\n    <li>Implementing a goal-oriented gameplay, giving players a reason to find the exit.</li>\n</ul>\n<p>Currently, the maze has only one exit, but the possibilities for expansion are endless. The Roblox Maze Generator represents not just a technical achievement in procedural generation, but also a journey of learning and problem-solving in game development using LUA and Roblox.</p>"
+        "_id": {
+            "$oid": "66d82b1dd6e1c56f368cd095"
         },
+        "title": "Roblox Maze generator",
+        "infoPages": [
+            {
+                "title": "Main",
+                "content": "<img src=\"https://i.imgur.com/zO9lc5k.png\" alt=\"Outside view of the current world generation\">\n<p>The Roblox Maze Generator is my first project using LUA and Roblox. It's an automatic maze generation script with a wide array of settings, ensuring that every maze is unique and fully accessible.</p>\n<ol>\n    <li>Automatic Generation: The script creates mazes without manual input.</li>\n    <li>Full Accessibility: Every location in the maze is always reachable.</li>\n    <li>Biomes: The maze features different themed areas or \"biomes\" with unique generation rules.</li>\n    <li>Randomization: Each generated maze is completely unique.</li>\n    <li>Customizable Settings: Various parameters can be adjusted to change the maze characteristics.</li>\n</ol>\n<p>The maze features different biomes, each with its own generation rules:</p>\n<ul>\n    <li>Hallways: Strict, narrow passages.</li>\n    <li>Rooms: More open areas with randomly placed walls.</li>\n</ul>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/BeZFhpe.png\" alt=\"Inside of the 'rooms' biome\"><sub>A glimpse inside the \"rooms\" biome, showcasing the open areas with random wall placement.</sub></div>\n<p>The development process was filled with interesting challenges and discoveries:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/MFF7yjP.png\" alt=\"Early development screenshot\"><sub>Very early in development, showing the basic structure.</sub></div>\n<p>Initially, the project started with simple hallways, but after a while biomes and other variations have been added.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/xEqq5VX.png\" alt=\"Testing vertical hallways\"><sub>Testing the implementation of vertical hallways, adding a new dimension to the maze.</sub></div>\n<p>One of the key features of the generator is its ability to create multi-level mazes, adding vertical complexity to the traditional 2D maze concept.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/8RFZd1h.png\" alt=\"Lighting bug\"><sub>A funny lighting bug encountered during development, showcasing the unexpected challenges in game development.</sub></div>\n<p>Like any development project, there were interesting bugs along the way. Some, like this lighting issue, created unexpectedly beautiful results!</p>\n<p>Future plans for the Roblox Maze Generator include:</p>\n<ul>\n    <li>Adding \"monsters\" to increase challenge and excitement.</li>\n    <li>Implementing a goal-oriented gameplay, giving players a reason to find the exit.</li>\n</ul>\n<p>Currently, the maze has only one exit, but the possibilities for expansion are endless. The Roblox Maze Generator represents not just a technical achievement in procedural generation, but also a journey of learning and problem-solving in game development using LUA and Roblox.</p>"
+            }
+        ],
         "lastUpdated": {
-            "$date": "2024-09-03T15:48:08.363Z"
+            "$date": "2024-09-04T14:12:30.391Z"
         },
         "hidden": false,
         "spoiler": false,
@@ -176,7 +201,121 @@
             "game",
             "roblox"
         ],
-        "displayItemType": "Project",
-        "link": "https://www.roblox.com/games/118878596315562/Random-Maze-Generation"
+        "displayItemType": "Projectus",
+        "link": "https://www.roblox.com/games/118878596315562/Random-Maze-Generation",
+        "thumbnailImage": "https://i.imgur.com/zO9lc5k.png"
+    },
+    {
+        "_id": {
+            "$oid": "66d89c78a329ffc0d655bdad"
+        },
+        "title": "Hello World!",
+        "thumbnailImage": "",
+        "description": "This is my first blogpost. Yippieee!",
+        "link": "",
+        "infoPages": [
+            {
+                "title": "Hello World!",
+                "content": "<p>I just added this blog system today. <br/>\nWell... this system already existed for Projects, but now this can also do more, like BLOGGS!!</p>\n<img src=\"https://i.imgur.com/dbWdoGc.png\"/>"
+            }
+        ],
+        "lastUpdated": {
+            "$date": "2024-09-04T17:44:43.421Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [
+            "first"
+        ],
+        "displayItemType": "blog",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "66d8a030a329ffc0d655be08"
+        },
+        "title": "Multiple pages",
+        "thumbnailImage": "",
+        "description": "Forgot to say it in blogpost 1, but my site supports multiple display pages now.",
+        "link": "",
+        "infoPages": [
+            {
+                "title": "Page 1",
+                "content": "This is my Second blogpost :3"
+            },
+            {
+                "title": "Page 2",
+                "content": "WOW! you found the second page on this ultra super duper cool hidden (not really)  second page. OwO"
+            }
+        ],
+        "lastUpdated": {
+            "$date": "2024-09-04T18:00:16.176Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [],
+        "displayItemType": "blog",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "66d8a4a4a329ffc0d655be3a"
+        },
+        "title": "My Youtube Channel.",
+        "thumbnailImage": "https://oldmartijntje.nl/assets/mii-rpD35z7m.png",
+        "description": "",
+        "link": "https://www.youtube.com/channel/UCd9_pxx4m9KP13s1-TncLcQ/",
+        "infoPages": [],
+        "lastUpdated": {
+            "$date": "2024-09-04T18:26:48.021Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [],
+        "displayItemType": "URL",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "66d8a6bca329ffc0d655be65"
+        },
+        "title": "My Github.",
+        "thumbnailImage": "https://i.imgur.com/WpcE194.png",
+        "description": "",
+        "link": "https://github.com/oldmartijntje",
+        "infoPages": [],
+        "lastUpdated": {
+            "$date": "2024-09-04T18:28:12.337Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [],
+        "displayItemType": "url",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "66d8aa49a329ffc0d655bee7"
+        },
+        "title": "¯\\_(ツ)_/¯",
+        "thumbnailImage": "https://i.imgur.com/sjujdWl.png",
+        "description": "",
+        "link": "",
+        "infoPages": [],
+        "lastUpdated": {
+            "$date": "2024-09-04T18:43:21.619Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [
+            "image"
+        ],
+        "displayItemType": "random",
+        "__v": 0
     }
 ]
