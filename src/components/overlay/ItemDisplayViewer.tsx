@@ -31,9 +31,6 @@ const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, 
                         style={{ backgroundColor: '#2a75fe' }}></Button>
                 </Modal.Header>
                 <Modal.Body>
-                    {previewProject?.thumbnailImage && (
-                        <img src={previewProject.thumbnailImage} alt={previewProject.title} className="img-fluid mb-3" />
-                    )}
                     {previewProject && previewProject.infoPages.length > 1 && <Tabs
                         activeKey={activeTab}
                         onSelect={(k) => setActiveTab(Number(k))}
