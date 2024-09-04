@@ -1,17 +1,15 @@
 [
     {
-        "_id": {
-            "$oid": "66c9e7aa6f0038c1d8a18650"
-        },
         "title": "🌵OldMartijntje’s Basement",
-        "images": [
-            "https://i.imgur.com/8exzm25.png",
-            "https://i.imgur.com/cY5b6vw.png"
-        ],
-        "tumbnailImageId": 0,
+        "tumbnailImage": "https://i.imgur.com/8exzm25.png",
         "link": "https://docs.oldmartijntje.nl/",
-        "info": "<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>"
+        },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "lastUpdated": {
             "$date": "2024-08-30T12:03:02.556Z"
         },
@@ -19,24 +17,20 @@
             "website",
             "documentation",
             "favourite"
-        ]
+        ],
+        "displayItemType": "Project"
     },
     {
-        "_id": {
-            "$oid": "66c9ee3e6f0038c1d8a18651"
-        },
         "title": "🦖OldMartijntje’s Playground",
-        "images": [
-            "https://i.imgur.com/XpoI9MI.png",
-            "https://i.imgur.com/9YQr4wS.png",
-            "https://i.imgur.com/CoPkGRr.png",
-            "https://i.imgur.com/y1BEHzn.png",
-            "https://i.imgur.com/JfQKZQD.png"
-        ],
-        "tumbnailImageId": 0,
+        "tumbnailImage": "https://i.imgur.com/XpoI9MI.png",
         "link": "https://oldmartijntje.github.io/outdated-oldmartijntje-website/",
-        "info": "<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>"
+        },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "lastUpdated": {
             "$date": "2024-08-30T12:10:40.434Z"
         },
@@ -46,71 +40,66 @@
             "my-code",
             "angular",
             "typescript"
-        ]
+        ],
+        "displayItemType": "Project"
     },
     {
-        "_id": {
-            "$oid": "66c9f41f6f0038c1d8a18652"
-        },
         "title": "Chess Simulator 256",
-        "images": [
-            "https://i.imgur.com/voO9uJM.png",
-            "https://i.imgur.com/IubDBSt.png",
-            "https://i.imgur.com/q8WeHBL.png",
-            "https://i.imgur.com/zGDaYs5.png",
-            "https://i.imgur.com/Vt3RHDT.png",
-            "https://i.imgur.com/ngITgkK.png",
-            "https://i.imgur.com/rRWgDMH.png"
-        ],
-        "tumbnailImageId": 3,
+        "tumbnailImage": "https://i.imgur.com/zGDaYs5.png",
         "link": "https://oldmartijntje.github.io/Totally-Normal-Chess-Simulator/",
-        "info": "<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>"
+        },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "lastUpdated": {
-            "$date": "2024-08-30T12:03:45.462Z"
+            "$date": "2024-09-03T15:44:59.522Z"
         },
         "tags": [
             "website",
             "favourite",
-            "my-code"
-        ]
+            "my-code",
+            "side-project",
+            "game"
+        ],
+        "displayItemType": "Project"
     },
     {
-        "_id": {
-            "$oid": "66c9f6d36f0038c1d8a18653"
-        },
         "title": "Project Kazamata",
-        "images": [
-            "https://i.imgur.com/4U73m3e.png",
-            "https://i.imgur.com/cTc12QY.png",
-            "https://i.imgur.com/dgz8qD1.png"
-        ],
-        "tumbnailImageId": 0,
+        "tumbnailImage": "https://i.imgur.com/4U73m3e.png",
         "link": "https://oldmartijntje.github.io/Project-Kazamata/",
-        "info": "<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>"
+        },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "lastUpdated": {
-            "$date": "2024-08-30T12:04:03.753Z"
+            "$date": "2024-09-03T15:41:48.222Z"
         },
         "tags": [
             "website",
             "favourite",
-            "my-code"
-        ]
+            "my-code",
+            "game"
+        ],
+        "displayItemType": "Project"
     },
     {
-        "_id": {
-            "$oid": "66c9f9606f0038c1d8a18654"
-        },
         "title": "SiSu AI Chatbot",
-        "images": [
-            "https://i.imgur.com/qXjglaH.png"
-        ],
-        "tumbnailImageId": 0,
-        "info": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\r\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie</a>.<br>\r\n                        This chatbot is made using:</p>\r\n                    <ul>\r\n                        <li>PHP</li>\r\n                        <li>ChatGPT</li>\r\n                        <li>Javascript</li>\r\n                    </ul>",
+        "tumbnailImage": "https://i.imgur.com/qXjglaH.png",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie <img src=\"https://simpelsubsidie.nl/assets/img/logo.webp\" style=\"height:40px!important;\"></a>.<br>\n                        This chatbot is made using:</p>\n                    <ul>\n                        <li>PHP</li>\n                        <li>ChatGPT</li>\n                        <li>Javascript</li>\n                    </ul>"
+        },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "lastUpdated": {
-            "$date": "2024-08-30T12:11:08.306Z"
+            "$date": "2024-09-01T13:00:55.199Z"
         },
         "tags": [
             "website",
@@ -118,26 +107,23 @@
             "my-code",
             "professional",
             "php"
-        ]
+        ],
+        "displayItemType": "Project"
     },
     {
-        "_id": {
-            "$oid": "66d1b5f4166278d875e9ce47"
-        },
         "title": "OldMartijntje's Webcorner💺",
-        "images": [
-            "https://i.imgur.com/fpyjbKy.png",
-            "https://i.imgur.com/wuOGyNu.png",
-            "https://i.imgur.com/pOzGkiq.png",
-            "https://i.imgur.com/s3w3SP9.png"
-        ],
-        "tumbnailImageId": 0,
+        "tumbnailImage": "https://i.imgur.com/fpyjbKy.png",
         "link": "https://oldmartijntje.nl",
-        "info": "<img src=\"https://i.imgur.com/fpyjbKy.png\" alt=\"Screenshot\">\n<p>This is my main website. Odds are that you are currently already on this website.<br/>\nI use this website to display my projects, Manage my database. etc.<br/>\nIt is the first time that I have used:</p>\n<ol>\n        <li>Node Backend</li>\n        <li>Account system</li>\n        <li>CRUD Editor</li>\n        <li>React</li>\n        <li>Bootstrap</li>\n</ol>\n<p>This website is heavily inspired by things like <a href=\"https://en.wikipedia.org/wiki/Agents_of_S.H.I.E.L.D.\" target=\"_blank\">Marvels S.H.I.E.L.D.</a></p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/wuOGyNu.png\" alt=\"Screenshot\"><sub>Accounts have an Clearance Level.</sub></div>\n<p>\nAn account on this website is invite only, that's why there is an guest account button.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/pOzGkiq.png\" alt=\"Screenshot\"><sub>More Marvel inspired things on the Signup page.</sub></div>\n<p>\nThere are some big plans for this website. But we'll see if it happens or not :3</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/s3w3SP9.png\" alt=\"Screenshot\"><sub>The Register page, if you received <a href=\"https://oldmartijntje.nl/#/signup?fillr=xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\" target=\"_blank\">an invite link</a></sub></div>",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/fpyjbKy.png\" alt=\"Screenshot\">\n<p>This is my main website. Odds are that you are currently already on this website.<br/>\nI use this website to display my projects, Manage my database. etc.<br/>\nIt is the first time that I have used:</p>\n<ol>\n        <li>Node Backend</li>\n        <li>Account system</li>\n        <li>CRUD Editor</li>\n        <li>React</li>\n        <li>Bootstrap</li>\n</ol>\n<p>This website is heavily inspired by things like <a href=\"https://en.wikipedia.org/wiki/Agents_of_S.H.I.E.L.D.\" target=\"_blank\">Marvels S.H.I.E.L.D.</a></p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/wuOGyNu.png\" alt=\"Screenshot\"><sub>Accounts have an Clearance Level.</sub></div>\n<p>\nAn account on this website is invite only, that's why there is an guest account button.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/pOzGkiq.png\" alt=\"Screenshot\"><sub>More Marvel inspired things on the Signup page.</sub></div>\n<p>\nThere are some big plans for this website. But we'll see if it happens or not :3</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/s3w3SP9.png\" alt=\"Screenshot\"><sub>The Register page, if you received <a href=\"https://oldmartijntje.nl/#/signup?fillr=xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\" target=\"_blank\">an invite link</a></sub></div>"
+        },
         "lastUpdated": {
-            "$date": "2024-08-30T12:26:16.222Z"
+            "$date": "2024-08-30T13:52:06.929Z"
         },
         "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
         "tags": [
             "website",
             "favourite",
@@ -148,6 +134,49 @@
             "backend",
             "node"
         ],
-        "__v": 0
+        "displayItemType": "Project"
+    },
+    {
+        "title": "Project Betacraft Explorer",
+        "tumbnailImage": "https://i.imgur.com/YYmXZZ7.png",
+        "link": "https://oldmartijntje.github.io/Project-Betacraft-Explorer/",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/BGJ3LHk.png\" alt=\"Screenshot of the Minecraft game\">\n<p>Project Betacraft Explorer is a unique Minecraft playthrough where I start from Alpha v1.0.1_01 and progress through the game's versions. Here's how it works:</p>\n<ol>\n    <li>I use Betacraft to play older versions of Minecraft.</li>\n    <li>Every time I reopen Minecraft, I update the game by one minor version (excluding April Fools versions).</li>\n    <li>If I die, I restart the game in a newer version.</li>\n    <li>I log my progress for each version in a diary.</li>\n    <li>Each version is played for a maximum of 30 minutes (until we reach the official releases).</li>\n    <li>If I'm watching YouTube while playing, I switch versions when I need to find a new video (or based on the above rules if the video is longer).</li>\n</ol>\n<p>To keep track of my progress and ensure I don't lose any data, I've set up an automatic backup system:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/ga83SjL.png\" alt=\"Screenshot of me wearing a chest plate on my head, and pants on my chest.\"><sub>An interesting bug discovery during the playthrough.</sub></div>\n<p>I created a Python script to automatically commit changes to a Git repository. The script uses Git LFS (Large File Storage) to handle the potentially large world files efficiently. You can find the script in my <a href=\"https://github.com/oldmartijntje/Python-toolkit\" target=\"_blank\">Python toolkit repository</a>.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/YYmXZZ7.png\" alt=\"Screenshot of a time where my Minecraft crashed\"><sub>Screenshot of a time where my Minecraft crashed.</sub></div>\n<p>Throughout this project, I've encountered various interesting situations, from game crashes to unusual glitches. For example, in version 13w02a-1613, my game crashed because my pickaxe broke while I was digging a tunnel.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/Fv7Aq2Z.png\" alt=\"Screenshot of finding diamonds in Minecraft\"><sub>The exciting moment of finding my first diamonds!</sub></div>\n<p>As of the latest entry (1.5), I've made significant progress, including finding my first diamonds and completing a major excavation project. It is fun to play through this nostalgic trip and see how much Minecraft has changed over time. I still have a long way to go, Cause Minecraft is at 1.21.2 at the time of this post.</p>"
+        },
+        "lastUpdated": {
+            "$date": "2024-08-30T13:34:21.999Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [
+            "minecraft",
+            "game",
+            "side-project"
+        ],
+        "displayItemType": "Project"
+    },
+    {
+        "title": "Roblox Maze generator",
+        "tumbnailImage": "https://i.imgur.com/zO9lc5k.png",
+        "infoPages": {
+            "title": "Main",
+            "content": "<img src=\"https://i.imgur.com/zO9lc5k.png\" alt=\"Outside view of the current world generation\">\n<p>The Roblox Maze Generator is my first project using LUA and Roblox. It's an automatic maze generation script with a wide array of settings, ensuring that every maze is unique and fully accessible.</p>\n<ol>\n    <li>Automatic Generation: The script creates mazes without manual input.</li>\n    <li>Full Accessibility: Every location in the maze is always reachable.</li>\n    <li>Biomes: The maze features different themed areas or \"biomes\" with unique generation rules.</li>\n    <li>Randomization: Each generated maze is completely unique.</li>\n    <li>Customizable Settings: Various parameters can be adjusted to change the maze characteristics.</li>\n</ol>\n<p>The maze features different biomes, each with its own generation rules:</p>\n<ul>\n    <li>Hallways: Strict, narrow passages.</li>\n    <li>Rooms: More open areas with randomly placed walls.</li>\n</ul>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/BeZFhpe.png\" alt=\"Inside of the 'rooms' biome\"><sub>A glimpse inside the \"rooms\" biome, showcasing the open areas with random wall placement.</sub></div>\n<p>The development process was filled with interesting challenges and discoveries:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/MFF7yjP.png\" alt=\"Early development screenshot\"><sub>Very early in development, showing the basic structure.</sub></div>\n<p>Initially, the project started with simple hallways, but after a while biomes and other variations have been added.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/xEqq5VX.png\" alt=\"Testing vertical hallways\"><sub>Testing the implementation of vertical hallways, adding a new dimension to the maze.</sub></div>\n<p>One of the key features of the generator is its ability to create multi-level mazes, adding vertical complexity to the traditional 2D maze concept.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/8RFZd1h.png\" alt=\"Lighting bug\"><sub>A funny lighting bug encountered during development, showcasing the unexpected challenges in game development.</sub></div>\n<p>Like any development project, there were interesting bugs along the way. Some, like this lighting issue, created unexpectedly beautiful results!</p>\n<p>Future plans for the Roblox Maze Generator include:</p>\n<ul>\n    <li>Adding \"monsters\" to increase challenge and excitement.</li>\n    <li>Implementing a goal-oriented gameplay, giving players a reason to find the exit.</li>\n</ul>\n<p>Currently, the maze has only one exit, but the possibilities for expansion are endless. The Roblox Maze Generator represents not just a technical achievement in procedural generation, but also a journey of learning and problem-solving in game development using LUA and Roblox.</p>"
+        },
+        "lastUpdated": {
+            "$date": "2024-09-03T15:48:08.363Z"
+        },
+        "hidden": false,
+        "spoiler": false,
+        "nsfw": false,
+        "tags": [
+            "lua",
+            "my-code",
+            "game",
+            "roblox"
+        ],
+        "displayItemType": "Project",
+        "link": "https://www.roblox.com/games/118878596315562/Random-Maze-Generation"
     }
 ]
