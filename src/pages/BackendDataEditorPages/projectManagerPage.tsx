@@ -26,7 +26,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         spoiler: false,
         nsfw: false,
         tags: [],
-        displayItemType: 'Project',
+        displayItemType: '',
     });
     const [editingProject, setEditingProject] = useState<ItemDisplay | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -170,7 +170,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     hidden: false,
                     tags: [],
                     infoPages: [{ title: '', content: '' }],
-                    displayItemType: 'Project',
+                    displayItemType: '',
                     spoiler: false,
                     nsfw: false,
                 });
@@ -256,6 +256,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Title</Form.Label>
                                     <Form.Control
+                                        placeholder='Epic Title'
                                         type="text"
                                         value={newProject.title}
                                         onChange={(e) => {
@@ -267,6 +268,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Thumbnail Image URL</Form.Label>
                                     <Form.Control
+                                        placeholder='https://i.imgur.com'
                                         type="text"
                                         value={newProject.thumbnailImage || ''}
                                         onChange={(e) => {
@@ -277,6 +279,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Description</Form.Label>
                                     <Form.Control
+                                        placeholder='Only used if there is no tumbnail image.'
                                         as="textarea"
                                         rows={3}
                                         value={newProject.description || ''}
@@ -288,6 +291,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Link</Form.Label>
                                     <Form.Control
+                                        placeholder='https://example.com'
                                         type="text"
                                         value={newProject.link || ''}
                                         onChange={(e) => {
@@ -298,11 +302,13 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">DisplayItemType</Form.Label>
                                     <Form.Control
+                                        placeholder='Project, Blog, URL'
                                         type="text"
                                         value={newProject.displayItemType || ''}
                                         onChange={(e) => {
                                             setNewProject({ ...newProject, displayItemType: e.target.value })
                                         }}
+                                        required
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -332,6 +338,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                             <Form.Group className="mb-2">
                                                                 <Form.Label className="text-light">Title</Form.Label>
                                                                 <Form.Control
+                                                                    placeholder='Tab Title Goes Here'
                                                                     type="text"
                                                                     value={infoPage.title}
                                                                     onChange={(e) => handleInfoPageChange(index, 'title', e.target.value)}
@@ -340,6 +347,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                             <Form.Group className="mb-2">
                                                                 <Form.Label className="text-light">Content</Form.Label>
                                                                 <Form.Control
+                                                                    placeholder='<h1>Example HTML Go BRRRRRR</h1>'
                                                                     as="textarea"
                                                                     rows={3}
                                                                     value={infoPage.content}
@@ -396,6 +404,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Tags (comma-separated)</Form.Label>
                                     <Form.Control
+                                        placeholder='Example1,Example2,Example3'
                                         type="text"
                                         value={newProject.tags.join(',')}
                                         onChange={(e) => {
@@ -425,7 +434,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             spoiler: false,
                                             nsfw: false,
                                             tags: [],
-                                            displayItemType: 'Project',
+                                            displayItemType: '',
                                         });
 
                                     }}>

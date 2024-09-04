@@ -48,6 +48,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     let fetched = false;
     const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
     const [mainBlog, setBlog] = useState<ItemDisplay[]>([]);
+    const [mainWebposts, setWebposts] = useState<ItemDisplay[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<ItemDisplay | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
@@ -77,6 +78,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             appliedFilters: ['game', 'my-code']
         },
         {
+            dataList: [...mainWebposts],
+            title: 'Weblinks',
+            appliedFilters: []
+        },
+        {
             dataList: [...mainProjects],
             title: 'Side Projects',
             appliedFilters: ['side-project']
@@ -90,7 +96,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         }
     ];
     if (!discovery) {
-        discoveryRows = [discoveryRows[0]];
+        discoveryRows = [discoveryRows[0], discoveryRows[2]];
     }
 
     useEffect(() => {
@@ -108,6 +114,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         });
         setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));
         setBlog(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'blog'));
+        setWebposts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'url'));
     }
 
     const filterProjects = (projects: ItemDisplay[], filters: string[]): ItemDisplay[] => {
@@ -188,13 +195,22 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                                         <Card.Body className="d-flex flex-column">
                                             <Card.Title>{project.title}</Card.Title>
                                             {!project.thumbnailImage && project.description && <Card.Text>{project.description}</Card.Text>}
-                                            <Button
+                                            {(project.infoPages.length > 0 && <Button
                                                 variant="outline-primary"
                                                 className="mt-auto"
                                                 onClick={() => showProjectDetails(project)}
                                             >
                                                 More Info
-                                            </Button>
+                                            </Button>) || (project.link && <Button
+                                                variant="outline-primary"
+                                                className="mt-auto"
+                                                onClick={() => {
+                                                    if (project?.link) {
+                                                        window.open(project.link, '_blank');
+                                                    }
+                                                }}
+                                            > Visit</Button>) || (project.description && project.thumbnailImage && <span className="mt-auto">{project.description}</span>)
+                                            }
                                         </Card.Body>
                                     </Card>
                                 </Col>
