@@ -324,36 +324,59 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Info Pages</Form.Label><br />
-                                    {newProject.infoPages.map((infoPage, index) => (
-                                        <Card key={index} className="mb-2 bg-secondary">
-                                            <Card.Body>
-                                                <Form.Group className="mb-2">
-                                                    <Form.Label className="text-light">Title</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={infoPage.title}
-                                                        onChange={(e) => handleInfoPageChange(index, 'title', e.target.value)}
-                                                    />
-                                                </Form.Group>
-                                                <Form.Group className="mb-2">
-                                                    <Form.Label className="text-light">Content</Form.Label>
-                                                    <Form.Control
-                                                        as="textarea"
-                                                        rows={3}
-                                                        value={infoPage.content}
-                                                        onChange={(e) => handleInfoPageChange(index, 'content', e.target.value)}
-                                                    />
-                                                </Form.Group>
-                                                <Button variant="danger" size="sm" onClick={() => removeInfoPage(index)}>
-                                                    Remove Info Page
-                                                </Button>
-                                            </Card.Body>
-                                        </Card>
-                                    ))}
+                                    <div className="accordion accordion text-bg-dark" id="accordionFlushExample">
+                                        {newProject.infoPages.map((infoPage, index) => (
+                                            <div className="accordion-item bg-dark" key={index}>
+                                                <h2 className="accordion-header text-bg-dark">
+                                                    <button
+                                                        className={"accordion-button bg-secondary text-light"}
+                                                        type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target={"#accordion-flush" + index}
+                                                        aria-expanded="false"
+                                                        aria-controls={"accordion-flush" + index}
+                                                    >
+                                                        {`Info Page ${index + 1}`}
+                                                    </button>
+                                                </h2>
+                                                <div
+                                                    id={"accordion-flush" + index}
+                                                    className={"accordion-collapse " + (index === 0 ? 'collapse show' : 'collapse')}
+                                                    data-bs-parent="#accordionFlushExample"
+                                                >
+                                                    <Card className="mb-2 bg-dark">
+                                                        <Card.Body>
+                                                            <Form.Group className="mb-2">
+                                                                <Form.Label className="text-light">Title</Form.Label>
+                                                                <Form.Control
+                                                                    type="text"
+                                                                    value={infoPage.title}
+                                                                    onChange={(e) => handleInfoPageChange(index, 'title', e.target.value)}
+                                                                />
+                                                            </Form.Group>
+                                                            <Form.Group className="mb-2">
+                                                                <Form.Label className="text-light">Content</Form.Label>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                    value={infoPage.content}
+                                                                    onChange={(e) => handleInfoPageChange(index, 'content', e.target.value)}
+                                                                />
+                                                            </Form.Group>
+                                                            <Button variant="danger" size="sm" onClick={() => removeInfoPage(index)}>
+                                                                Remove Info Page
+                                                            </Button>
+                                                        </Card.Body>
+                                                    </Card>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                     <Button variant="secondary" size="sm" onClick={addInfoPage}>
                                         Add Info Page
                                     </Button>
                                 </Form.Group>
+
                                 <Form.Group className="mb-3">
                                     <Form.Check
                                         type="checkbox"
