@@ -405,7 +405,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
                                 <div className="btn-group" role="group" aria-label="Basic example">
                                     <Button variant="primary" type="submit">
-                                        {editingProject ? 'Update DisplayItem' : 'Create DisplayItem'}
+                                        {editingProject ? 'Update Item' : 'Create Item'}
                                     </Button>
                                     {previewableCheck() && <Button variant="info" onClick={() => {
                                         setPreviewProject(newProject);
@@ -429,7 +429,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         });
 
                                     }}>
-                                        {editingProject ? "Deselect DisplayItem" : 'Clear'}
+                                        {editingProject ? "Deselect Item" : 'Clear'}
                                     </Button>}
                                 </div>
                                 {errorMessage && <Form.Text className="text-danger">{errorMessage}</Form.Text>}
@@ -440,7 +440,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">Existing DisplayItems</Card.Title>
+                            <Card.Title className="text-light">Existing Items</Card.Title>
                             <Form.Group className="mb-3">
                                 <Form.Label className="text-light">Search</Form.Label>
                                 <Form.Control
@@ -486,7 +486,12 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                 Preview
                                             </Button>
                                             {userProfile.clearanceLevel >= 6 && (
-                                                <Button variant="danger" size="sm" onClick={() => handleDelete(project._id!)}>
+                                                <Button variant="danger" size="sm" onClick={() => {
+                                                    if (confirm("Are you sure you want to proceed?")) {
+                                                        // Code to execute if the user clicks "OK"
+                                                        handleDelete(project._id!)
+                                                    }
+                                                }}>
                                                     Delete
                                                 </Button>
                                             )}

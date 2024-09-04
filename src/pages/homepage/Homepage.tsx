@@ -47,6 +47,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     const discovery = data?.title === 'Discovery';
     let fetched = false;
     const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
+    const [mainBlog, setBlog] = useState<ItemDisplay[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProject, setSelectedProject] = useState<ItemDisplay | null>(null);
     const [offline, setOfflineModeModal] = useState(false);
@@ -64,6 +65,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             }),
             title: 'Website Projects',
             appliedFilters: ['website', 'my-code']
+        },
+        {
+            dataList: [...mainBlog],
+            title: 'Blog Posts',
+            appliedFilters: []
         },
         {
             dataList: [...mainProjects],
@@ -100,7 +106,8 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             const dateB = new Date(b.lastUpdated || 0).getTime();
             return dateB - dateA;
         });
-        setProjects(sortedProjects);
+        setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));
+        setBlog(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'blog'));
     }
 
     const filterProjects = (projects: ItemDisplay[], filters: string[]): ItemDisplay[] => {
@@ -171,15 +178,16 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                             {filterProjects(row.dataList, row.appliedFilters).map((project, index) => (
                                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                     <Card className="h-100 project-card bg-dark text-white">
-                                        <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
+                                        {project.thumbnailImage && <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
                                             if (project?.link) {
                                                 window.open(project.link, '_blank');
                                             }
                                         }} className={
                                             (project?.link ? 'clickable' : '')
-                                        } />
+                                        } />}
                                         <Card.Body className="d-flex flex-column">
                                             <Card.Title>{project.title}</Card.Title>
+                                            {!project.thumbnailImage && project.description && <Card.Text>{project.description}</Card.Text>}
                                             <Button
                                                 variant="outline-primary"
                                                 className="mt-auto"
