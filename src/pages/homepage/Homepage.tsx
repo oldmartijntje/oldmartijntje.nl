@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
+const MAX_DISPLAY_ITEMS_PER_ROW = 10;
+
 interface HomepageProps {
     data?: any;
 }
@@ -96,7 +98,9 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             appliedFilters: []
         },
         {
-            dataList: [...mainRandomPosts],
+            dataList: [...mainRandomPosts].sort(() => {
+                return seededRandom() - 0.5;
+            }),
             title: 'Random Things',
             appliedFilters: []
         }
@@ -189,7 +193,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                         </OverlayTrigger>
                         )}</h2>
                         <div className="g-4 scrollBar">
-                            {filterProjects(row.dataList, row.appliedFilters).map((project, index) => (
+                            {filterProjects(row.dataList, row.appliedFilters).slice(0, MAX_DISPLAY_ITEMS_PER_ROW).map((project, index) => (
                                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                     <Card className="h-100 project-card bg-dark text-white">
                                         {project.thumbnailImage && <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
