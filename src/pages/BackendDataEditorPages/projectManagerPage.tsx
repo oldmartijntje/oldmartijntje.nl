@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col, Navbar, Modal } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, Navbar, Modal, Tabs, Tab } from 'react-bootstrap';
 import ServerConnector from '../../services/ServerConnector';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
+import '../../App.css'
 
 interface InfoPage {
     title: string;
@@ -43,6 +44,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     });
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [activeTab, setActiveTab] = useState(0);
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
     const [showModal, setShowModal] = useState(false);
     const [previewProject, setPreviewProject] = useState<Project | null>(null);
@@ -50,6 +52,12 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     useEffect(() => {
         fetchProjects();
     }, []);
+
+    const handleInfoPageChange = (index: number, field: keyof InfoPage, value: string) => {
+        const updatedProject = { ...previewProject! };
+        updatedProject.infoPages[index] = { ...updatedProject.infoPages[index], [field]: value };
+        setPreviewProject(updatedProject);
+    };
 
     const fetchProjects = () => {
         const serverConnector = new ServerConnector();
@@ -177,13 +185,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     };
 
     const showProjectDetails = () => {
+        setActiveTab(0);
         setShowModal(true);
-    };
-
-    const handleInfoPageChange = (index: number, field: keyof InfoPage, value: string) => {
-        const updatedInfoPages = [...newProject.infoPages];
-        updatedInfoPages[index] = { ...updatedInfoPages[index], [field]: value };
-        setNewProject({ ...newProject, infoPages: updatedInfoPages });
     };
 
     const addInfoPage = () => {
@@ -244,7 +247,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Info Pages</Form.Label>
+                                    <Form.Label className="text-light">Info Pages</Form.Label><br />
                                     {newProject.infoPages.map((infoPage, index) => (
                                         <Card key={index} className="mb-2 bg-secondary">
                                             <Card.Body>
@@ -314,13 +317,13 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Button variant="primary" type="submit">
                                         {editingProject ? 'Update Project' : 'Create Project'}
                                     </Button>
-                                    <Button variant="info" onClick={() => {
+                                    {true && <Button variant="info" onClick={() => {
                                         setPreviewProject(newProject);
                                         showProjectDetails();
                                     }}>
                                         Preview
-                                    </Button>
-                                    <Button variant="secondary" onClick={() => {
+                                    </Button>}
+                                    {true && <Button variant="secondary" onClick={() => {
                                         setEditingProject(null);
                                         setNewProject({
                                             title: '',
@@ -336,7 +339,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         });
                                     }}>
                                         {editingProject ? "Deselect Project" : 'Clear'}
-                                    </Button>
+                                    </Button>}
                                 </div>
                                 {errorMessage && <Form.Text className="text-danger">{errorMessage}</Form.Text>}
                             </Form>
@@ -422,14 +425,22 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     {previewProject?.thumbnailImage && (
                         <img src={previewProject.thumbnailImage} alt={previewProject.title} className="img-fluid mb-3" />
                     )}
-                    <p><strong>Description:</strong> {previewProject?.description}</p>
-                    <h4>Info Pages:</h4>
-                    {previewProject?.infoPages.map((infoPage, index) => (
-                        <div key={index} className="mb-3">
-                            <h5>{infoPage.title}</h5>
-                            <div dangerouslySetInnerHTML={{ __html: infoPage.content }} />
-                        </div>
-                    ))}
+                    {previewProject && previewProject.infoPages.length > 1 && <Tabs
+                        activeKey={activeTab}
+                        onSelect={(k) => setActiveTab(Number(k))}
+                        className="mb-3 custom-tabs"
+                    >
+                        {previewProject?.infoPages.map((infoPage, index) => (
+                            <Tab eventKey={index} title={infoPage.title} key={index}>
+                                <div dangerouslySetInnerHTML={{ __html: infoPage.content }} />
+                            </Tab>
+                        ))}
+                    </Tabs> || previewProject?.infoPages.length === 1 && (
+                        <div dangerouslySetInnerHTML={{ __html: previewProject.infoPages[0].content }} />
+                    )}
+
+                </Modal.Body>
+                <Modal.Footer>
                     {previewProject?.link && (
                         <p className="btn btn-primary">
                             <a href={previewProject.link} target="_blank" rel="noopener noreferrer" className="text-light">
@@ -439,16 +450,10 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     )}
                     {previewProject?.lastUpdated && (
                         <p className="text-muted">
-                            <small className="text-secondary">Last update: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
+                            <small className="text-secondary">Last article update: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
                         </p>
                     )}
-                    <p>
-                        <strong>Visibility:</strong> {previewProject?.hidden ? 'Hidden' : 'Shown'}<br />
-                        <strong>Spoiler:</strong> {previewProject?.spoiler ? 'Yes' : 'No'}<br />
-                        <strong>NSFW:</strong> {previewProject?.nsfw ? 'Yes' : 'No'}<br />
-                        <strong>Tags:</strong> {previewProject?.tags.join(', ') || 'N/A'}
-                    </p>
-                </Modal.Body>
+                </Modal.Footer>
             </Modal>
         </Container>
     );

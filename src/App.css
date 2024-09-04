@@ -228,3 +228,10 @@ a:hover {
     height: auto;
     width: fit-content;
 }
+
+.custom-tabs .nav-link.active {
+    background-color: #375cc8 !important;
+    /* Replace this with your desired color */
+    color: white !important;
+    border: none !important;
+}
