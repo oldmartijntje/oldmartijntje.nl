@@ -5,7 +5,7 @@ import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 import '../../App.css'
 import { Link } from 'react-router-dom';
 import { InfoPage, ItemDisplay } from '../../models/itemDisplayModel';
-import ItemDisplayViewer from '../../components/overlay/itemDisplayViewer';
+import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
 
 

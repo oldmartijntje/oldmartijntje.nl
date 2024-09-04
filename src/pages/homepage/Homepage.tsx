@@ -4,8 +4,8 @@ import offlineProjects from '../../assets/json/projects.json';
 import './Homepage.css';
 import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
-import ItemDisplayViewer from '../../components/overlay/itemDisplayViewer';
 import { ItemDisplay } from '../../models/itemDisplayModel';
+import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
 interface HomepageProps {
     data?: any;
