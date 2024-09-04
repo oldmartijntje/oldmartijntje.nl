@@ -84,16 +84,36 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const search = searchFilter.toLowerCase();
         const allQueryWords = search.split(' ');
         allQueryWords.forEach((queryWord: any) => {
+            let keywordFits = true
+            let inverse = false
+            if (queryWord[0] == "!") {
+                if (queryWord.length < 2) {
+                    return
+                }
+                inverse = true
+                queryWord = queryWord.substring(1)
+            }
+
             if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
                 if (project.hidden && 'hidden'.includes(queryWord)) {
-                    // do nothing
+                    keywordFits = true;
                 } else if (!project.hidden && 'shown'.includes(queryWord)) {
-                    // do nothing
+                    keywordFits = true;
                 } else {
                     fitsSearch = false;
                 }
 
+            } else if (project.spoiler && 'spoiler'.includes(queryWord)) {
+                keywordFits = true;
+            } else if (project.nsfw && 'nsfw'.includes(queryWord)) {
+                keywordFits = true;
             } else if (!project.title.toLowerCase().includes(queryWord) && !JSON.stringify(project.infoPages).toLowerCase().includes(queryWord) && !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord))) {
+                keywordFits = false;
+            }
+            if (inverse) {
+                keywordFits = !keywordFits;
+            }
+            if (!keywordFits) {
                 fitsSearch = false;
             }
         });

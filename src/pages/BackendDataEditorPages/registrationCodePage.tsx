@@ -64,14 +64,28 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const search = searchFilter.toLowerCase();
         const allQueryWords = search.split(' ');
         allQueryWords.forEach((queryWord: any) => {
-            if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
+            let keywordFits = true
+            let inverse = false
+            if (queryWord[0] == "!") {
+                if (queryWord.length < 2) {
+                    return
+                }
+                inverse = true
+                queryWord = queryWord.substring(1)
+            }
 
-
-            } else if (!`${project.clearanceLevel}`.toLowerCase().includes(queryWord) && !project.textNote?.toLowerCase().includes(queryWord) && !project.role?.toLowerCase().includes(queryWord) && !project.code.toLowerCase().includes(queryWord)) {
+            if (!`${project.clearanceLevel}`.toLowerCase().includes(queryWord) && !project.textNote?.toLowerCase().includes(queryWord) && !project.role?.toLowerCase().includes(queryWord) && !project.code.toLowerCase().includes(queryWord)) {
+                keywordFits = false;
+            }
+            if (inverse) {
+                keywordFits = !keywordFits;
+            }
+            if (!keywordFits) {
                 fitsSearch = false;
             }
         });
         return fitsSearch;
+
     }
 
     const handleDelete = (code: string) => {
