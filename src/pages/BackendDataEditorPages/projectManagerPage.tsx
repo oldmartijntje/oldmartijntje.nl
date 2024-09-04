@@ -4,16 +4,24 @@ import ServerConnector from '../../services/ServerConnector';
 import { Link } from 'react-router-dom';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 
+interface InfoPage {
+    title: string;
+    content: string;
+}
+
 interface Project {
     _id?: string;
     title: string;
-    images: string[];
-    tumbnailImageId: number;
+    tumbnailImage?: string;
+    description?: string;
     link?: string;
-    info: string;
+    infoPages: InfoPage[];
     lastUpdated?: Date;
-    hidden?: boolean;
-    tags?: string[];
+    hidden: boolean;
+    spoiler: boolean;
+    nsfw: boolean;
+    tags: string[];
+    displayItemType: string;
 }
 
 interface UserPageProps {
@@ -22,28 +30,20 @@ interface UserPageProps {
 
 const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [previewProject, setNewPreviewProject] = useState<Project>({
-        title: '',
-        images: [],
-        tumbnailImageId: 0,
-        info: '',
-        lastUpdated: new Date(),
-        hidden: false,
-        tags: [],
-    });
     const [newProject, setNewProject] = useState<Project>({
         title: '',
-        images: [],
-        tumbnailImageId: 0,
-        info: '',
-        lastUpdated: new Date(),
+        infoPages: [{ title: '', content: '' }],
         hidden: false,
+        spoiler: false,
+        nsfw: false,
         tags: [],
+        displayItemType: 'Project',
     });
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
     const [showModal, setShowModal] = useState(false);
+    const [previewProject, setPreviewProject] = useState<Project | null>(null);
 
     useEffect(() => {
         fetchProjects();
@@ -51,18 +51,15 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const isEmptyForm = (project: Project) => {
         return project.title === '' &&
-            (project.images.length === 0 || (project.images[0] == '' && project.images.length == 1)) &&
-            project.tumbnailImageId === 0 &&
-            (project.link === '' || !project.link) &&
-            (!project.tags || project.tags.length === 0 || (project.tags[0] == '' && project.tags.length == 1)) &&
-            project.info === '';
+            project.infoPages.length === 0 &&
+            project.tags.length === 0;
     }
 
     const fetchProjects = () => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getProjects', 'POST', JSON.stringify({ hidden: true }), (response: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/getData/getDisplayItems', 'POST', JSON.stringify({ hidden: true }), (response: any) => {
             if (response.status === 200) {
-                setProjects(response.projects);
+                setProjects(response.displayItems);
             } else if (response.status === 401) {
                 handleUnauthorized();
             } else {
@@ -77,8 +74,6 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const handleUnauthorized = () => {
         localStorage.removeItem('UserLogin');
         alert('Session expired. Please log in again.');
-        // Assuming you have a logout event
-        // allEvents.emit('logout');
     };
 
     const doesThisProjectMatchSearch = (project: Project) => {
@@ -98,7 +93,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     fitsSearch = false;
                 }
 
-            } else if (!project.title.toLowerCase().includes(queryWord) && !project.info.toLowerCase().includes(queryWord) && !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord))) {
+            } else if (!project.title.toLowerCase().includes(queryWord) && !JSON.stringify(project.infoPages).toLowerCase().includes(queryWord) && !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord))) {
                 fitsSearch = false;
             }
         });
@@ -108,7 +103,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const serverConnector = new ServerConnector();
-        const endpoint = `https://api.oldmartijntje.nl/getData/projects`;
+        const endpoint = `https://api.oldmartijntje.nl/getData/displayItems`;
         const method = editingProject ? 'PUT' : 'POST';
         const projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
         projectData.sessionToken = userProfile.sessionToken
@@ -118,10 +113,12 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 fetchProjects();
                 setNewProject({
                     title: '',
-                    images: [],
-                    tumbnailImageId: 0,
-                    info: '',
                     hidden: false,
+                    tags: [],
+                    infoPages: [{ title: '', content: '' }],
+                    displayItemType: 'Project',
+                    spoiler: false,
+                    nsfw: false,
                 });
                 setErrorMessage('');
                 setEditingProject(null);
@@ -142,7 +139,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const url = ServerConnector.encodeQueryData({
             id: id,
             sessionToken: userProfile.sessionToken,
-        }, `https://api.oldmartijntje.nl/getData/projects`);
+        }, `https://api.oldmartijntje.nl/getData/displayItems`);
         serverConnector.fetchData(url, 'DELETE', undefined, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
@@ -197,24 +194,6 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
-                                        <Form.Label className="text-light">Images (comma-separated URLs)</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={newProject.images.join(',')}
-                                            onChange={(e) => setNewProject({ ...newProject, images: e.target.value.split(',') })}
-                                            required
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label className="text-light">Thumbnail Image ID</Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            value={newProject.tumbnailImageId}
-                                            onChange={(e) => setNewProject({ ...newProject, tumbnailImageId: parseInt(e.target.value) })}
-                                            required
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
                                         <Form.Label className="text-light">Link</Form.Label>
                                         <Form.Control
                                             type="text"
@@ -226,8 +205,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         <Form.Label className="text-light">Info</Form.Label>
                                         <Form.Control
                                             as="textarea"
-                                            value={newProject.info}
-                                            onChange={(e) => setNewProject({ ...newProject, info: e.target.value })}
+                                            value={JSON.stringify(newProject.infoPages)}
+                                            onChange={(e) => setNewProject({ ...newProject, infoPages: JSON.parse(e.target.value) })}
                                             required
                                         />
                                     </Form.Group>
@@ -253,7 +232,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             {editingProject ? 'Update Project' : 'Create Project'}
                                         </Button>
                                         {!isEmptyForm(newProject) && <Button variant="info" onClick={() => {
-                                            setNewPreviewProject(newProject)
+                                            setPreviewProject(newProject)
                                             showProjectDetails()
                                         }}>
                                             Preview
@@ -262,11 +241,12 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             setEditingProject(null)
                                             setNewProject({
                                                 title: '',
-                                                images: [],
-                                                tumbnailImageId: 0,
-                                                info: '',
                                                 lastUpdated: new Date(),
                                                 hidden: false,
+                                                displayItemType: 'Project',
+                                                spoiler: false,
+                                                nsfw: false,
+                                                infoPages: [{ title: '', content: '' }],
                                                 tags: [],
                                             })
 
@@ -301,10 +281,8 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         <Card.Body className="card text-bg-dark">
                                             <Card.Title>{project.title}</Card.Title>
                                             <Card.Text>
-                                                <strong>Images:</strong> {project.images.length}<br />
-                                                <strong>Thumbnail ID:</strong> {project.tumbnailImageId}<br />
                                                 <strong>Link:</strong> {project.link || 'N/A'}<br />
-                                                <strong>Info:</strong> {project.info.substring(0, 100)}...<br />
+                                                <strong>Info:</strong> {JSON.stringify(project.infoPages).substring(0, 100)}...<br />
                                                 <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
                                                 <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
                                                 <strong>Tags:</strong> {project.tags?.join(', ') || 'N/A'}
@@ -317,18 +295,20 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                     setEditingProject(null)
                                                     setNewProject({
                                                         title: project.title,
-                                                        images: project.images,
-                                                        tumbnailImageId: project.tumbnailImageId,
-                                                        info: project.info,
                                                         lastUpdated: project.lastUpdated,
                                                         hidden: project.hidden,
                                                         tags: project.tags,
+                                                        infoPages: project.infoPages,
+                                                        displayItemType: project.displayItemType,
+                                                        spoiler: project.spoiler,
+                                                        nsfw: project.nsfw,
+                                                        description: project.description,
                                                     });
                                                 }}>
                                                     Duplicate
                                                 </Button>
                                                 <Button variant="info" onClick={() => {
-                                                    setNewPreviewProject(project)
+                                                    setPreviewProject(project)
                                                     showProjectDetails()
                                                 }}>
                                                     Preview
@@ -359,7 +339,7 @@ const ProjectManager: React.FC<UserPageProps> = ({ userProfile }) => {
                         style={{ backgroundColor: '#2a75fe' }}></Button>
                 </Modal.Header>
                 <Modal.Body>
-                    <div dangerouslySetInnerHTML={{ __html: previewProject?.info || '' }} />
+                    <div dangerouslySetInnerHTML={{ __html: previewProject?.infoPages || '' }} />
                     {previewProject?.link && (
                         <p className="btn btn-primary">
                             <a href={previewProject.link} target="_blank" className="text-light">
