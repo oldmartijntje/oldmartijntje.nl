@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface ConsoleState {
-    consoleText: string;
+    lines: string[];
+    currentLine: string;
     cursorPosition: number;
     cursorVisible: boolean;
 }
@@ -16,11 +17,13 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     private readonly padding = 10;
     private readonly fontSize = 16;
     private readonly cursorBlinkInterval = 500; // milliseconds
+    private readonly maxLines = 100;
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            consoleText: '',
+            lines: [],
+            currentLine: '',
             cursorPosition: 0,
             cursorVisible: true
         };
@@ -52,22 +55,29 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     }
 
     updateCanvas = () => {
-        if (this.ctx) {
+        if (this.ctx && this.canvasRef.current) {
+            const { width, height } = this.canvasRef.current;
             this.ctx.fillStyle = 'black';
-            this.ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
+            this.ctx.fillRect(0, 0, width, height);
 
             this.ctx.font = `${this.fontSize}px monospace`;
             this.ctx.fillStyle = 'white';
 
-            const lines = this.state.consoleText.split('\n');
-            lines.forEach((line, index) => {
-                this.ctx!.fillText(line, this.padding, (index + 1) * this.lineHeight);
+            // Draw previous lines
+            const startY = height - this.lineHeight * 2 - this.padding;
+            this.state.lines.slice(-this.maxLines).forEach((line, index) => {
+                const y = startY - (this.state.lines.length - index - 1) * this.lineHeight;
+                this.ctx!.fillText(line, this.padding, y);
             });
 
+            // Draw current line
+            this.ctx.fillText(this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
+
+            // Draw cursor
             if (this.state.cursorVisible) {
-                const cursorX = (this.state.cursorPosition % 80) * (this.fontSize * 0.6) + this.padding;
-                const cursorY = Math.floor(this.state.cursorPosition / 80) * this.lineHeight + this.lineHeight - this.fontSize / 2;
-                this.ctx.fillRect(cursorX, cursorY, this.fontSize * 0.6, 2);
+                const cursorX = this.state.cursorPosition * (this.fontSize * 0.55) + this.padding + 2;
+                const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
+                this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
             }
         }
         this.animationFrameId = requestAnimationFrame(this.updateCanvas);
@@ -75,16 +85,17 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 
     handleKeyDown = (e: KeyboardEvent) => {
         e.preventDefault();
-        let { consoleText, cursorPosition } = this.state;
+        let { currentLine, cursorPosition, lines } = this.state;
 
         switch (e.key) {
             case 'Enter':
-                consoleText = consoleText.slice(0, cursorPosition) + '\n' + consoleText.slice(cursorPosition);
-                cursorPosition++;
+                lines = [...lines, currentLine];
+                currentLine = '';
+                cursorPosition = 0;
                 break;
             case 'Backspace':
                 if (cursorPosition > 0) {
-                    consoleText = consoleText.slice(0, cursorPosition - 1) + consoleText.slice(cursorPosition);
+                    currentLine = currentLine.slice(0, cursorPosition - 1) + currentLine.slice(cursorPosition);
                     cursorPosition--;
                 }
                 break;
@@ -92,22 +103,16 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 if (cursorPosition > 0) cursorPosition--;
                 break;
             case 'ArrowRight':
-                if (cursorPosition < consoleText.length) cursorPosition++;
-                break;
-            case 'ArrowUp':
-                cursorPosition = Math.max(0, cursorPosition - 80);
-                break;
-            case 'ArrowDown':
-                cursorPosition = Math.min(consoleText.length, cursorPosition + 80);
+                if (cursorPosition < currentLine.length) cursorPosition++;
                 break;
             default:
                 if (e.key.length === 1) {
-                    consoleText = consoleText.slice(0, cursorPosition) + e.key + consoleText.slice(cursorPosition);
+                    currentLine = currentLine.slice(0, cursorPosition) + e.key + currentLine.slice(cursorPosition);
                     cursorPosition++;
                 }
         }
 
-        this.setState({ consoleText, cursorPosition });
+        this.setState({ currentLine, cursorPosition, lines });
     }
 
     render() {
