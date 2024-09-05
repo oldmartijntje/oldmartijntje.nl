@@ -9,7 +9,7 @@
     {
         "name": "test.exe",
         "type": "file",
-        "content": ":0",
+        "content": "Wow, this is <h1>HTML</h1> content!",
         "path": "C:/desktop",
         "fullPath": "C:/desktop/test.exe",
         "clearanceLock": 1
@@ -18,8 +18,7 @@
         "name": "desktop",
         "type": "folder",
         "path": "C:/",
-        "fullPath": "C:/desktop",
-        "clearanceLock": 1
+        "fullPath": "C:/desktop"
     },
     {
         "name": "documents",
