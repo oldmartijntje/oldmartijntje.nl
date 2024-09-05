@@ -57,6 +57,21 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         this.allowInput = true; // Changed to true for immediate input
 
         this.canvasRef = React.createRef();
+
+        this.onInit();
+    }
+
+    onInit() {
+        const { lines } = this.state;
+        lines.push(new ConsoleLine(`
+███╗   ███╗    █████╗    ██████╗     █████╗         ██████╗ ███████╗
+████╗ ████║   ██╔══██╗   ██╔══██╗   ██╔══██╗       ██╔═══██╗██╔════╝
+██╔████╔██║   ███████║   ██████╔╝   ███████║       ██║   ██║███████╗
+██║╚██╔╝██║   ██╔══██║   ██╔══██╗   ██╔══██║       ██║   ██║╚════██║
+██║ ╚═╝ ██║██╗██║  ██║██╗██║  ██║██╗██║  ██║██╗    ╚██████╔╝███████║
+╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝     ╚═════╝ ╚══════╝`, 'output'));
+
+
     }
 
     componentDidMount() {
@@ -126,14 +141,16 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 this.ctx!.fillText((line.type === 'input' ? this.consoleLineStart : '') + line.displayText, this.padding, y);
             });
 
-            // Draw current line
-            this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
+            if (this.allowInput) {
+                // Draw current line
+                this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
 
-            // Draw cursor
-            if (this.state.cursorVisible) {
-                const cursorX = (this.state.cursorPosition + this.consoleLineStart.length) * (this.fontSize * 0.55) + this.padding + 2;
-                const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
-                this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
+                // Draw cursor
+                if (this.state.cursorVisible) {
+                    const cursorX = (this.state.cursorPosition + this.consoleLineStart.length) * (this.fontSize * 0.55) + this.padding + 2;
+                    const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
+                    this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
+                }
             }
         }
         this.animationFrameId = requestAnimationFrame(this.updateCanvas);
