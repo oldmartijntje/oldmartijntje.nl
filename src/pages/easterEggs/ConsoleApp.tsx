@@ -27,6 +27,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     private readonly consoleLineStart = '~$ ';
     activeKeys: Set<string>;
     recentKeys: string[];
+    allowInput: boolean;
 
     constructor(props: {}) {
         super(props);
@@ -39,6 +40,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         };
         this.activeKeys = new Set();
         this.recentKeys = [];
+        this.allowInput = false;
 
         this.canvasRef = React.createRef();
     }
@@ -90,14 +92,16 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 this.ctx!.fillText((line.type == 'input' ? this.consoleLineStart : '') + line.text, this.padding, y);
             });
 
-            // Draw current line
-            this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
+            if (this.allowInput) {
+                // Draw current line
+                this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
 
-            // Draw cursor
-            if (this.state.cursorVisible) {
-                const cursorX = (this.state.cursorPosition + this.consoleLineStart.length) * (this.fontSize * 0.55) + this.padding + 2;
-                const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
-                this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
+                // Draw cursor
+                if (this.state.cursorVisible) {
+                    const cursorX = (this.state.cursorPosition + this.consoleLineStart.length) * (this.fontSize * 0.55) + this.padding + 2;
+                    const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
+                    this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
+                }
             }
         }
         this.animationFrameId = requestAnimationFrame(this.updateCanvas);
@@ -110,6 +114,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     }
 
     handleKeyDown = (e: KeyboardEvent) => {
+        if (!this.allowInput) return;
         let runProgram = null;
         e.preventDefault();
         let { currentLine, cursorPosition, lines, currentPath } = this.state;
