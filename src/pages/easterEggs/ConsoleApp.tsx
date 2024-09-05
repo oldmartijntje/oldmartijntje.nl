@@ -1,4 +1,5 @@
 import React from 'react';
+import KeyboardOpener from '../../components/overlay/mobileKeyboardButton';
 
 interface ConsoleState {
     lines: string[];
@@ -126,7 +127,10 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     }
 
     render() {
-        return <canvas ref={this.canvasRef} style={{ display: 'block' }} />;
+        return <>
+            <canvas ref={this.canvasRef} style={{ display: 'block' }} />
+            <KeyboardOpener />
+        </>;
     }
 }
 
