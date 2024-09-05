@@ -48,28 +48,40 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     componentDidMount() {
         if (this.canvasRef.current) {
             this.ctx = this.canvasRef.current.getContext('2d');
-            this.canvasRef.current.width = window.innerWidth;
-            this.canvasRef.current.height = window.innerHeight;
+            this.resizeCanvas();
             window.addEventListener('keydown', this.handleKeyDown);
             window.addEventListener('keyup', this.handleKeyUp);
+            window.addEventListener('resize', this.handleResize); // Listen for window resize
             this.startCursorBlink();
-            this.animationFrameId = requestAnimationFrame(this.updateCanvas);
+            this.animationFrameId = requestAnimationFrame(() => this.updateCanvas());
         }
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.handleKeyDown);
+        window.removeEventListener('keyup', this.handleKeyUp);
+        window.removeEventListener('resize', this.handleResize); // Remove resize listener
+        if (this.animationFrameId !== null) {
+            cancelAnimationFrame(this.animationFrameId);
+        }
+    }
+
+    handleResize = () => {
+        this.resizeCanvas();
+    };
+
+    resizeCanvas = () => {
+        if (this.canvasRef.current) {
+            this.canvasRef.current.width = window.innerWidth;
+            this.canvasRef.current.height = window.innerHeight;
+        }
+    };
 
     onEnter = (command: string) => {
         let { lines } = this.state;
         lines.push({ text: command, type: 'input' });
         lines.push({ text: `Command entered: ${command}`, type: 'output' });
         this.setState({ lines, currentLine: '' });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('keydown', this.handleKeyDown);
-        window.removeEventListener('keyup', this.handleKeyUp);
-        if (this.animationFrameId !== null) {
-            cancelAnimationFrame(this.animationFrameId);
-        }
     }
 
     startCursorBlink = () => {
