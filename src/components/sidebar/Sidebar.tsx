@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
 import AdminPathsPopup from '../buttons/adminSelectPaths';
-
+import { useEffect, useState } from 'react';
 
 interface SidebarProps {
     userProfile?: any;
@@ -11,10 +11,25 @@ interface SidebarProps {
 
 // UserPage component
 const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar }) => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Check if it's a mobile device
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768); // You can adjust the breakpoint as needed
+        };
+
+        handleResize(); // Run on mount to set initial state
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <>
-
-
             <button id="sidebarToggle" className="sidebar-toggle" onClick={toggleSidebar}>
                 ☰
             </button>
@@ -26,7 +41,14 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar })
                         <li><Link to="/discovery">Discovery</Link></li>
                         <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <li><Link to="/user">account</Link></li>
-                        <li><a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">Github <i className="bi bi-box-arrow-up-right" style={{ height: '26px' }}></i></a></li>
+                        {!isMobile && (
+                            <li><Link to="/console">M.A.R.A. OS</Link></li>
+                        )}
+                        <li>
+                            <a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">
+                                Github <i className="bi bi-box-arrow-up-right" style={{ height: '26px' }}></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
