@@ -5,7 +5,7 @@ import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 
 const SETTINGS = {
-    skipStartupAnimation: true,
+    skipStartupAnimation: false,
     version: 'v1.0.0'
 }
 
