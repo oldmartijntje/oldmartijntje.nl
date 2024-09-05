@@ -3,30 +3,29 @@
         "name": "README.txt",
         "type": "file",
         "content": "Lol, tricked you! There's no README here!",
-        "path": "C:/desktop"
-    },
-    {
-        "name": "cd.exe",
-        "type": "file",
-        "content": "Nope. No code.",
-        "path": "C:/apps"
-    },
-    {
-        "name": "run.exe",
-        "type": "file",
-        "content": "Nope. No code.",
-        "path": "C:/apps"
+        "path": "C:/desktop",
+        "fullPath": "C:/desktop/README.txt"
     },
     {
         "name": "test.exe",
         "type": "file",
-        "content": "function myFunction(consoleApp, lines, commandName, param) {lines.push(new ConsoleLine(`Running '${commandName}'...`, 'output'));   lines.push(new ConsoleLine(`Error: This function has no code.`, 'output'));}",
-        "path": "C:/apps"
+        "content": ":0",
+        "path": "C:/desktop",
+        "fullPath": "C:/desktop/test.exe",
+        "clearanceLock": 1
     },
     {
-        "name": "help.exe",
-        "type": "file",
-        "content": "function myFunction(consoleApp, lines, commandName, param) {\nlines.push(new ConsoleLine(`Running '${commandName}'...`, 'output'));   \nlines.push(new ConsoleLine(`Error: Whomp Whomp, this doesn't exist yet.`, 'output'));\n}",
-        "path": "C:/apps"
+        "name": "desktop",
+        "type": "folder",
+        "path": "C:/",
+        "fullPath": "C:/desktop",
+        "clearanceLock": 1
+    },
+    {
+        "name": "documents",
+        "type": "folder",
+        "path": "C:/desktop",
+        "fullPath": "C:/desktop/documents",
+        "clearanceLock": 1
     }
 ]

@@ -1,53 +1,20 @@
 import React from 'react';
 import offlineFiles from '../../assets/json/files.json';
+import { applications, ConsoleFile, ConsoleLine, ConsoleState } from '../../models/consoleAppApplications';
+import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
+import { ItemDisplay } from '../../models/itemDisplayModel';
 
 const SETTINGS = {
     skipStartupAnimation: true,
     version: 'v1.0.0'
 }
 
-interface ConsoleFile {
-    name: string;
-    type: 'file' | 'folder';
-    content: string;
-    path: string;
+interface ConsoleProps {
+    userProfile?: any;
 }
 
-class ConsoleLine {
-    displayText: string;
-    originalText: string;
-    type: 'input' | 'output';
-    functionData: any;
-    onEmit: Function = () => { };
 
-    constructor(text: string, type: 'input' | 'output') {
-        this.displayText = text;
-        this.originalText = text;
-        this.type = type;
-        this.functionData = {};
-    }
-
-    onDraw(self: ConsoleLine) {
-        self
-    }
-
-    duplicate() {
-        const newLine = new ConsoleLine(this.originalText, this.type);
-        newLine.functionData = this.functionData;
-        newLine.onDraw = this.onDraw;
-        return newLine;
-    }
-}
-
-interface ConsoleState {
-    lines: ConsoleLine[];
-    currentLine: string;
-    cursorPosition: number;
-    cursorVisible: boolean;
-    currentPath: string;
-}
-
-class ConsoleApp extends React.Component<{}, ConsoleState> {
+export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
     private canvasRef: React.RefObject<HTMLCanvasElement>;
     private ctx: CanvasRenderingContext2D | null = null;
     private animationFrameId: number | null = null;
@@ -62,9 +29,13 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     recentKeys: string[];
     allowInput: boolean;
     programs: any;
+    loadedFiles: ConsoleFile[];
+    showModal: boolean;
+    overlayFakeProject: ItemDisplay
 
     constructor(props: {}) {
         super(props);
+        this.showModal = false
         this.state = {
             lines: [],
             currentLine: '',
@@ -72,31 +43,44 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             cursorVisible: true,
             currentPath: 'C:/desktop'
         };
+        this.overlayFakeProject = {
+            title: "Test Project",
+            infoPages: [],
+            hidden: false,
+            spoiler: false,
+            nsfw: false,
+            tags: [],
+            displayItemType: "fake"
+        };
+        this.loadedFiles = [];
         this.activeKeys = new Set();
         this.recentKeys = [];
         this.allowInput = false; // Changed to true for immediate input
         this.programs = {};
+
 
         this.canvasRef = React.createRef();
     }
 
     getFiles = () => {
         const loadedFiles = offlineFiles as ConsoleFile[];
-        loadedFiles.forEach(element => {
-            if (element.path == "C:/apps" && element.name.endsWith(".exe")) {
-                try {
-                    const restoredFunction = eval(`(${element.content})`);
-                    this.programs[element.name.split('.', 1)[0]] = restoredFunction
-                } catch (error) {
-                    this.programs[element.name.split('.', 1)[0]] = (console: ConsoleApp, lines: ConsoleLine[], commandName: string, param: string) => {
-                        console; param
-                        lines.push(new ConsoleLine(`Running '${commandName}'...`, 'output'));
-                        lines.push(new ConsoleLine(`Error: File is corrupted.`, 'output'));
-                    }
-                }
+        // loadedFiles.forEach(element => {
+        //     if (element.path == "C:/apps" && element.name.endsWith(".exe")) {
+        //         try {
+        //             const restoredFunction = eval(`(${element.content})`);
+        //             this.programs[element.name.split('.', 1)[0]] = restoredFunction
+        //         } catch (error) {
+        //             this.programs[element.name.split('.', 1)[0]] = (consoleApp: ConsoleApp, lines: ConsoleLine[], commandName: string, param: string) => {
+        //                 consoleApp; param
+        //                 console.error(error)
+        //                 lines.push(new ConsoleLine(`Running '${commandName}'...`, 'output'));
+        //                 lines.push(new ConsoleLine(`Error: File is corrupted.`, 'output'));
+        //             }
+        //         }
 
-            }
-        });
+        //     }
+        // });
+        this.loadedFiles = loadedFiles;
 
     }
 
@@ -189,9 +173,10 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     }
 
     runProgram = (command: string) => {
+        if (command === '') return;
         const [commandName, param] = command.split(' ', 2);
-        if (commandName in this.programs) {
-            this.programs[commandName](this, this.state.lines, commandName, param);
+        if (commandName in applications) {
+            applications[commandName](this, this.props.userProfile, this.state.lines, commandName, param);
         } else {
             this.state.lines.push(new ConsoleLine(`Bash syntax error: command '${commandName}' not found.`, 'output'));
         }
@@ -428,15 +413,20 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         }
 
         this.setState({ currentLine, cursorPosition, lines, currentPath });
-        if (runProgram) {
+        if (runProgram != null) {
             this.onEnter(runProgram);
         }
+    }
+
+    setModal = (bool: boolean) => {
+        this.showModal = bool;
     }
 
     render() {
         return (
             <div className="crt-container">
                 <canvas ref={this.canvasRef} style={{ display: 'block' }} />
+                <ItemDisplayViewer previewProject={this.overlayFakeProject} showModal={this.showModal} setShowModal={this.setModal} />
                 <style>{`
                     .crt-container {
                         position: relative;
