@@ -70,7 +70,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         this.canvasRef = React.createRef();
     }
 
-    onInit() {
+    startupAnimation() {
         const startupFunction = (() => {
             lines.length = 0
             this.allowInput = true;
@@ -151,6 +151,10 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 
             });
         });
+    }
+
+    onInit = () => {
+        this.startupAnimation();
     }
 
     componentDidMount() {
