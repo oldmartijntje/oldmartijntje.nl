@@ -1,10 +1,16 @@
 import React from 'react';
 
+const SETTINGS = {
+    skipStartupAnimation: true,
+    version: 'v1.0.0'
+}
+
 class ConsoleLine {
     displayText: string;
     originalText: string;
     type: 'input' | 'output';
     functionData: any;
+    onEmit: Function = () => { };
 
     constructor(text: string, type: 'input' | 'output') {
         this.displayText = text;
@@ -13,9 +19,15 @@ class ConsoleLine {
         this.functionData = {};
     }
 
-    onDraw() {
+    onDraw(self: ConsoleLine) {
+        self
+    }
 
-
+    duplicate() {
+        const newLine = new ConsoleLine(this.originalText, this.type);
+        newLine.functionData = this.functionData;
+        newLine.onDraw = this.onDraw;
+        return newLine;
     }
 }
 
@@ -37,7 +49,6 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     private readonly padding = 10;
     private readonly fontSize = 16;
     private readonly cursorBlinkInterval = 500; // milliseconds
-    private readonly maxLines = 100;
     private readonly consoleLineStart = '~$ ';
     activeKeys: Set<string>;
     recentKeys: string[];
@@ -54,15 +65,24 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         };
         this.activeKeys = new Set();
         this.recentKeys = [];
-        this.allowInput = true; // Changed to true for immediate input
+        this.allowInput = false; // Changed to true for immediate input
 
         this.canvasRef = React.createRef();
-
-        this.onInit();
     }
 
     onInit() {
+        const startupFunction = (() => {
+            lines.length = 0
+            this.allowInput = true;
+            lines.push(new ConsoleLine(`Welcome to M.A.R.A.`, 'output'));
+            lines.push(new ConsoleLine(`Type 'help' for a list of commands.`, 'output'));
+            this.setState({ lines });
+        })
         const { lines } = this.state;
+        if (SETTINGS.skipStartupAnimation) {
+            startupFunction();
+            return;
+        }
         lines.push(new ConsoleLine(`
 ███╗   ███╗    █████╗    ██████╗     █████╗         ██████╗ ███████╗
 ████╗ ████║   ██╔══██╗   ██╔══██╗   ██╔══██╗       ██╔═══██╗██╔════╝
@@ -71,10 +91,70 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 ██║ ╚═╝ ██║██╗██║  ██║██╗██║  ██║██╗██║  ██║██╗    ╚██████╔╝███████║
 ╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝     ╚═════╝ ╚══════╝`, 'output'));
 
+        lines.push(new ConsoleLine(`Console ${SETTINGS.version}`, 'output'));
+        const now = new Date(Date.now())
+        lines.push(new ConsoleLine(`Current Date: ${now.getDate()}/${now.getMonth()}/${now.getFullYear()}`, 'output'));
+        lines.push(new ConsoleLine(`Loading Kernel...`, 'output'));
+        const loadingBar = new ConsoleLine(`[=··········]`, 'output');
+        loadingBar.functionData.progress = 0;
+        loadingBar.functionData.progressNeeded = 50;
 
+        loadingBar.onDraw = (self: ConsoleLine) => {
+            let progress = self.functionData.progress / self.functionData.progressNeeded * 10
+            if (progress > 10) progress = 10;
+            progress = Math.floor(progress);
+            const progressText = `[${'='.repeat(progress)}${'·'.repeat(10 - progress)}] ${Math.floor(self.functionData.progress / self.functionData.progressNeeded * 100)}%`;
+            self.displayText = progressText;
+            self.functionData.progress += 1;
+            if (self.functionData.progress > self.functionData.progressNeeded) {
+                self.displayText = '[==========] Complete!';
+                self.onEmit()
+                self.onDraw = () => {
+                }
+            }
+        };
+        const loadingBar2 = loadingBar.duplicate();
+        loadingBar2.functionData.progress = 0;
+        lines.push(loadingBar2);
+        loadingBar2.onEmit = (() => {
+            lines.push(new ConsoleLine(`Loading System Data...`, 'output'));
+            const loadingBar3 = loadingBar.duplicate();
+            loadingBar3.functionData.message = 'xxx';
+            loadingBar3.functionData.progress = 0;
+            loadingBar3.functionData.progressNeeded = 5;
+            lines.push(loadingBar3);
+            loadingBar3.onEmit = (() => {
+                lines.push(new ConsoleLine(`Checking for Vulnerabilities...`, 'output'));
+                const loadingBar4 = loadingBar.duplicate();
+                loadingBar4.functionData.progress = 0;
+                loadingBar4.functionData.progressNeeded = 12;
+                lines.push(loadingBar4);
+                loadingBar4.onEmit = (() => {
+                    lines.push(new ConsoleLine(`Loading M.A.R.A. Files...`, 'output'));
+                    const loadingBar5 = loadingBar.duplicate();
+                    loadingBar5.functionData.progress = 0;
+                    loadingBar5.functionData.progressNeeded = 200;
+                    loadingBar5.onEmit = (() => {
+                        lines.push(new ConsoleLine(`M.A.R.A. Files Loaded!`, 'output'));
+                        lines.push(new ConsoleLine(`Rebooting...`, 'output'));
+                        const loadingBar6 = loadingBar.duplicate();
+                        loadingBar6.functionData.progress = 0;
+                        loadingBar6.functionData.progressNeeded = 69;
+                        loadingBar6.onEmit = startupFunction;
+                        lines.push(loadingBar6);
+
+
+                    });
+                    lines.push(loadingBar5);
+
+                });
+
+            });
+        });
     }
 
     componentDidMount() {
+        this.onInit();
         if (this.canvasRef.current) {
             this.ctx = this.canvasRef.current.getContext('2d');
             this.resizeCanvas();
@@ -119,6 +199,26 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         }, this.cursorBlinkInterval);
     }
 
+    private wrapText(text: string, maxWidth: number): string[] {
+        const words = text.split(' ');
+        const lines: string[] = [];
+        let currentLine = '';
+
+        for (const word of words) {
+            const testLine = currentLine ? `${currentLine} ${word}` : word;
+            const metrics = this.ctx!.measureText(testLine);
+            if (metrics.width > maxWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = testLine;
+            }
+        }
+        lines.push(currentLine);
+
+        return lines;
+    }
+
     updateCanvas = () => {
         if (this.ctx && this.canvasRef.current) {
             const { width, height } = this.canvasRef.current;
@@ -133,17 +233,32 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             this.ctx.font = `${this.fontSize}px monospace`;
             this.ctx.fillStyle = '#00ff00'; // Green text color
 
+            const maxWidth = width - this.padding * 2;
+            let y = height - this.lineHeight * 2 - this.padding;
+
             // Draw previous lines
-            const startY = height - this.lineHeight * 2 - this.padding;
-            this.state.lines.slice(-this.maxLines).forEach((line, index) => {
-                line.onDraw();
-                const y = startY - (this.state.lines.length - index - 1) * this.lineHeight;
-                this.ctx!.fillText((line.type === 'input' ? this.consoleLineStart : '') + line.displayText, this.padding, y);
-            });
+            for (let i = this.state.lines.length - 1; i >= 0 && y > 0; i--) {
+                const line = this.state.lines[i];
+                if (!line) continue;
+                const onDraw = line.onDraw || (() => { });
+                onDraw(line);
+                const prefix = line.type === 'input' ? this.consoleLineStart : '';
+                const fullText = prefix + line.displayText;
+                const wrappedLines = fullText.split('\n').flatMap(textLine => this.wrapText(textLine, maxWidth));
+
+                for (let j = wrappedLines.length - 1; j >= 0 && y > 0; j--) {
+                    this.ctx.fillText(wrappedLines[j], this.padding, y);
+                    y -= this.lineHeight;
+                }
+            }
 
             if (this.allowInput) {
                 // Draw current line
-                this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
+                let currentLineText = this.consoleLineStart + this.state.currentLine;
+                const maxCharactersOnLine = Math.floor(maxWidth / (this.fontSize * 0.55));
+                currentLineText = currentLineText.slice(-maxCharactersOnLine);
+                this.ctx.fillText(currentLineText, this.padding, height - this.lineHeight - this.padding);
+
 
                 // Draw cursor
                 if (this.state.cursorVisible) {
@@ -197,10 +312,16 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 
         switch (e.key) {
             case 'Enter':
-                runProgram = currentLine;
-                currentLine = '';
-                cursorPosition = 0;
-                break;
+                if (this.activeKeys.has('Shift')) {
+                    currentLine += '\n';
+                    cursorPosition++;
+                    break;
+                } else {
+                    runProgram = currentLine;
+                    currentLine = '';
+                    cursorPosition = 0;
+                    break;
+                }
             case 'Backspace':
                 if (cursorPosition > 0) {
                     currentLine = currentLine.slice(0, cursorPosition - 1) + currentLine.slice(cursorPosition);
