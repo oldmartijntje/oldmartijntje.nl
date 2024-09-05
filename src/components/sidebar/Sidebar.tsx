@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
-import { NavDropdown } from 'react-bootstrap';
+import AdminPathsPopup from '../buttons/adminSelectPaths';
 
 
 interface SidebarProps {
@@ -24,10 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar })
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/discovery">Discovery</Link></li>
-                        {userProfile.clearanceLevel >= 4 && <li><NavDropdown title="admin" id="basic-nav-dropdown" className="text-light">
-                            {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item bg-light link-dark" to="/registerCode">Account Keys</Link>}
-                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item bg-light link-dark" to="/api/DisplayItems">DisplayItems</Link>}
-                        </NavDropdown></li>}
+                        <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <li><Link to="/user">account</Link></li>
                         <li><a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">Github <i className="bi bi-box-arrow-up-right" style={{ height: '26px' }}></i></a></li>
                     </ul>

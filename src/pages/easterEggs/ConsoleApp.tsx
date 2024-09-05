@@ -1,8 +1,16 @@
 import React from 'react';
+import offlineFiles from '../../assets/json/files.json';
 
 const SETTINGS = {
     skipStartupAnimation: true,
     version: 'v1.0.0'
+}
+
+interface ConsoleFile {
+    name: string;
+    type: 'file' | 'folder';
+    content: string;
+    path: string;
 }
 
 class ConsoleLine {
@@ -53,6 +61,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     activeKeys: Set<string>;
     recentKeys: string[];
     allowInput: boolean;
+    programs: any;
 
     constructor(props: {}) {
         super(props);
@@ -66,8 +75,29 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         this.activeKeys = new Set();
         this.recentKeys = [];
         this.allowInput = false; // Changed to true for immediate input
+        this.programs = {};
 
         this.canvasRef = React.createRef();
+    }
+
+    getFiles = () => {
+        const loadedFiles = offlineFiles as ConsoleFile[];
+        loadedFiles.forEach(element => {
+            if (element.path == "C:/apps" && element.name.endsWith(".exe")) {
+                try {
+                    const restoredFunction = eval(`(${element.content})`);
+                    this.programs[element.name.split('.', 1)[0]] = restoredFunction
+                } catch (error) {
+                    this.programs[element.name.split('.', 1)[0]] = (console: ConsoleApp, lines: ConsoleLine[], commandName: string, param: string) => {
+                        console; param
+                        lines.push(new ConsoleLine(`Running '${commandName}'...`, 'output'));
+                        lines.push(new ConsoleLine(`Error: File is corrupted.`, 'output'));
+                    }
+                }
+
+            }
+        });
+
     }
 
     startupAnimation() {
@@ -155,6 +185,17 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 
     onInit = () => {
         this.startupAnimation();
+        this.getFiles()
+    }
+
+    runProgram = (command: string) => {
+        const [commandName, param] = command.split(' ', 2);
+        if (commandName in this.programs) {
+            this.programs[commandName](this, this.state.lines, commandName, param);
+        } else {
+            this.state.lines.push(new ConsoleLine(`Bash syntax error: command '${commandName}' not found.`, 'output'));
+        }
+
     }
 
     componentDidMount() {
@@ -193,7 +234,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     onEnter = (command: string) => {
         let { lines } = this.state;
         lines.push(new ConsoleLine(command, 'input'));
-        lines.push(new ConsoleLine(`Command entered: ${command}`, 'output'));
+        this.runProgram(command);
         this.setState({ lines, currentLine: '' });
     }
 

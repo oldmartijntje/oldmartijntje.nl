@@ -15,6 +15,7 @@ import { allEvents } from './services/EventsSystem';
 import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
 import ConsoleApp from './pages/easterEggs/ConsoleApp';
+import ConsoleFileEditor from './pages/BackendDataEditorPages/consoleFileEditor';
 
 interface RouteData {
     path: string;
@@ -105,6 +106,12 @@ const App: React.FC = () => {
             path: "signup",
             element: SignupPage,
             isPrivate: false
+        },
+        {
+            path: "/api/ConsoleFileEditor",
+            element: ConsoleFileEditor,
+            isPrivate: true,
+            clearanceLevelNeeded: 6
         },
         {
             path: "console",

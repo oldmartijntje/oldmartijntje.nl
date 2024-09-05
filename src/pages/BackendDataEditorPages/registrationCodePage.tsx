@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Card, Container, Row, Col, NavDropdown, Navbar, Nav } from 'react-bootstrap';
+import { Button, Form, Card, Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
 import ServerConnector from '../../services/ServerConnector';
 import CopyToClipboardButton from '../../components/buttons/copyToClipboard';
 import { Link } from 'react-router-dom';
 import { allEvents } from '../../services/EventsSystem';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
+import AdminPathsPopup from '../../components/buttons/adminSelectPaths';
 
 
 interface RegistrationCode {
@@ -145,10 +146,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
             <Navbar bg="dark" variant="dark" expand="lg" className="mb-4 shadow-sm" style={{ padding: '8px 16px', justifyContent: "center" }}>
                 <Nav className="ml-auto">
                     <Col className='flex'>
-                        <h1 className="text-center text-light inline"><NavDropdown title="Account Keys" id="basic-nav-dropdown" className="text-light">
-                            {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
-                            {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/DisplayItems">DisplayItems</Link>}
-                        </NavDropdown></h1>
+                        <h1 className="text-center text-light inline"><AdminPathsPopup userProfile={userProfile} title="Account Keys"></AdminPathsPopup></h1>
                         <h1 className="text-center text-light inline" style={{ padding: "8px 0" }}>Manager</h1>
                     </Col>
                 </Nav>
