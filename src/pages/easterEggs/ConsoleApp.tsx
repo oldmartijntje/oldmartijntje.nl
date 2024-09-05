@@ -1,8 +1,22 @@
 import React from 'react';
 
-interface ConsoleLine {
-    text: string;
+class ConsoleLine {
+    displayText: string;
+    originalText: string;
     type: 'input' | 'output';
+    functionData: any;
+
+    constructor(text: string, type: 'input' | 'output') {
+        this.displayText = text;
+        this.originalText = text;
+        this.type = type;
+        this.functionData = {};
+    }
+
+    onDraw() {
+
+
+    }
 }
 
 interface ConsoleState {
@@ -79,8 +93,8 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
 
     onEnter = (command: string) => {
         let { lines } = this.state;
-        lines.push({ text: command, type: 'input' });
-        lines.push({ text: `Command entered: ${command}`, type: 'output' });
+        lines.push(new ConsoleLine(command, 'input'));
+        lines.push(new ConsoleLine(`Command entered: ${command}`, 'output'));
         this.setState({ lines, currentLine: '' });
     }
 
@@ -107,8 +121,9 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             // Draw previous lines
             const startY = height - this.lineHeight * 2 - this.padding;
             this.state.lines.slice(-this.maxLines).forEach((line, index) => {
+                line.onDraw();
                 const y = startY - (this.state.lines.length - index - 1) * this.lineHeight;
-                this.ctx!.fillText((line.type === 'input' ? this.consoleLineStart : '') + line.text, this.padding, y);
+                this.ctx!.fillText((line.type === 'input' ? this.consoleLineStart : '') + line.displayText, this.padding, y);
             });
 
             // Draw current line
@@ -190,7 +205,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 if (this.activeKeys.has('Control')) {
                     switch (e.key) {
                         case 'c':
-                            lines.push({ text: currentLine, type: 'input' });
+                            lines.push(new ConsoleLine(currentLine, 'input'));
                             navigator.clipboard.writeText(currentLine);
                             currentLine = '';
                             cursorPosition = 0;
@@ -209,8 +224,14 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                             const savedData = JSON.parse(localStorage.getItem('console') || '{}');
                             currentLine = savedData.currentLine || '';
                             cursorPosition = savedData.cursorPosition || 0;
-                            lines = savedData.lines || [];
+                            lines = []
+                            for (let index = 0; index < savedData.lines.length; index++) {
+                                lines.push(new ConsoleLine(savedData.lines[index].originalText, savedData.lines[index].type));
+                                lines[index].functionData = savedData.lines[index].functionData;
+                                lines[index].displayText = savedData.lines[index].displayText;
+                            }
                             currentPath = savedData.currentPath || 'C:/desktop';
+                            console.log(lines)
                             break;
                         default:
                             break;
