@@ -10,6 +10,7 @@ interface ConsoleState {
     currentLine: string;
     cursorPosition: number;
     cursorVisible: boolean;
+    currentPath: string;
 }
 
 class ConsoleApp extends React.Component<{}, ConsoleState> {
@@ -33,7 +34,8 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             lines: [],
             currentLine: '',
             cursorPosition: 0,
-            cursorVisible: true
+            cursorVisible: true,
+            currentPath: 'C:/desktop'
         };
         this.activeKeys = new Set();
         this.recentKeys = [];
@@ -110,7 +112,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     handleKeyDown = (e: KeyboardEvent) => {
         let runProgram = null;
         e.preventDefault();
-        let { currentLine, cursorPosition, lines } = this.state;
+        let { currentLine, cursorPosition, lines, currentPath } = this.state;
 
         this.activeKeys.add(e.key);
         this.recentKeys.push(e.key);
@@ -157,13 +159,14 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                             });
                             return
                         case 's':
-                            localStorage.setItem('console', JSON.stringify({ currentLine, cursorPosition, lines }));
+                            localStorage.setItem('console', JSON.stringify({ currentLine, cursorPosition, lines, currentPath }));
                             break;
                         case 'r':
                             const savedData = JSON.parse(localStorage.getItem('console') || '{}');
                             currentLine = savedData.currentLine;
                             cursorPosition = savedData.cursorPosition;
                             lines = savedData.lines;
+                            currentPath = savedData.currentPath;
                             break;
                         default:
                             break;
@@ -178,7 +181,8 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 }
 
         }
-        this.setState({ currentLine, cursorPosition, lines });
+        console.log(currentPath)
+        this.setState({ currentLine, cursorPosition, lines, currentPath });
         if (runProgram) {
             this.onEnter(runProgram);
         }
