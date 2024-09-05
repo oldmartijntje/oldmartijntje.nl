@@ -1,8 +1,12 @@
 import React from 'react';
-import KeyboardOpener from '../../components/overlay/mobileKeyboardButton';
+
+interface ConsoleLine {
+    text: string;
+    type: 'input' | 'output';
+}
 
 interface ConsoleState {
-    lines: string[];
+    lines: ConsoleLine[];
     currentLine: string;
     cursorPosition: number;
     cursorVisible: boolean;
@@ -19,6 +23,9 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
     private readonly fontSize = 16;
     private readonly cursorBlinkInterval = 500; // milliseconds
     private readonly maxLines = 100;
+    private readonly consoleLineStart = '~$ ';
+    activeKeys: Set<string>;
+    recentKeys: string[];
 
     constructor(props: {}) {
         super(props);
@@ -28,6 +35,9 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             cursorPosition: 0,
             cursorVisible: true
         };
+        this.activeKeys = new Set();
+        this.recentKeys = [];
+
         this.canvasRef = React.createRef();
     }
 
@@ -37,13 +47,16 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             this.canvasRef.current.width = window.innerWidth;
             this.canvasRef.current.height = window.innerHeight;
             window.addEventListener('keydown', this.handleKeyDown);
+            window.addEventListener('keyup', this.handleKeyUp);
             this.startCursorBlink();
             this.animationFrameId = requestAnimationFrame(this.updateCanvas);
         }
     }
 
     onEnter = (command: string) => {
-        console.log(command);
+        let { lines } = this.state;
+        lines.push({ text: command, type: 'output' });
+        this.setState({ lines });
     }
 
     componentWillUnmount() {
@@ -72,15 +85,15 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
             const startY = height - this.lineHeight * 2 - this.padding;
             this.state.lines.slice(-this.maxLines).forEach((line, index) => {
                 const y = startY - (this.state.lines.length - index - 1) * this.lineHeight;
-                this.ctx!.fillText(line, this.padding, y);
+                this.ctx!.fillText((line.type == 'input' ? this.consoleLineStart : '') + line.text, this.padding, y);
             });
 
             // Draw current line
-            this.ctx.fillText(this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
+            this.ctx.fillText(this.consoleLineStart + this.state.currentLine, this.padding, height - this.lineHeight - this.padding);
 
             // Draw cursor
             if (this.state.cursorVisible) {
-                const cursorX = this.state.cursorPosition * (this.fontSize * 0.55) + this.padding + 2;
+                const cursorX = (this.state.cursorPosition + this.consoleLineStart.length) * (this.fontSize * 0.55) + this.padding + 2;
                 const cursorY = height - this.lineHeight * 1.8 - this.padding + 2;
                 this.ctx.fillRect(cursorX, cursorY, 2, this.fontSize);
             }
@@ -88,14 +101,24 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         this.animationFrameId = requestAnimationFrame(this.updateCanvas);
     }
 
+    handleKeyUp = (e: KeyboardEvent) => {
+        e.preventDefault();
+        this.activeKeys.delete(e.key);
+
+    }
+
     handleKeyDown = (e: KeyboardEvent) => {
+        let runProgram = null;
         e.preventDefault();
         let { currentLine, cursorPosition, lines } = this.state;
 
+        this.activeKeys.add(e.key);
+        this.recentKeys.push(e.key);
+
         switch (e.key) {
             case 'Enter':
-                lines = [...lines, currentLine];
-                this.onEnter(currentLine);
+                lines.push({ text: currentLine, type: 'input' });
+                runProgram = currentLine;
                 currentLine = '';
                 cursorPosition = 0;
                 break;
@@ -117,19 +140,53 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 }
                 break;
             default:
-                if (e.key.length === 1) {
-                    currentLine = currentLine.slice(0, cursorPosition) + e.key + currentLine.slice(cursorPosition);
-                    cursorPosition++;
-                }
-        }
+                if (this.activeKeys.has('Control')) {
+                    switch (e.key) {
+                        case 'c':
+                            lines.push({ text: currentLine, type: 'input' });
+                            navigator.clipboard.writeText(currentLine);
+                            currentLine = '';
+                            cursorPosition = 0;
+                            break;
+                        case 'v':
+                            navigator.clipboard.readText().then(text => {
+                                currentLine = currentLine.slice(0, cursorPosition) + text + currentLine.slice(cursorPosition);
+                                cursorPosition += text.length;
+                                console.log(text, currentLine);
+                                this.setState({ currentLine, cursorPosition, lines });
+                            });
+                            return
+                        case 's':
+                            localStorage.setItem('console', JSON.stringify({ currentLine, cursorPosition, lines }));
+                            break;
+                        case 'r':
+                            const savedData = JSON.parse(localStorage.getItem('console') || '{}');
+                            currentLine = savedData.currentLine;
+                            cursorPosition = savedData.cursorPosition;
+                            lines = savedData.lines;
+                            break;
+                        default:
+                            break;
 
+                    }
+                } else {
+
+                    if (e.key.length === 1) {
+                        currentLine = currentLine.slice(0, cursorPosition) + e.key + currentLine.slice(cursorPosition);
+                        cursorPosition++;
+                    }
+                }
+
+        }
         this.setState({ currentLine, cursorPosition, lines });
+        if (runProgram) {
+            this.onEnter(runProgram);
+        }
     }
 
     render() {
         return <>
             <canvas ref={this.canvasRef} style={{ display: 'block' }} />
-            <KeyboardOpener />
         </>;
     }
 }
