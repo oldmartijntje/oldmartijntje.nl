@@ -88,7 +88,7 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
         const startupFunction = (() => {
             lines.length = 0
             this.allowInput = true;
-            lines.push(new ConsoleLine(`Welcome to M.A.R.A.`, 'output'));
+            lines.push(new ConsoleLine(`Welcome to M.A.R.A. OS`, 'output'));
             lines.push(new ConsoleLine(`Type 'help' for a list of commands.`, 'output'));
             this.setState({ lines });
         })
