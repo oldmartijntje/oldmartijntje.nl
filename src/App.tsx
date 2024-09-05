@@ -14,6 +14,7 @@ import ServerConnector from './services/ServerConnector';
 import { allEvents } from './services/EventsSystem';
 import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
+import ConsoleApp from './pages/easterEggs/ConsoleApp';
 
 interface RouteData {
     path: string;
@@ -103,6 +104,11 @@ const App: React.FC = () => {
         {
             path: "signup",
             element: SignupPage,
+            isPrivate: false
+        },
+        {
+            path: "console",
+            element: ConsoleApp,
             isPrivate: false
         },
         { path: '*', element: NotFoundPage, isPrivate: false },
