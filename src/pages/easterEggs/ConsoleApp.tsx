@@ -41,6 +41,10 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         }
     }
 
+    onEnter = (command: string) => {
+        console.log(command);
+    }
+
     componentWillUnmount() {
         window.removeEventListener('keydown', this.handleKeyDown);
         if (this.animationFrameId !== null) {
@@ -90,6 +94,7 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
         switch (e.key) {
             case 'Enter':
                 lines = [...lines, currentLine];
+                this.onEnter(currentLine);
                 currentLine = '';
                 cursorPosition = 0;
                 break;
@@ -104,6 +109,11 @@ class ConsoleApp extends React.Component<{}, ConsoleState> {
                 break;
             case 'ArrowRight':
                 if (cursorPosition < currentLine.length) cursorPosition++;
+                break;
+            case 'Delete':
+                if (cursorPosition < currentLine.length) {
+                    currentLine = currentLine.slice(0, cursorPosition) + currentLine.slice(cursorPosition + 1);
+                }
                 break;
             default:
                 if (e.key.length === 1) {
