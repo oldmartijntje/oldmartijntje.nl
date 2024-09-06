@@ -52,10 +52,12 @@ export interface ConsoleState {
 export const applications: { [key: string]: any } = {
     ls: (consoleApp: any, userProfile: any, lines: ConsoleLine[], commandName: string, param: string) => {
         [commandName, param, userProfile]
-        const filteredFiles = consoleApp.loadedFiles.filter((file: ConsoleFile) => { return file.path === consoleApp.state.currentPath; });
+        let trimmedPath = consoleApp.state.currentPath
+        if (trimmedPath.endsWith('/') && trimmedPath != 'C:/') {
+            trimmedPath = trimmedPath.slice(0, -1)
+        }
+        const filteredFiles = [...consoleApp.loadedFiles.filter((file: ConsoleFile) => { return file.path === trimmedPath; })];
         let list = ""
-        console.log(userProfile)
-        consoleApp.loadedFiles = filteredFiles;
         for (let index = 0; index < filteredFiles.length; index++) {
             let locked = filteredFiles[index].clearanceLock && (!userProfile._id || userProfile.clearanceLevel < filteredFiles[index].clearanceLock) ? `🗝 ` : '';
             if (filteredFiles[index].type == 'folder') {
@@ -68,16 +70,25 @@ export const applications: { [key: string]: any } = {
     },
     cd: (consoleApp: any, userProfile: any, lines: ConsoleLine[], commandName: string, param: string) => {
         [commandName, userProfile]
+        let trimmedPath = consoleApp.state.currentPath
+        if (trimmedPath.endsWith('/') && trimmedPath != 'C:/') {
+            trimmedPath = trimmedPath.slice(0, -1)
+        }
         const newPath = param;
         if (newPath === '..') {
-            const splitPath = consoleApp.state.currentPath.split('/');
+            const splitPath = trimmedPath.split('/');
             splitPath.pop();
-            consoleApp.setState({ currentPath: splitPath.join('/') + '/' })
+            let newPath = splitPath.join('/')
+            if (newPath.length < 3) {
+                newPath = 'C:/'
+            }
+            consoleApp.setState({ currentPath: newPath })
         } else {
-            const newPath = consoleApp.state.currentPath != 'C:/' ? `${consoleApp.state.currentPath}/${param}` : `C:/${param}`;
+            const newPath = trimmedPath != 'C:/' ? `${trimmedPath}/${param}` : `C:/${param}`;
             const filteredFiles = consoleApp.loadedFiles.filter((file: ConsoleFile) => {
-                return (file.fullPath === newPath ||
-                    file.fullPath.slice(0, file.fullPath.length - 1) == newPath) &&
+                const fullPath = `${file.path}${file.path != 'C:/' ? '/' : ''}${file.name}`
+                return (`${fullPath}` === newPath ||
+                    `${fullPath}/` === newPath) &&
                     file.type === 'folder';
             });
             if (filteredFiles.length > 0 && (!filteredFiles[0].clearanceLock || userProfile.clearanceLevel >= filteredFiles[0].clearanceLock)) {

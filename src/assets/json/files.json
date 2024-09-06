@@ -3,28 +3,24 @@
         "name": "README.txt",
         "type": "file",
         "content": "Lol, tricked you! There's no README here!",
-        "path": "C:/desktop",
-        "fullPath": "C:/desktop/README.txt"
+        "path": "C:/desktop"
     },
     {
         "name": "test.exe",
         "type": "file",
         "content": "Wow, this is <h1>HTML</h1> content!",
         "path": "C:/desktop",
-        "fullPath": "C:/desktop/test.exe",
         "clearanceLock": 1
     },
     {
         "name": "desktop",
         "type": "folder",
-        "path": "C:/",
-        "fullPath": "C:/desktop"
+        "path": "C:/"
     },
     {
         "name": "documents",
         "type": "folder",
         "path": "C:/desktop",
-        "fullPath": "C:/desktop/documents",
         "clearanceLock": 1
     }
 ]
