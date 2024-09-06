@@ -18,6 +18,12 @@
         "path": "C:/"
     },
     {
+        "name": "yeet.txt",
+        "type": "file",
+        "path": "C:/",
+        "content": ":3"
+    },
+    {
         "name": "documents",
         "type": "folder",
         "path": "C:/desktop",
