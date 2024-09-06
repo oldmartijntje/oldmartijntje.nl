@@ -7,6 +7,22 @@ export interface ConsoleFile {
     clearanceLock?: number
 }
 
+function sizeCalculator(file: ConsoleFile): string {
+    let contentSize = file.content.length;
+    const sizeTypes = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+    let index = 0;
+
+    // Keep dividing contentSize by 1000 as long as it's 1000 or more
+    while (contentSize >= 1000 && index < sizeTypes.length - 1) {
+        contentSize /= 1000;
+        index++;
+    }
+
+    // Return the size formatted with the appropriate unit, limiting decimals to 2
+    return contentSize.toFixed(2) + ' ' + sizeTypes[index];
+}
+
 function getClassifiedLevel(hasToBe: number, userData: any): number {
     if (!userData.clearanceLevel) {
         return 1
@@ -63,7 +79,7 @@ export const applications: { [key: string]: any } = {
             if (filteredFiles[index].type == 'folder') {
                 list += `\n${index == filteredFiles.length - 1 ? '└──' : '├──'} ${locked + filteredFiles[index].name}/`
             } else {
-                list += `\n${index == filteredFiles.length - 1 ? '└──' : '├──'} ${locked + filteredFiles[index].name}`
+                list += `\n${index == filteredFiles.length - 1 ? '└──' : '├──'} ${locked + filteredFiles[index].name} (${sizeCalculator(filteredFiles[index])})`
             }
         }
         lines.push(new ConsoleLine(`${consoleApp.state.currentPath}${list}`, 'output'));
