@@ -50,7 +50,7 @@ export interface ConsoleState {
 }
 
 export const applications: { [key: string]: any } = {
-    dir: (consoleApp: any, userProfile: any, lines: ConsoleLine[], commandName: string, param: string) => {
+    ls: (consoleApp: any, userProfile: any, lines: ConsoleLine[], commandName: string, param: string) => {
         [commandName, param, userProfile]
         const filteredFiles = consoleApp.loadedFiles.filter((file: ConsoleFile) => { return file.path === consoleApp.state.currentPath; });
         let list = ""
