@@ -8,7 +8,7 @@ export interface ConsoleFile {
 }
 
 export const SETTINGS = {
-    skipStartupAnimation: true,
+    skipStartupAnimation: false,
     version: 'v1.1.0',
     maxInputsToRemember: 25
 }
