@@ -7,6 +7,11 @@ export interface ConsoleFile {
     clearanceLock?: number
 }
 
+export const SETTINGS = {
+    skipStartupAnimation: true,
+    version: 'v1.1.0'
+}
+
 function sizeCalculator(file: ConsoleFile): string {
     let contentSize = file.content.length;
     const sizeTypes = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -159,7 +164,7 @@ export const applications: { [key: string]: any } = {
             ██║ ╚═╝ ██║██╗██║  ██║██╗██║  ██║██╗██║  ██║██╗    ╚██████╔╝███████║
             ╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝     ╚═════╝ ╚══════╝\n\n`, 'output'));
         lines.push(new ConsoleLine(`Made by OldMartijntje.`, 'output'));
-        lines.push(new ConsoleLine(`M.A.R.A. OS – Your Ultimate AI-Integrated Operating System
+        lines.push(new ConsoleLine(`M.A.R.A. OS ${SETTINGS.version} – Your Ultimate AI-Integrated Operating System
 
 Built using ███████, the most advanced and reliable programming language available. This console is specifically designed for use by ████████ Agents, allowing them to access █████████████████ securely, without any compromise to their data or operations.
 

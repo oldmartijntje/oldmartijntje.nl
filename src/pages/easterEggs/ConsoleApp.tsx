@@ -1,13 +1,10 @@
 import React from 'react';
 import offlineFiles from '../../assets/json/files.json';
-import { applications, ConsoleFile, ConsoleLine, ConsoleState } from '../../models/consoleAppApplications';
+import { applications, ConsoleFile, ConsoleLine, ConsoleState, SETTINGS } from '../../models/consoleAppApplications';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 
-const SETTINGS = {
-    skipStartupAnimation: false,
-    version: 'v1.0.0'
-}
+
 
 interface ConsoleProps {
     userProfile?: any;
@@ -31,7 +28,9 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
     programs: any;
     loadedFiles: ConsoleFile[];
     showModal: boolean;
-    overlayFakeProject: ItemDisplay
+    overlayFakeProject: ItemDisplay;
+    typingHistory: string[];
+    typingHistoryIndex: number;
 
     constructor(props: {}) {
         super(props);
@@ -57,6 +56,9 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
         this.recentKeys = [];
         this.allowInput = false; // Changed to true for immediate input
         this.programs = {};
+        const localStorageHistory = localStorage.getItem('typingHistory')
+        this.typingHistory = localStorageHistory ? JSON.parse(localStorageHistory) : [];
+        this.typingHistoryIndex = this.typingHistory.length
 
 
         this.canvasRef = React.createRef();
@@ -219,6 +221,10 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
     onEnter = (command: string) => {
         let { lines } = this.state;
         lines.push(new ConsoleLine(command, 'input'));
+        this.typingHistory = this.typingHistory.slice(0, this.typingHistoryIndex)
+        this.typingHistory.push(command)
+        this.typingHistoryIndex = this.typingHistory.length
+        localStorage.setItem('typingHistory', JSON.stringify(this.typingHistory))
         this.runProgram(command);
         this.setState({ lines, currentLine: '' });
     }
@@ -361,6 +367,24 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
             case 'ArrowLeft':
                 if (cursorPosition > 0) cursorPosition--;
                 break;
+            case 'ArrowUp':
+                if (this.typingHistoryIndex > 0) {
+                    currentLine = this.typingHistory[this.typingHistoryIndex - 1]
+                    this.typingHistoryIndex--
+                    cursorPosition = currentLine.length
+                }
+                break
+            case 'ArrowDown':
+                if (this.typingHistoryIndex + 1 < this.typingHistory.length) {
+                    currentLine = this.typingHistory[this.typingHistoryIndex + 1]
+                    this.typingHistoryIndex++
+                    cursorPosition = currentLine.length
+                } else {
+                    currentLine = ''
+                    cursorPosition = 0
+                    this.typingHistoryIndex = this.typingHistory.length
+                }
+                break
             case 'ArrowRight':
                 if (cursorPosition < currentLine.length) cursorPosition++;
                 break;
@@ -408,6 +432,8 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
                     if (e.key.length === 1) {
                         currentLine = currentLine.slice(0, cursorPosition) + e.key + currentLine.slice(cursorPosition);
                         cursorPosition++;
+                    } else {
+                        console.log("ignored input: ", e.key);
                     }
                 }
         }
