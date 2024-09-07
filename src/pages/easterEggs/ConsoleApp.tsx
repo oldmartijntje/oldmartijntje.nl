@@ -223,6 +223,10 @@ export class ConsoleApp extends React.Component<ConsoleProps, ConsoleState> {
         lines.push(new ConsoleLine(command, 'input'));
         this.typingHistory = this.typingHistory.slice(0, this.typingHistoryIndex)
         this.typingHistory.push(command)
+        if (this.typingHistory.length > SETTINGS.maxInputsToRemember) {
+            this.typingHistory.shift()
+
+        }
         this.typingHistoryIndex = this.typingHistory.length
         localStorage.setItem('typingHistory', JSON.stringify(this.typingHistory))
         this.runProgram(command);

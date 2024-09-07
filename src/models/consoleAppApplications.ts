@@ -9,7 +9,8 @@ export interface ConsoleFile {
 
 export const SETTINGS = {
     skipStartupAnimation: true,
-    version: 'v1.1.0'
+    version: 'v1.1.0',
+    maxInputsToRemember: 25
 }
 
 function sizeCalculator(file: ConsoleFile): string {
