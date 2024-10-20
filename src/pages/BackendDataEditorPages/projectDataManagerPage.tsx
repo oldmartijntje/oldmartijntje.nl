@@ -105,7 +105,6 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
         });
         return fitsSearch;
     }
-
     const emptyEditingCheck = () => {
         let empty = true
         if (newProject) {
