@@ -3,8 +3,7 @@ import { Button, Form, Card, Container, Row, Col, Navbar, Nav } from 'react-boot
 import ServerConnector from '../../services/ServerConnector';
 import { getSearchFilters, setSearchFilters } from '../../helpers/localstorage';
 import '../../App.css'
-import { displayItemTypes, InfoPage, ProjectData } from '../../models/itemDisplayModel';
-import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
+import { ProjectData } from '../../models/itemDisplayModel';
 import AdminPathsPopup from '../../components/buttons/adminSelectPaths';
 
 
@@ -24,8 +23,6 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [editingProject, setEditingProject] = useState<ProjectData | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
-    const [showModal, setShowModal] = useState(false);
-    const [previewProject, setPreviewProject] = useState<ProjectData | null>(null);
     const [allProjectIds, setTopics] = useState<string[]>([]);
     const [activeTopic, setActiveTopic] = useState<string>('');
 
