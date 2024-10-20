@@ -124,14 +124,20 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const serverConnector = new ServerConnector();
-        const endpoint = `https://api.oldmartijntje.nl/getData/displayItems`;
+        const endpoint = `https://api.oldmartijntje.nl/projectData`;
         const method = editingProject ? 'PUT' : 'POST';
         const projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
-        projectData.sessionToken = userProfile.sessionToken
+        if (projectData.attributes.startsWith('"') && projectData.attributes.endsWith('"')) {
+            projectData.attributes = projectData.attributes.substring(1, projectData.attributes.length - 1);
+        }
+        projectData.attributes = JSON.parse(projectData.attributes);
+        projectData.sessionToken = userProfile.sessionToken;
 
         serverConnector.fetchData(endpoint, method, JSON.stringify(projectData), (response: any) => {
             if (response.status === 200) {
-                fetchProjects();
+                setActiveTopic(projectData.projectId);
+                fetchProjects(projectData.projectId);
+                fetchProjectDataTopics();
                 setNewProject({
                     projectId: '',
                     attributes: `"${JSON.stringify({})}"`,
@@ -149,6 +155,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
             setErrorMessage(error.message);
             console.log(error);
         });
+
     };
 
     const handleDelete = (id: string) => {
@@ -157,11 +164,12 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const url = ServerConnector.encodeQueryData({
             id: id,
             sessionToken: userProfile.sessionToken,
-        }, `https://api.oldmartijntje.nl/getData/displayItems`);
+        }, `https://api.oldmartijntje.nl/projectData`);
         serverConnector.fetchData(url, 'DELETE', undefined, (response: any) => {
             if (response.status === 200) {
                 fetchProjects();
                 setErrorMessage('');
+                fetchProjectDataTopics();
             } else if (response.status === 401) {
                 handleUnauthorized();
             } else {
@@ -179,9 +187,18 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     };
 
-    const showProjectDetails = () => {
-        setShowModal(true);
-    };
+    const isValidData = (data: string) => {
+        if (data.startsWith('"') && data.endsWith('"')) {
+            data = data.substring(1, data.length - 1);
+        }
+
+        try {
+            JSON.parse(data);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 
     return (
         <Container fluid className="py-4">
@@ -197,7 +214,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">{editingProject ? 'Edit DisplayItem' : 'Add New DisplayItem'}</Card.Title>
+                            <Card.Title className="text-light">{editingProject ? 'Edit ProjectData object' : 'Add New ProjectData object'}</Card.Title>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Project ID</Form.Label>
@@ -236,9 +253,18 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
 
                                 <div className="btn-group" role="group" aria-label="Basic example">
-                                    <Button variant="primary" type="submit">
-                                        {editingProject ? 'Update Item' : 'Create Item'}
-                                    </Button>
+                                    {isValidData(newProject.attributes) &&
+                                        <Button variant="primary" type="submit">
+                                            {editingProject ? 'Update Item' : 'Create Item'}
+                                        </Button>
+                                    }
+                                    {!isValidData(newProject.attributes) &&
+                                        <Button variant="danger" onClick={() => {
+                                            alert("Invalid Attributes JSON string");
+                                        }}>
+                                            {editingProject ? 'Update Item' : 'Create Item'}
+                                        </Button>
+                                    }
                                     {(!emptyEditingCheck() || editingProject) && <Button variant="secondary" onClick={() => {
                                         setEditingProject(null);
                                         setNewProject({
@@ -259,7 +285,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">Existing Items</Card.Title>
+                            <Card.Title className="text-light">Existing Objects</Card.Title>
                             {/* Topics Selector, topic is string */}
                             <Form.Group className="mb-3">
                                 <Form.Label className="text-light">Topics</Form.Label>
