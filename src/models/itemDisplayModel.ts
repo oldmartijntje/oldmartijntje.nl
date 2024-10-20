@@ -13,6 +13,13 @@ export interface ItemDisplay {
     displayItemType: string;
 }
 
+export interface ProjectData {
+    _id?: string;
+    projectId: string;
+    attributes: string | any;
+    clearanceLevelNeeded: number;
+}
+
 export const displayItemTypes = ['project', 'blog', 'url', 'random'];
 
 

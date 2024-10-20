@@ -14,6 +14,7 @@ const AdminPathsPopup: React.FC<SidebarProps> = ({ userProfile, title }) => {
             {userProfile && userProfile.clearanceLevel >= 4 && <li><NavDropdown title={title} id="basic-nav-dropdown" className="text-light">
                 {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item bg-light link-dark" to="/registerCode">Account Keys</Link>}
                 {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item bg-light link-dark" to="/api/DisplayItems">DisplayItems</Link>}
+                {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item bg-light link-dark" to="/api/projectDataManager">projectData</Link>}
             </NavDropdown></li>}
         </>
     );

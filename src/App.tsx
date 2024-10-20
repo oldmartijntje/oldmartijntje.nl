@@ -15,6 +15,7 @@ import { allEvents } from './services/EventsSystem';
 import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
 import ConsoleApp from './pages/easterEggs/ConsoleApp';
+import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManagerPage';
 
 interface RouteData {
     path: string;
@@ -98,6 +99,12 @@ const App: React.FC = () => {
         {
             path: '/api/DisplayItems',
             element: DisplayItemsManager,
+            isPrivate: true,
+            clearanceLevelNeeded: 5
+        },
+        {
+            path: '/api/projectDataManager',
+            element: ProjectDataManager,
             isPrivate: true,
             clearanceLevelNeeded: 5
         },
