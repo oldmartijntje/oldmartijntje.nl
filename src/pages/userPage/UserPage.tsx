@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Navbar, Nav } from 'react-bootstrap';
 import '../../assets/styling/darkmode.css';
 import icon from '../../assets/images/mii.png';
 import { allEvents } from '../../services/EventsSystem';
-import { Link } from 'react-router-dom';
 import AdminPathsPopup from '../../components/buttons/adminSelectPaths';
 
 interface UserPageProps {
