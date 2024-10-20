@@ -7,7 +7,7 @@ import Homepage from './pages/homepage/Homepage';
 import { NotFoundPage } from './pages/404/404';
 import ApiTestComponent from './pages/apiTesterPage/ApiTestingPage';
 import RegistrationCodeManager from './pages/BackendDataEditorPages/registrationCodePage';
-import ProjectManager from './pages/BackendDataEditorPages/projectManagerPage';
+import DisplayItemsManager from './pages/BackendDataEditorPages/displayItemsEditorPage';
 import { PrivateRoute, LayeredRoute } from './components/privateRoute/PrivateRoute';
 import UserPage from './pages/userPage/UserPage';
 import ServerConnector from './services/ServerConnector';
@@ -97,7 +97,7 @@ const App: React.FC = () => {
         },
         {
             path: '/api/DisplayItems',
-            element: ProjectManager,
+            element: DisplayItemsManager,
             isPrivate: true,
             clearanceLevelNeeded: 5
         },
