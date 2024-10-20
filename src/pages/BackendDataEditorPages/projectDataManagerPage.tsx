@@ -22,7 +22,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     });
     const [editingProject, setEditingProject] = useState<ProjectData | null>(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
+    const [searchFilter, setSearchFilter] = useState(getSearchFilters('projectData') || '');
     const [allProjectIds, setTopics] = useState<string[]>([]);
     const [activeTopic, setActiveTopic] = useState<string>('');
 
