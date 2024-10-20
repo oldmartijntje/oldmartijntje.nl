@@ -4,6 +4,7 @@ import '../../assets/styling/darkmode.css';
 import icon from '../../assets/images/mii.png';
 import { allEvents } from '../../services/EventsSystem';
 import { Link } from 'react-router-dom';
+import AdminPathsPopup from '../../components/buttons/adminSelectPaths';
 
 interface UserPageProps {
     userProfile?: any;
@@ -33,12 +34,7 @@ const UserPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        {userProfile.clearanceLevel >= 4 && (
-                            <NavDropdown title="admin" id="basic-nav-dropdown" className="text-light">
-                                {userProfile.clearanceLevel >= 4 && <Link className="dropdown-item text-dark bg-light" to="/registerCode">Account Keys</Link>}
-                                {userProfile.clearanceLevel >= 5 && <Link className="dropdown-item text-dark bg-light" to="/api/DisplayItems">DisplayItems</Link>}
-                            </NavDropdown>
-                        )}
+                        <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <Button variant="danger" className="ml-3" onClick={handleLogout}>Logout</Button>
                     </Nav>
                 </Navbar.Collapse>
