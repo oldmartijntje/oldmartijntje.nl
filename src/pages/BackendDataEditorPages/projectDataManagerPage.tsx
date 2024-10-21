@@ -320,7 +320,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     value={searchFilter}
                                     onChange={(e) => {
                                         const value = e.target.value;
-                                        setSearchFilters('projects', value);
+                                        setSearchFilters('projectData', value);
                                         setSearchFilter(value);
                                     }}
                                     placeholder='Search by title, info, visibility or tags'
