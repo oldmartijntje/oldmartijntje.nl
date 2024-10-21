@@ -17,7 +17,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<ProjectData[]>([]);
     const [newProject, setNewProject] = useState<ProjectData>({
         projectId: '',
-        attributes: `"${JSON.stringify({})}"`,
+        attributes: `'${JSON.stringify({})}'`,
         clearanceLevelNeeded: 0,
     });
     const [editingProject, setEditingProject] = useState<ProjectData | null>(null);
@@ -33,7 +33,11 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const fetchProjectDataTopics = () => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData('https://api.oldmartijntje.nl/projectData/getAllProjectIds', 'POST', JSON.stringify({ sessionToken: userProfile.sessionToken }), (response: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/projectData/getAllProjectIds', 'POST', JSON.stringify({
+            "from": 0,
+            "amount": 9999999999,
+            sessionToken: userProfile.sessionToken
+        }), (response: any) => {
             if (response.status === 200) {
                 setTopics(response.projectIds);
             } else if (response.status === 401) {
@@ -49,11 +53,16 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const fetchProjects = (customId: string | undefined = undefined) => {
         const serverConnector = new ServerConnector();
-        serverConnector.fetchData('https://api.oldmartijntje.nl/projectData/getProjectData', 'POST', JSON.stringify({ sessionToken: userProfile.sessionToken, projectId: customId ? customId : activeTopic }), (response: any) => {
+        serverConnector.fetchData('https://api.oldmartijntje.nl/projectData/getProjectData', 'POST', JSON.stringify({
+            "from": 0,
+            "amount": 9999999999,
+            sessionToken: userProfile.sessionToken,
+            projectId: customId ? customId : activeTopic
+        }), (response: any) => {
             if (response.status === 200) {
                 console.log(response)
                 for (let i = 0; i < response.projectData.length; i++) {
-                    response.projectData[i].attributes = `"${JSON.stringify(response.projectData[i].attributes)}"`
+                    response.projectData[i].attributes = `'${JSON.stringify(response.projectData[i].attributes)}'`
                 }
                 setProjects(response.projectData);
             } else if (response.status === 401) {
@@ -111,7 +120,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
         if (newProject) {
             if (newProject.projectId !== "") {
                 empty = false
-            } else if (newProject.attributes !== '"{}"') {
+            } else if (newProject.attributes !== '"{}"' || newProject.attributes !== "'{}'") {
                 empty = false
             }
         }
@@ -124,7 +133,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
         const endpoint = `https://api.oldmartijntje.nl/projectData`;
         const method = editingProject ? 'PUT' : 'POST';
         const projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
-        if (projectData.attributes.startsWith('"') && projectData.attributes.endsWith('"')) {
+        if ((projectData.attributes.startsWith('"') && projectData.attributes.endsWith('"')) || (projectData.attributes.startsWith("'") && projectData.attributes.endsWith("'"))) {
             projectData.attributes = projectData.attributes.substring(1, projectData.attributes.length - 1);
         }
         projectData.attributes = JSON.parse(projectData.attributes);
@@ -136,8 +145,8 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 fetchProjects(projectData.projectId);
                 fetchProjectDataTopics();
                 setNewProject({
-                    projectId: '',
-                    attributes: `"${JSON.stringify({})}"`,
+                    projectId: projectData.projectId,
+                    attributes: `'${JSON.stringify({})}'`,
                     clearanceLevelNeeded: 0,
                 });
 
@@ -185,7 +194,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     };
 
     const isValidData = (data: string) => {
-        if (data.startsWith('"') && data.endsWith('"')) {
+        if ((data.startsWith('"') && data.endsWith('"')) || (data.startsWith("'") && data.endsWith("'"))) {
             data = data.substring(1, data.length - 1);
         }
 
@@ -266,7 +275,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         setEditingProject(null);
                                         setNewProject({
                                             projectId: '',
-                                            attributes: `"${JSON.stringify({})}"`,
+                                            attributes: `'${JSON.stringify({})}'`,
                                             clearanceLevelNeeded: 0,
                                         });
 
