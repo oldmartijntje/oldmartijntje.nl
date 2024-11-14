@@ -37,6 +37,12 @@
     left: 0;
 }
 
+.sidebar-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar-content h2 {
     color: #007FFF;
     margin-top: 0;

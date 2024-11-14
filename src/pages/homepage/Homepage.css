@@ -62,6 +62,11 @@
     margin-left: calc(-0.5* var(--bs-gutter-x));
 }
 
+sub {
+    height: fit-content;
+    line-height: 1rem !important;
+}
+
 .scrollBar .itemCard {
     max-width: 100%;
     padding-right: calc(var(--bs-gutter-x)* 0.5);
