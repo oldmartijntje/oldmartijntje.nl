@@ -1,6 +1,7 @@
 // App.js
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { useKonamiDebug } from './helpers/konamiDebug';
 
 import Sidebar from './components/sidebar/Sidebar';
 import Homepage from './pages/homepage/Homepage';
@@ -28,6 +29,7 @@ interface RouteData {
 const randomnessSeed = Math.random() * 10000
 
 const App: React.FC = () => {
+    useKonamiDebug();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [clearanceLevel, setClearanceLevel] = useState(0);
