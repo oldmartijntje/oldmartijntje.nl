@@ -7,10 +7,11 @@ interface SidebarProps {
     userProfile?: any;
     isOpen: boolean;
     toggleSidebar: () => void;
+    isEventActive: boolean;
 }
 
 // UserPage component
-const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, isEventActive }) => {
     const [isMobile, setIsMobile] = useState(false);
 
     // Check if it's a mobile device
@@ -33,6 +34,9 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar })
             <button id="sidebarToggle" className="sidebar-toggle" onClick={toggleSidebar}>
                 ☰
             </button>
+            {isEventActive && <div id="EventLabel" className="EventLabel">
+
+            </div>}
             <div id="sidebar" className={`sidebar ${isOpen ? 'open' : ''}`}>
                 <div className="sidebar-content">
                     <h2>Navigator</h2>

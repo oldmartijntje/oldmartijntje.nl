@@ -29,6 +29,9 @@ interface RouteData {
 const randomnessSeed = Math.random() * 10000
 
 const App: React.FC = () => {
+    const isEventActive = false;
+
+
     useKonamiDebug();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -126,7 +129,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app-container">
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userProfile={userProfile}></Sidebar>
+                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userProfile={userProfile} isEventActive={isEventActive}></Sidebar>
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                     <Routes>
                         {routesData.map((route, index) => (

@@ -13,6 +13,86 @@
     border: #0056b3 solid 2px;
 }
 
+.EventLabel {
+    position: fixed;
+    top: 100px;
+    left: 0px;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    background: linear-gradient(90deg, #2b81f3, #ff4500);
+    box-shadow: 0 8px 25px rgba(255, 69, 0, 0.2);
+    animation: float 5s ease-in-out infinite;
+    width: 250px;
+    padding: 15px;
+    padding-left: 25px;
+    border-left: 6px solid #ffffff;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.3s ease;
+    clip-path: polygon(0% 0%,
+            100% 0%,
+            90% 50%,
+            100% 100%,
+            0% 100%);
+}
+
+.EventLabel:hover {
+    transform: translateY(-15px);
+}
+
+.EventLabel::before {
+    font-weight: bold;
+    position: relative;
+    content: "✨Ongoing Event";
+    z-index: 2;
+}
+
+.EventLabel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    filter: blur(15px);
+    transform: skewX(-15deg);
+    animation: blurredGlide 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes blurredGlide {
+    0% {
+        left: -100%;
+        opacity: 0.5;
+        transform: skewX(-15deg) translateX(-100px);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: skewX(-15deg) translateX(300px);
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+        transform: skewX(-15deg) translateX(500px);
+    }
+}
+
 .sidebar-toggle:hover {
     background-color: #0056b3;
     border: #007FFF solid 2px;
