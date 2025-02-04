@@ -17,6 +17,7 @@ import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
 import ConsoleApp from './pages/easterEggs/ConsoleApp';
 import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManagerPage';
+import Events from './pages/events/Events';
 
 interface RouteData {
     path: string;
@@ -121,6 +122,11 @@ const App: React.FC = () => {
         {
             path: "console",
             element: ConsoleApp,
+            isPrivate: false
+        },
+        {
+            path: "events",
+            element: Events,
             isPrivate: false
         },
         { path: '*', element: NotFoundPage, isPrivate: false },

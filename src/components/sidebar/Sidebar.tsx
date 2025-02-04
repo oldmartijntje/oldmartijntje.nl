@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './Sidebar.css';
 import AdminPathsPopup from '../buttons/adminSelectPaths';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface SidebarProps {
     userProfile?: any;
@@ -13,6 +14,11 @@ interface SidebarProps {
 // UserPage component
 const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, isEventActive }) => {
     const [isMobile, setIsMobile] = useState(false);
+    const location = useLocation();
+
+    const navToEvents = () => {
+        window.location.href = "#/events";
+    }
 
     // Check if it's a mobile device
     useEffect(() => {
@@ -34,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
             <button id="sidebarToggle" className="sidebar-toggle" onClick={toggleSidebar}>
                 ☰
             </button>
-            {isEventActive && <div id="EventLabel" className="EventLabel">
+            {isEventActive && location.pathname != "/events" && <div id="EventLabel" className="EventLabel" onClick={navToEvents}>
 
             </div>}
             <div id="sidebar" className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -44,7 +50,8 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/discovery">Discovery</Link></li>
                         <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
-                        <li><Link to="/user">account</Link></li>
+                        <li><Link to="/user">Account</Link></li>
+                        {/* <li><Link to="/events">Events</Link></li> */}
                         {!isMobile && (
                             <li><Link to="/console">M.A.R.A. OS</Link></li>
                         )}
