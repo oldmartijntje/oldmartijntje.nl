@@ -14,6 +14,7 @@ interface EventItem {
     content: string;
     image: string;
     dateString: string;
+    endDateString: string;
 }
 
 const Events: React.FC<EventsProps> = ({ data }) => {
@@ -29,7 +30,8 @@ const Events: React.FC<EventsProps> = ({ data }) => {
             typeof item.title === 'string' &&
             typeof item.content === 'string' &&
             typeof item.image === 'string' &&
-            typeof item.dateString === 'string'
+            typeof item.dateString === 'string' &&
+            typeof item.endDateString === 'string'
         );
     }
 
@@ -39,7 +41,8 @@ const Events: React.FC<EventsProps> = ({ data }) => {
             title: data.attributes.title,
             content: data.attributes.content,
             image: data.attributes.image,
-            dateString: data.attributes.dateString
+            dateString: data.attributes.dateString,
+            endDateString: data.attributes.endDateString
         };
     }
 
@@ -90,24 +93,24 @@ const Events: React.FC<EventsProps> = ({ data }) => {
     }
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <header className="text-center mb-12">
+            <header className="text-center mb-12 text-white">
                 <h1 className="text-4xl font-bold mb-4">Tech & Trends Blog</h1>
                 <p className="text-gray-600">Exploring the latest in technology and innovation</p>
             </header>
 
-            <main className="space-y-8">
-                {activeEvents.map(blog => (
-                    <Card key={blog._id} className="overflow-hidden bg-dark text-white">
-                        < img
+            <main className="space-y-8 p-4">
+                {[...activeEvents, ...oldEvents].map(blog => (
+                    <Card key={blog._id} className="overflow-hidden bg-dark text-white p-4">
+                        {/* < img
                             src={blog.image}
                             alt={blog.title}
                             className="w-full h-64 object-cover"
-                        />
+                        /> */}
                         <div className="p-6">
                             <div className="mb-4">
                                 <h2 className="text-2xl font-bold mb-2">{blog.title}</h2>
                                 <div className="text-sm text-gray-600">
-                                    By OldMartijntje | {blog.dateString}
+                                    From {blog.dateString} untill {blog.endDateString}
                                 </div>
                             </div>
                             <p className="text-gray-700 leading-relaxed">{blog.content}</p>
