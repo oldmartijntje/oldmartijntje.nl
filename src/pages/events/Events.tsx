@@ -18,6 +18,7 @@ interface EventItem {
 }
 
 const Events: React.FC<EventsProps> = ({ data }) => {
+    console.log(data);
     const [activeEvents, setNewEvents] = useState<EventItem[]>([]);
     const [oldEvents, setOldEvents] = useState<EventItem[]>([]);
 
