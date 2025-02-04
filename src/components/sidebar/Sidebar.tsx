@@ -51,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                         <li><Link to="/discovery">Discovery</Link></li>
                         <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <li><Link to="/user">Account</Link></li>
-                        {/* <li><Link to="/events">Events</Link></li> */}
+                        <li><Link to="/events">Events</Link></li>
                         {!isMobile && (
                             <li><Link to="/console">M.A.R.A. OS</Link></li>
                         )}
