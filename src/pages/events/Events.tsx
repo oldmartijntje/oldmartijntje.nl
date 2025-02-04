@@ -115,7 +115,7 @@ const Events: React.FC<EventsProps> = ({ data }) => {
                                 </div>
                             </div>
                             <p className="text-gray-700 leading-relaxed">{blog.content}</p>
-                            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                            <button className="mt-4 bg-primary text-white px-4 py-2 rounded">
                                 Read More
                             </button>
                         </div>
