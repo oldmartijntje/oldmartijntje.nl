@@ -30,7 +30,25 @@ interface RouteData {
 const randomnessSeed = Math.random() * 10000
 
 const App: React.FC = () => {
-    const isEventActive = false;
+    const [isEventActive, setEventStatus] = useState(false);
+
+    const serverConnector = new ServerConnector();
+    serverConnector.fetchData('https://api.oldmartijntje.nl/projectData/getProjectData', 'POST', JSON.stringify({
+        "from": 0,
+        "amount": 5,
+        projectId: "Event"
+    }), (response: any) => {
+        if (response.status === 200) {
+            if (response.projectData.length > 1) {
+                setEventStatus(true);
+            } else {
+                setEventStatus(false);
+            }
+
+        }
+    }, (error: any) => {
+        console.log(error);
+    });
 
 
     useKonamiDebug();

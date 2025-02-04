@@ -473,7 +473,8 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
                                             <strong>Spoiler:</strong> {project.spoiler ? 'Yes' : 'No'}<br />
                                             <strong>NSFW:</strong> {project.nsfw ? 'Yes' : 'No'}<br />
-                                            <strong>Tags:</strong> {project.tags.join(', ') || 'N/A'}
+                                            <strong>Tags:</strong> {project.tags.join(', ') || 'N/A'}<br />
+                                            <strong>Id:</strong> {project._id}
                                         </Card.Text>
                                         <div className="btn-group" role="group" aria-label="Basic example">
                                             <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>

@@ -14,6 +14,7 @@ interface RegistrationCode {
     role?: string;
     code: string;
     textNote?: string;
+    _id: string;
 }
 
 interface UserPageProps {
@@ -27,7 +28,8 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [newCode, setNewCode] = useState<Omit<RegistrationCode, 'code'>>({
         clearanceLevel: 0,
         role: '',
-        textNote: ''
+        textNote: '',
+        _id: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -126,7 +128,7 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
 
             if (response.status === 200) {
                 setCodes(response.codes);
-                setNewCode({ clearanceLevel: 0, role: '', textNote: '' });
+                setNewCode({ clearanceLevel: 0, role: '', textNote: '', _id: '' });
             } else if (response.status == 401) {
                 localStorage.removeItem('UserLogin');
                 alert('Session expired. Please log in again.');
@@ -219,7 +221,8 @@ const RegistrationCodeManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <strong>Account Key:</strong> {code.code}<br />
                                             <strong>Clearance Level:</strong> {code.clearanceLevel}<br />
                                             <strong>Role:</strong> {code.role || 'N/A'} <br />
-                                            <strong>Note:</strong> {code.textNote || 'N/A'}
+                                            <strong>Note:</strong> {code.textNote || 'N/A'} <br />
+                                            <strong>Id:</strong> {code._id}
                                             <Link className="nav-link link-primary" to={"/signup?fillr=" + code.code}>Redeem Code</Link>
                                         </Card.Text>
                                         <div className="btn-group" role="group" aria-label="Basic example" style={{ marginBottom: '1rem' }}>

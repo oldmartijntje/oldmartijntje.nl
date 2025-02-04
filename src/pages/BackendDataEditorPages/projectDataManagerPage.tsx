@@ -331,6 +331,7 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Card.Body className="card text-bg-dark">
                                         <Card.Title>{project.projectId}</Card.Title>
                                         <Card.Text>
+                                            <strong>Id:</strong> {project._id}<br />
                                             <strong>Attributes:</strong> {project.attributes}<br />
                                             <strong>Clearance Level Needed:</strong> {project.clearanceLevelNeeded}
                                         </Card.Text>
