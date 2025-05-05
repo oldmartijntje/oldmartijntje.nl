@@ -30,6 +30,8 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projects') || '');
     const [showModal, setShowModal] = useState(false);
     const [previewProject, setPreviewProject] = useState<ItemDisplay | null>(null);
+    const [useCustomDatetime, setUseCustomDatetime] = useState(false);
+    const [datetimeInput, setDatetimeInput] = useState('');
 
     useEffect(() => {
         fetchProjects();
@@ -161,13 +163,27 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
         return empty
     }
 
+    // Update datetime input when date changes
+    const handleDatetimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const dtString = e.target.value;
+        setDatetimeInput(dtString);
+        const newDate = new Date(dtString);
+        setNewProject({ ...newProject, lastUpdated: newDate });
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const serverConnector = new ServerConnector();
         const endpoint = `https://api.oldmartijntje.nl/getData/displayItems`;
         const method = editingProject ? 'PUT' : 'POST';
-        const projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
-        projectData.sessionToken = userProfile.sessionToken
+        let projectData: any = editingProject ? { ...editingProject, ...newProject } : newProject;
+
+        // Clear lastUpdated if custom datetime is disabled
+        if (!useCustomDatetime) {
+            projectData.lastUpdated = null;
+        }
+
+        projectData.sessionToken = userProfile.sessionToken;
 
         serverConnector.fetchData(endpoint, method, JSON.stringify(projectData), (response: any) => {
             if (response.status === 200) {
@@ -194,6 +210,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
             console.log(error);
         });
     };
+
 
     const handleDelete = (id: string) => {
         const serverConnector = new ServerConnector();
@@ -432,6 +449,43 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         }}
                                     />
                                 </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">Last Updated</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        readOnly
+                                        value={newProject.lastUpdated ?
+                                            new Date(newProject.lastUpdated).toLocaleString() :
+                                            'Last Update'}
+                                        className="text-dark text-bg-secondary"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Use Custom Datetime"
+                                        checked={useCustomDatetime}
+                                        onChange={(e) => {
+                                            setUseCustomDatetime(e.target.checked);
+                                            if (!e.target.checked) {
+                                                setNewProject({ ...newProject, lastUpdated: undefined });
+                                            }
+                                        }}
+                                        className="text-light"
+                                    />
+                                </Form.Group>
+
+                                {useCustomDatetime && (
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Select Date & Time</Form.Label>
+                                        <Form.Control
+                                            type="datetime-local"
+                                            value={datetimeInput}
+                                            onChange={handleDatetimeChange}
+                                        />
+                                    </Form.Group>
+                                )}
                                 <div className="btn-group" role="group" aria-label="Basic example">
                                     <Button variant="primary" type="submit">
                                         {editingProject ? 'Update Item' : 'Create Item'}
