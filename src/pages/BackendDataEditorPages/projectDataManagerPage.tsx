@@ -25,6 +25,8 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [searchFilter, setSearchFilter] = useState(getSearchFilters('projectData') || '');
     const [allProjectIds, setTopics] = useState<string[]>([]);
     const [activeTopic, setActiveTopic] = useState<string>('');
+    const [includeDatetime, setIncludeDatetime] = useState(false);
+    const [selectedDatetime, setSelectedDatetime] = useState<string>('');
 
     useEffect(() => {
         fetchProjectDataTopics();
@@ -238,7 +240,8 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Form.Label className="text-light">Attributes (Stringified JSON)</Form.Label>
                                     <Form.Control
                                         placeholder='{"key":"value"}'
-                                        type="text"
+                                        as="textarea"
+                                        rows={3}
                                         value={newProject.attributes}
                                         onChange={(e) => {
                                             setNewProject({ ...newProject, attributes: e.target.value })
@@ -257,6 +260,44 @@ const ProjectDataManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         required
                                     />
                                 </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Add DateTime"
+                                        checked={includeDatetime}
+                                        onChange={(e) => setIncludeDatetime(e.target.checked)}
+                                        className="text-light"
+                                    />
+                                </Form.Group>
+
+                                {includeDatetime && (
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Select Date & Time</Form.Label>
+                                        <Form.Control
+                                            type="datetime-local"
+                                            value={selectedDatetime}
+                                            onChange={(e) => setSelectedDatetime(e.target.value)}
+                                        />
+                                        <Button
+                                            className="mt-2"
+                                            variant="success"
+                                            onClick={() => {
+                                                const attr = JSON.parse(
+                                                    newProject.attributes.startsWith("'") || newProject.attributes.startsWith('"')
+                                                        ? newProject.attributes.slice(1, -1)
+                                                        : newProject.attributes
+                                                );
+                                                attr.datetime = selectedDatetime;
+                                                setNewProject({
+                                                    ...newProject,
+                                                    attributes: `'${JSON.stringify(attr)}'`
+                                                });
+                                            }}
+                                        >
+                                            Set DateTime in Attributes
+                                        </Button>
+                                    </Form.Group>
+                                )}
 
                                 <div className="btn-group" role="group" aria-label="Basic example">
                                     {isValidData(newProject.attributes) &&
