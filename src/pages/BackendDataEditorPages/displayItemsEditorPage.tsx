@@ -7,9 +7,6 @@ import { displayItemTypes, InfoPage, ItemDisplay } from '../../models/itemDispla
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 import AdminPathsPopup from '../../components/buttons/adminSelectPaths';
 
-
-
-
 interface UserPageProps {
     userProfile?: any;
 }
@@ -38,11 +35,21 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
         fetchProjects();
     }, []);
 
-    const handleInfoPageChange = (index: number, field: keyof InfoPage, value: string) => {
-        const updatedProject = { ...newProject! };
+    // Move info page up or down
+    const moveInfoPage = (index: number, direction: -1 | 1) => {
+        const pages = [...newProject.infoPages];
+        const newIndex = index + direction;
+        if (newIndex < 0 || newIndex >= pages.length) return;
+        [pages[index], pages[newIndex]] = [pages[newIndex], pages[index]];
+        setNewProject({ ...newProject, infoPages: pages });
+        setPreviewProject({ ...newProject, infoPages: pages });
+    };
 
-        updatedProject.infoPages[index] = { ...updatedProject.infoPages[index], [field]: value };
-        setPreviewProject(updatedProject);
+    const handleInfoPageChange = (index: number, field: keyof InfoPage, value: string) => {
+        const updated = { ...newProject };
+        updated.infoPages[index] = { ...updated.infoPages[index], [field]: value };
+        setNewProject(updated);
+        setPreviewProject(updated);
     };
 
     const fetchProjects = () => {
@@ -225,13 +232,11 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
             ...newProject,
             infoPages: [...newProject.infoPages, { title: '', content: '' }],
         });
-
     };
 
     const removeInfoPage = (index: number) => {
-        const updatedInfoPages = newProject.infoPages.filter((_, i) => i !== index);
-        setNewProject({ ...newProject, infoPages: updatedInfoPages });
-
+        const updated = newProject.infoPages.filter((_, i) => i !== index);
+        setNewProject({ ...newProject, infoPages: updated });
     };
 
     return (
@@ -248,7 +253,9 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 <Col md={6}>
                     <Card className="bg-dark">
                         <Card.Body>
-                            <Card.Title className="text-light">{editingProject ? 'Edit DisplayItem' : 'Add New DisplayItem'}</Card.Title>
+                            <Card.Title className="text-light">
+                                {editingProject ? 'Edit DisplayItem' : 'Add New DisplayItem'}
+                            </Card.Title>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Title</Form.Label>
@@ -310,24 +317,24 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Info Pages</Form.Label><br />
-                                    <div className="accordion accordion text-bg-dark" id="accordionFlushExample">
+                                    <div className="accordion accordion-flush text-bg-dark" id="accordionFlushExample">
                                         {newProject.infoPages.map((infoPage, index) => (
                                             <div className="accordion-item bg-dark" key={index}>
-                                                <h2 className="accordion-header text-bg-dark">
+                                                <h2 className="accordion-header">
                                                     <button
-                                                        className={"accordion-button bg-secondary text-light"}
+                                                        className="accordion-button bg-secondary text-light"
                                                         type="button"
                                                         data-bs-toggle="collapse"
-                                                        data-bs-target={"#accordion-flush" + index}
+                                                        data-bs-target={`#accordion-flush${index}`}
                                                         aria-expanded="false"
-                                                        aria-controls={"accordion-flush" + index}
+                                                        aria-controls={`accordion-flush${index}`}
                                                     >
                                                         {`Info Page ${index + 1}`}
                                                     </button>
                                                 </h2>
                                                 <div
-                                                    id={"accordion-flush" + index}
-                                                    className={"accordion-collapse " + (index === 0 ? 'collapse show' : 'collapse')}
+                                                    id={`accordion-flush${index}`}
+                                                    className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
                                                     data-bs-parent="#accordionFlushExample"
                                                 >
                                                     <Card className="mb-2 bg-dark">
@@ -335,7 +342,6 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                             <Form.Group className="mb-2">
                                                                 <Form.Label className="text-light">Title</Form.Label>
                                                                 <Form.Control
-                                                                    placeholder='Tab Title Goes Here'
                                                                     type="text"
                                                                     value={infoPage.title}
                                                                     onChange={(e) => handleInfoPageChange(index, 'title', e.target.value)}
@@ -344,23 +350,40 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                             <Form.Group className="mb-2">
                                                                 <Form.Label className="text-light">Content</Form.Label>
                                                                 <Form.Control
-                                                                    placeholder='<h1>Example HTML Go BRRRRRR</h1>'
                                                                     as="textarea"
                                                                     rows={3}
                                                                     value={infoPage.content}
                                                                     onChange={(e) => handleInfoPageChange(index, 'content', e.target.value)}
                                                                 />
                                                             </Form.Group>
-                                                            <Button variant="danger" size="sm" onClick={() => removeInfoPage(index)}>
-                                                                Remove Info Page
-                                                            </Button>
+                                                            <div className="d-flex gap-2">
+                                                                <Button
+                                                                    variant="secondary"
+                                                                    size="sm"
+                                                                    onClick={() => moveInfoPage(index, -1)}
+                                                                    disabled={index === 0}
+                                                                >
+                                                                    Move Up
+                                                                </Button>
+                                                                <Button
+                                                                    variant="secondary"
+                                                                    size="sm"
+                                                                    onClick={() => moveInfoPage(index, 1)}
+                                                                    disabled={index === newProject.infoPages.length - 1}
+                                                                >
+                                                                    Move Down
+                                                                </Button>
+                                                                <Button variant="danger" size="sm" onClick={() => removeInfoPage(index)}>
+                                                                    Remove
+                                                                </Button>
+                                                            </div>
                                                         </Card.Body>
                                                     </Card>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <Button variant="secondary" size="sm" onClick={addInfoPage}>
+                                    <Button variant="secondary" size="sm" onClick={addInfoPage} className="mt-2">
                                         Add Info Page
                                     </Button>
                                 </Form.Group>
@@ -510,9 +533,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     </Card>
                 </Col>
             </Row>
-            <ItemDisplayViewer previewProject={previewProject} showModal={showModal} setShowModal={function (bool: boolean): void {
-                setShowModal(bool);
-            }} />
+            <ItemDisplayViewer previewProject={previewProject} showModal={showModal} setShowModal={(bool) => setShowModal(bool)} />
         </Container>
     );
 };
