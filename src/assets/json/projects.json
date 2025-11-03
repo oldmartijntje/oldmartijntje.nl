@@ -1,147 +1,112 @@
-[
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd08e"
-        },
-        "title": "🌵OldMartijntje’s Basement",
-        "link": "https://docs.oldmartijntje.nl/",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "lastUpdated": {
-            "$date": "2024-08-30T12:03:02.556Z"
-        },
-        "tags": [
+{
+   "displayItems":[
+      {
+         "_id":"66d82b1dd6e1c56f368cd08e",
+         "title":"🌵OldMartijntje’s Basement",
+         "link":"https://docs.oldmartijntje.nl/",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/8exzm25.png\" alt=\"Screenshot\"><p>This website is where I post my articles. Articles on literally Anything. Kinda like it's a second brain.<br>This is my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault turned into a website with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz v4.1.5</a>.<br></p><div class=\"imgDiv\"><img src=\"https://i.imgur.com/cY5b6vw.png\" alt=\"Screenshot\"><sub>Easy Navmap to navigate my articles.</sub></div>"
+            }
+         ],
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "lastUpdated":"2024-08-30T12:03:02.556Z",
+         "tags":[
             "website",
             "documentation",
             "favourite"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/8exzm25.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd08f"
-        },
-        "title": "🦖OldMartijntje’s Playground",
-        "link": "https://oldmartijntje.github.io/outdated-oldmartijntje-website/",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "lastUpdated": {
-            "$date": "2024-08-30T12:10:40.434Z"
-        },
-        "tags": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/8exzm25.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd08f",
+         "title":"💺OldMartijntje’s Playground",
+         "link":"https://oldmartijntje.github.io/outdated-oldmartijntje-website/",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/XpoI9MI.png\" alt=\"Screenshot\">\n                    <p>This is my old website which is just a dump where I used to test stuff, or just place random things that I thought would be fun.<br>\n                        This website has different homepages dependign on your device, but it is intended for Desktop users.<br>\n                        It had a whole Achievement / easteregg finding gig.</p>\n                        <p>\n                            The design analysis behind this website is not: \"Is this a good place for this?\", No it goes like: \"Hmm where should I place this big clicker game, hmm 1 small button between anything else is a good idea.\"<br>\n                            This way it has lots of secrets to find.</p>\n                            \n                            <div>\n                                <img src=\"https://i.imgur.com/CoPkGRr.png\" alt=\"Screenshot\">\n                                <sub>Easteregg collector.</sub>\n                                </div>\n                                <p>This website is made with Angular, PHP (backend that might be offline now), MySQL, and a lot of love.</p>\n\n                                <div>\n                                <img src=\"https://i.imgur.com/y1BEHzn.png\" alt=\"Screenshot\">\n                                <sub>It can run Doom.</sub>\n                                </div>\n                                <p>This was my main website for a long time, but I have moved on to a new website, but I still keep this one up for the memories.<br>\n                                    The reason I switched websites is because it is not really easy access to information like \"My projects\" etc, and I made the new website at the same time I got my VPS,  which made it easy to combine front and back-end.</p>"
+            }
+         ],
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "lastUpdated":"2024-09-23T20:16:23.260Z",
+         "tags":[
             "website",
             "favourite",
             "my-code",
             "angular",
             "typescript"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/XpoI9MI.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd090"
-        },
-        "title": "Chess Simulator 256",
-        "link": "https://oldmartijntje.github.io/Totally-Normal-Chess-Simulator/",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "lastUpdated": {
-            "$date": "2024-09-03T15:44:59.522Z"
-        },
-        "tags": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/XpoI9MI.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd090",
+         "title":"Chess Simulator 256",
+         "link":"https://oldmartijntje.github.io/Totally-Normal-Chess-Simulator/",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/IubDBSt.png\" alt=\"Screenshot\">\n                    <p>This is a website I made as a summer project.</p>\n                    <h3>✨Totally Normal Chess Simulator✨</h3>\n                    <p>This project started as a normal chess game (without En passant / castling), Reddit had the power to decide what would be added in the next update. Normal chess things or not, didn't matter.<br>\n                        This happened 7 times:</p>\n                    <ol>\n                        <li>Added Microtransactions</li>\n                        <li>Added Lootboxes</li>\n                        <li>Added Merging Pieces</li>\n                        <li>Added carrying pieces</li>\n                        <li>Added a twist selector</li>\n                        <li>Added a tech tree</li>\n                        <li>Added more pawn varients</li>\n                    </ol>\n                        \n                    <p>Anyone can play this game for free. It's a fun project that I'm proud of.</p>\n                            <div>\n                                <img src=\"https://i.imgur.com/q8WeHBL.png\" alt=\"Screenshot\">\n                                <sub>Tech tree.</sub>\n                                </div>\n                                <p>Technologies used:</p>\n                                <ul>\n                                    <li>HTML</li>\n                                    <li>CSS</li>\n                                    <li>JavaScript</li>\n                                </ul>\n                                <p>You can play this on mobile or desktop, it even has settings to suit your preferences.</p>"
+            }
+         ],
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "lastUpdated":"2024-09-03T15:44:59.522Z",
+         "tags":[
             "website",
             "favourite",
             "my-code",
             "side-project",
             "game"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/zGDaYs5.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd091"
-        },
-        "title": "Project Kazamata",
-        "link": "https://oldmartijntje.github.io/Project-Kazamata/",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "lastUpdated": {
-            "$date": "2024-09-03T15:41:48.222Z"
-        },
-        "tags": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/zGDaYs5.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd091",
+         "title":"Project Kazamata",
+         "link":"https://oldmartijntje.github.io/Project-Kazamata/",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/cTc12QY.png\" alt=\"Screenshot\">\r\n                    <p>Project Kazamata is a Game Engine / Framework I am making.</p>\r\n                    <h3>The framework.</h3>\r\n                    <p>This is completely customisable. I was / am going to make my own game with it as a Demo. <br>\r\n                        It is an RPG framework. It even has <a href=\"https://www.npmjs.com/package/kazamata-cli?activeTab=readme\" target=\"_blank\">it's own CLI.</a> (command line interface)</p>\r\n                    <h4>Github</h4>\r\n                    <p>It is open source and can be found on <a href=\"https://github.com/oldmartijntje/Project-Kazamata\" target=\"_blank\">Github</a></p>\r\n                    <div>\r\n                        <img src=\"https://i.imgur.com/dgz8qD1.png\" alt=\"Screenshot\">\r\n                        <sub>YEET</sub>\r\n                    </div>"
+            }
+         ],
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "lastUpdated":"2025-06-23T12:04:25.674Z",
+         "tags":[
             "website",
-            "favourite",
             "my-code",
             "game"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/4U73m3e.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd092"
-        },
-        "title": "SiSu AI Chatbot",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/qXjglaH.png\" alt=\"Screenshot\">\n                    <p>I made an AI chatbot for a company called <a href=\"https://www.simpelsubsidie.nl/\" target=\"_blank\">Simpel Subsidie <img src=\"https://simpelsubsidie.nl/assets/img/logo.webp\" style=\"height:40px!important;\"></a>.<br>\n                        This chatbot is made using:</p>\n                    <ul>\n                        <li>PHP</li>\n                        <li>ChatGPT</li>\n                        <li>Javascript</li>\n                    </ul>"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "lastUpdated": {
-            "$date": "2024-09-01T13:00:55.199Z"
-        },
-        "tags": [
-            "website",
-            "favourite",
-            "my-code",
-            "professional",
-            "php"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/qXjglaH.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd093"
-        },
-        "title": "OldMartijntje's Webcorner💺",
-        "link": "https://oldmartijntje.nl",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/fpyjbKy.png\" alt=\"Screenshot\">\n<p>This is my main website. Odds are that you are currently already on this website.<br/>\nI use this website to display my projects, Manage my database. etc.<br/>\nIt is the first time that I have used:</p>\n<ol>\n        <li>Node Backend</li>\n        <li>Account system</li>\n        <li>CRUD Editor</li>\n        <li>React</li>\n        <li>Bootstrap</li>\n</ol>\n<p>This website is heavily inspired by things like <a href=\"https://en.wikipedia.org/wiki/Agents_of_S.H.I.E.L.D.\" target=\"_blank\">Marvels S.H.I.E.L.D.</a></p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/wuOGyNu.png\" alt=\"Screenshot\"><sub>Accounts have an Clearance Level.</sub></div>\n<p>\nAn account on this website is invite only, that's why there is an guest account button.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/pOzGkiq.png\" alt=\"Screenshot\"><sub>More Marvel inspired things on the Signup page.</sub></div>\n<p>\nThere are some big plans for this website. But we'll see if it happens or not :3</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/s3w3SP9.png\" alt=\"Screenshot\"><sub>The Register page, if you received <a href=\"https://oldmartijntje.nl/#/signup?fillr=xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\" target=\"_blank\">an invite link</a></sub></div>"
-        },
-        "lastUpdated": {
-            "$date": "2024-08-30T13:52:06.929Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/4U73m3e.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd093",
+         "title":"🦖OldMartijntje's Webcorner",
+         "link":"https://oldmartijntje.nl",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/fpyjbKy.png\" alt=\"Screenshot\">\n<p>This is my main website. Odds are that you are currently already on this website.<br/>\nI use this website to display my projects, Manage my database. etc.<br/>\nIt is the first time that I have used:</p>\n<ol>\n        <li>Node Backend</li>\n        <li>Account system</li>\n        <li>CRUD Editor</li>\n        <li>React</li>\n        <li>Bootstrap</li>\n</ol>\n<p>This website is heavily inspired by things like <a href=\"https://en.wikipedia.org/wiki/Agents_of_S.H.I.E.L.D.\" target=\"_blank\">Marvels S.H.I.E.L.D.</a></p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/wuOGyNu.png\" alt=\"Screenshot\"><sub>Accounts have an Clearance Level.</sub></div>\n<p>\nAn account on this website is invite only, that's why there is an guest account button.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/pOzGkiq.png\" alt=\"Screenshot\"><sub>More Marvel inspired things on the Signup page.</sub></div>\n<p>\nThere are some big plans for this website. But we'll see if it happens or not :3</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/s3w3SP9.png\" alt=\"Screenshot\"><sub>The Register page, if you received <a href=\"https://oldmartijntje.nl/#/signup?fillr=xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\" target=\"_blank\">an invite link</a></sub></div>"
+            }
+         ],
+         "lastUpdated":"2024-09-23T20:16:33.985Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
             "website",
             "favourite",
             "my-code",
@@ -150,172 +115,299 @@
             "typescript",
             "backend",
             "node"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/fpyjbKy.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd094"
-        },
-        "title": "Project Betacraft Explorer",
-        "link": "https://oldmartijntje.github.io/Project-Betacraft-Explorer/",
-        "infoPages": {
-            "title": "Main",
-            "content": "<img src=\"https://i.imgur.com/BGJ3LHk.png\" alt=\"Screenshot of the Minecraft game\">\n<p>Project Betacraft Explorer is a unique Minecraft playthrough where I start from Alpha v1.0.1_01 and progress through the game's versions. Here's how it works:</p>\n<ol>\n    <li>I use Betacraft to play older versions of Minecraft.</li>\n    <li>Every time I reopen Minecraft, I update the game by one minor version (excluding April Fools versions).</li>\n    <li>If I die, I restart the game in a newer version.</li>\n    <li>I log my progress for each version in a diary.</li>\n    <li>Each version is played for a maximum of 30 minutes (until we reach the official releases).</li>\n    <li>If I'm watching YouTube while playing, I switch versions when I need to find a new video (or based on the above rules if the video is longer).</li>\n</ol>\n<p>To keep track of my progress and ensure I don't lose any data, I've set up an automatic backup system:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/ga83SjL.png\" alt=\"Screenshot of me wearing a chest plate on my head, and pants on my chest.\"><sub>An interesting bug discovery during the playthrough.</sub></div>\n<p>I created a Python script to automatically commit changes to a Git repository. The script uses Git LFS (Large File Storage) to handle the potentially large world files efficiently. You can find the script in my <a href=\"https://github.com/oldmartijntje/Python-toolkit\" target=\"_blank\">Python toolkit repository</a>.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/YYmXZZ7.png\" alt=\"Screenshot of a time where my Minecraft crashed\"><sub>Screenshot of a time where my Minecraft crashed.</sub></div>\n<p>Throughout this project, I've encountered various interesting situations, from game crashes to unusual glitches. For example, in version 13w02a-1613, my game crashed because my pickaxe broke while I was digging a tunnel.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/Fv7Aq2Z.png\" alt=\"Screenshot of finding diamonds in Minecraft\"><sub>The exciting moment of finding my first diamonds!</sub></div>\n<p>As of the latest entry (1.5), I've made significant progress, including finding my first diamonds and completing a major excavation project. It is fun to play through this nostalgic trip and see how much Minecraft has changed over time. I still have a long way to go, Cause Minecraft is at 1.21.2 at the time of this post.</p>"
-        },
-        "lastUpdated": {
-            "$date": "2024-08-30T13:34:21.999Z"
-        },
-        "hidden": false,
-        "spoiler": true,
-        "nsfw": false,
-        "tags": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/fpyjbKy.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd094",
+         "title":"Project Betacraft Explorer",
+         "link":"https://oldmartijntje.github.io/Project-Betacraft-Explorer/",
+         "infoPages":[
+            {
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/BGJ3LHk.png\" alt=\"Screenshot of the Minecraft game\">\n<p>Project Betacraft Explorer is a unique Minecraft playthrough where I start from Alpha v1.0.1_01 and progress through the game's versions. Here's how it works:</p>\n<ol>\n    <li>I use Betacraft to play older versions of Minecraft.</li>\n    <li>Every time I reopen Minecraft, I update the game by one minor version (excluding April Fools versions).</li>\n    <li>If I die, I restart the game in a newer version.</li>\n    <li>I log my progress for each version in a diary.</li>\n    <li>Each version is played for a maximum of 30 minutes (until we reach the official releases).</li>\n    <li>If I'm watching YouTube while playing, I switch versions when I need to find a new video (or based on the above rules if the video is longer).</li>\n</ol>\n<p>To keep track of my progress and ensure I don't lose any data, I've set up an automatic backup system:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/ga83SjL.png\" alt=\"Screenshot of me wearing a chest plate on my head, and pants on my chest.\"><sub>An interesting bug discovery during the playthrough.</sub></div>\n<p>I created a Python script to automatically commit changes to a Git repository. The script uses Git LFS (Large File Storage) to handle the potentially large world files efficiently. You can find the script in my <a href=\"https://github.com/oldmartijntje/Python-toolkit\" target=\"_blank\">Python toolkit repository</a>.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/YYmXZZ7.png\" alt=\"Screenshot of a time where my Minecraft crashed\"><sub>Screenshot of a time where my Minecraft crashed.</sub></div>\n<p>Throughout this project, I've encountered various interesting situations, from game crashes to unusual glitches. For example, in version 13w02a-1613, my game crashed because my pickaxe broke while I was digging a tunnel.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/Fv7Aq2Z.png\" alt=\"Screenshot of finding diamonds in Minecraft\"><sub>The exciting moment of finding my first diamonds!</sub></div>\n<p>As of the latest entry (1.5), I've made significant progress, including finding my first diamonds and completing a major excavation project. It is fun to play through this nostalgic trip and see how much Minecraft has changed over time. I still have a long way to go, Cause Minecraft is at 1.21.2 at the time of this post.</p>"
+            }
+         ],
+         "lastUpdated":"2024-08-30T13:34:21.999Z",
+         "hidden":false,
+         "spoiler":true,
+         "nsfw":false,
+         "tags":[
             "minecraft",
             "game",
             "side-project"
-        ],
-        "displayItemType": "Project",
-        "thumbnailImage": "https://i.imgur.com/YYmXZZ7.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d82b1dd6e1c56f368cd095"
-        },
-        "title": "Roblox Maze generator",
-        "infoPages": [
+         ],
+         "displayItemType":"Project",
+         "thumbnailImage":"https://i.imgur.com/YYmXZZ7.png"
+      },
+      {
+         "_id":"66d82b1dd6e1c56f368cd095",
+         "title":"Roblox Maze generator",
+         "infoPages":[
             {
-                "title": "Main",
-                "content": "<img src=\"https://i.imgur.com/zO9lc5k.png\" alt=\"Outside view of the current world generation\">\n<p>The Roblox Maze Generator is my first project using LUA and Roblox. It's an automatic maze generation script with a wide array of settings, ensuring that every maze is unique and fully accessible.</p>\n<ol>\n    <li>Automatic Generation: The script creates mazes without manual input.</li>\n    <li>Full Accessibility: Every location in the maze is always reachable.</li>\n    <li>Biomes: The maze features different themed areas or \"biomes\" with unique generation rules.</li>\n    <li>Randomization: Each generated maze is completely unique.</li>\n    <li>Customizable Settings: Various parameters can be adjusted to change the maze characteristics.</li>\n</ol>\n<p>The maze features different biomes, each with its own generation rules:</p>\n<ul>\n    <li>Hallways: Strict, narrow passages.</li>\n    <li>Rooms: More open areas with randomly placed walls.</li>\n</ul>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/BeZFhpe.png\" alt=\"Inside of the 'rooms' biome\"><sub>A glimpse inside the \"rooms\" biome, showcasing the open areas with random wall placement.</sub></div>\n<p>The development process was filled with interesting challenges and discoveries:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/MFF7yjP.png\" alt=\"Early development screenshot\"><sub>Very early in development, showing the basic structure.</sub></div>\n<p>Initially, the project started with simple hallways, but after a while biomes and other variations have been added.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/xEqq5VX.png\" alt=\"Testing vertical hallways\"><sub>Testing the implementation of vertical hallways, adding a new dimension to the maze.</sub></div>\n<p>One of the key features of the generator is its ability to create multi-level mazes, adding vertical complexity to the traditional 2D maze concept.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/8RFZd1h.png\" alt=\"Lighting bug\"><sub>A funny lighting bug encountered during development, showcasing the unexpected challenges in game development.</sub></div>\n<p>Like any development project, there were interesting bugs along the way. Some, like this lighting issue, created unexpectedly beautiful results!</p>\n<p>Future plans for the Roblox Maze Generator include:</p>\n<ul>\n    <li>Adding \"monsters\" to increase challenge and excitement.</li>\n    <li>Implementing a goal-oriented gameplay, giving players a reason to find the exit.</li>\n</ul>\n<p>Currently, the maze has only one exit, but the possibilities for expansion are endless. The Roblox Maze Generator represents not just a technical achievement in procedural generation, but also a journey of learning and problem-solving in game development using LUA and Roblox.</p>"
+               "title":"Main",
+               "content":"<img src=\"https://i.imgur.com/zO9lc5k.png\" alt=\"Outside view of the current world generation\">\n<p>The Roblox Maze Generator is my first project using LUA and Roblox. It's an automatic maze generation script with a wide array of settings, ensuring that every maze is unique and fully accessible.</p>\n<ol>\n    <li>Automatic Generation: The script creates mazes without manual input.</li>\n    <li>Full Accessibility: Every location in the maze is always reachable.</li>\n    <li>Biomes: The maze features different themed areas or \"biomes\" with unique generation rules.</li>\n    <li>Randomization: Each generated maze is completely unique.</li>\n    <li>Customizable Settings: Various parameters can be adjusted to change the maze characteristics.</li>\n</ol>\n<p>The maze features different biomes, each with its own generation rules:</p>\n<ul>\n    <li>Hallways: Strict, narrow passages.</li>\n    <li>Rooms: More open areas with randomly placed walls.</li>\n</ul>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/BeZFhpe.png\" alt=\"Inside of the 'rooms' biome\"><sub>A glimpse inside the \"rooms\" biome, showcasing the open areas with random wall placement.</sub></div>\n<p>The development process was filled with interesting challenges and discoveries:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/MFF7yjP.png\" alt=\"Early development screenshot\"><sub>Very early in development, showing the basic structure.</sub></div>\n<p>Initially, the project started with simple hallways, but after a while biomes and other variations have been added.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/xEqq5VX.png\" alt=\"Testing vertical hallways\"><sub>Testing the implementation of vertical hallways, adding a new dimension to the maze.</sub></div>\n<p>One of the key features of the generator is its ability to create multi-level mazes, adding vertical complexity to the traditional 2D maze concept.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/8RFZd1h.png\" alt=\"Lighting bug\"><sub>A funny lighting bug encountered during development, showcasing the unexpected challenges in game development.</sub></div>\n<p>Like any development project, there were interesting bugs along the way. Some, like this lighting issue, created unexpectedly beautiful results!</p>\n<p>Future plans for the Roblox Maze Generator include:</p>\n<ul>\n    <li>Adding \"monsters\" to increase challenge and excitement.</li>\n    <li>Implementing a goal-oriented gameplay, giving players a reason to find the exit.</li>\n</ul>\n<p>Currently, the maze has only one exit, but the possibilities for expansion are endless. The Roblox Maze Generator represents not just a technical achievement in procedural generation, but also a journey of learning and problem-solving in game development using LUA and Roblox.</p>"
             }
-        ],
-        "lastUpdated": {
-            "$date": "2024-09-04T14:12:30.391Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [
+         ],
+         "lastUpdated":"2024-09-07T10:44:51.370Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
             "lua",
             "my-code",
             "game",
             "roblox"
-        ],
-        "displayItemType": "Projectus",
-        "link": "https://www.roblox.com/games/118878596315562/Random-Maze-Generation",
-        "thumbnailImage": "https://i.imgur.com/zO9lc5k.png"
-    },
-    {
-        "_id": {
-            "$oid": "66d89c78a329ffc0d655bdad"
-        },
-        "title": "Hello World!",
-        "thumbnailImage": "",
-        "description": "This is my first blogpost. Yippieee!",
-        "link": "",
-        "infoPages": [
+         ],
+         "displayItemType":"Project",
+         "link":"https://www.roblox.com/games/118878596315562/Random-Maze-Generation",
+         "thumbnailImage":"https://i.imgur.com/zO9lc5k.png"
+      },
+      {
+         "_id":"66d89c78a329ffc0d655bdad",
+         "title":"Hello World!",
+         "thumbnailImage":"",
+         "description":"This is my first blogpost. Yippieee!",
+         "link":"",
+         "infoPages":[
             {
-                "title": "Hello World!",
-                "content": "<p>I just added this blog system today. <br/>\nWell... this system already existed for Projects, but now this can also do more, like BLOGGS!!</p>\n<img src=\"https://i.imgur.com/dbWdoGc.png\"/>"
+               "title":"Hello World!",
+               "content":"<p>I just added this blog system today. <br/>\nWell... this system already existed for Projects, but now this can also do more, like BLOGGS!!</p>\n<img src=\"https://i.imgur.com/dbWdoGc.png\"/>"
             }
-        ],
-        "lastUpdated": {
-            "$date": "2024-09-04T17:44:43.421Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [
-            "first"
-        ],
-        "displayItemType": "blog",
-        "__v": 0
-    },
-    {
-        "_id": {
-            "$oid": "66d8a030a329ffc0d655be08"
-        },
-        "title": "Multiple pages",
-        "thumbnailImage": "",
-        "description": "Forgot to say it in blogpost 1, but my site supports multiple display pages now.",
-        "link": "",
-        "infoPages": [
+         ],
+         "lastUpdated":"2024-09-04T22:14:23.733Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "first",
+            "short-blog"
+         ],
+         "displayItemType":"blog",
+         "__v":0
+      },
+      {
+         "_id":"66d8a030a329ffc0d655be08",
+         "title":"Multiple pages",
+         "thumbnailImage":"",
+         "description":"Forgot to say it in blogpost 1, but my site supports multiple display pages now.",
+         "link":"",
+         "infoPages":[
             {
-                "title": "Page 1",
-                "content": "This is my Second blogpost :3"
+               "title":"Page 1",
+               "content":"This is my Second blogpost :3"
             },
             {
-                "title": "Page 2",
-                "content": "WOW! you found the second page on this ultra super duper cool hidden (not really)  second page. OwO"
+               "title":"Page 2",
+               "content":"WOW! you found the second page on this ultra super duper cool hidden (not really)  second page. OwO"
             }
-        ],
-        "lastUpdated": {
-            "$date": "2024-09-04T18:00:16.176Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [],
-        "displayItemType": "blog",
-        "__v": 0
-    },
-    {
-        "_id": {
-            "$oid": "66d8a4a4a329ffc0d655be3a"
-        },
-        "title": "My Youtube Channel.",
-        "thumbnailImage": "https://oldmartijntje.nl/assets/mii-rpD35z7m.png",
-        "description": "",
-        "link": "https://www.youtube.com/channel/UCd9_pxx4m9KP13s1-TncLcQ/",
-        "infoPages": [],
-        "lastUpdated": {
-            "$date": "2024-09-04T18:26:48.021Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [],
-        "displayItemType": "URL",
-        "__v": 0
-    },
-    {
-        "_id": {
-            "$oid": "66d8a6bca329ffc0d655be65"
-        },
-        "title": "My Github.",
-        "thumbnailImage": "https://i.imgur.com/WpcE194.png",
-        "description": "",
-        "link": "https://github.com/oldmartijntje",
-        "infoPages": [],
-        "lastUpdated": {
-            "$date": "2024-09-04T18:28:12.337Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [],
-        "displayItemType": "url",
-        "__v": 0
-    },
-    {
-        "_id": {
-            "$oid": "66d8aa49a329ffc0d655bee7"
-        },
-        "title": "¯\\_(ツ)_/¯",
-        "thumbnailImage": "https://i.imgur.com/sjujdWl.png",
-        "description": "",
-        "link": "",
-        "infoPages": [],
-        "lastUpdated": {
-            "$date": "2024-09-04T18:43:21.619Z"
-        },
-        "hidden": false,
-        "spoiler": false,
-        "nsfw": false,
-        "tags": [
+         ],
+         "lastUpdated":"2024-09-04T16:00:00.000Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "short-blog"
+         ],
+         "displayItemType":"blog",
+         "__v":0
+      },
+      {
+         "_id":"66d8a4a4a329ffc0d655be3a",
+         "title":"My Youtube Channel.",
+         "thumbnailImage":"https://oldmartijntje.nl/assets/mii-rpD35z7m.png",
+         "description":"",
+         "link":"https://www.youtube.com/channel/UCd9_pxx4m9KP13s1-TncLcQ/",
+         "infoPages":[
+            
+         ],
+         "lastUpdated":"2024-09-04T18:26:48.021Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            
+         ],
+         "displayItemType":"URL",
+         "__v":0
+      },
+      {
+         "_id":"66d8a6bca329ffc0d655be65",
+         "title":"My Github.",
+         "thumbnailImage":"https://i.imgur.com/WpcE194.png",
+         "description":"",
+         "link":"https://github.com/oldmartijntje",
+         "infoPages":[
+            
+         ],
+         "lastUpdated":"2024-09-04T18:28:12.337Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            
+         ],
+         "displayItemType":"url",
+         "__v":0
+      },
+      {
+         "_id":"66d8aa49a329ffc0d655bee7",
+         "title":"¯\\_(ツ)_/¯",
+         "thumbnailImage":"https://i.imgur.com/sjujdWl.png",
+         "description":"",
+         "link":"",
+         "infoPages":[
+            
+         ],
+         "lastUpdated":"2024-09-04T18:43:21.619Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
             "image"
-        ],
-        "displayItemType": "random",
-        "__v": 0
-    }
-]
+         ],
+         "displayItemType":"random",
+         "__v":0
+      },
+      {
+         "_id":"66d8db8ba329ffc0d655bf88",
+         "title":"🎉19🎉",
+         "thumbnailImage":"",
+         "description":"It's ma birthday, woo!",
+         "link":"",
+         "infoPages":[
+            {
+               "title":"",
+               "content":"<h1>Current time</h1>\n<div class=\"imgDiv\"><iframe src=\"https://free.timeanddate.com/countdown/i9j84tuu/n16/cf111/cm0/cu4/ct0/cs0/ca0/co1/cr0/ss0/cac000/cpc000/pc66c/tc66c/fs150/szw448/szh189/tatTime%20left%20to%20Event%20in/tac000/tptTime%20since%20Event%20started%20in/tpc000/iso2024-09-05T00:00:00\" allowtransparency=\"true\" frameborder=\"0\" width=\"448\" height=\"189\"></iframe>\n<sub>Not me still doing the project betacraft explorer thingy after midnight :3</sub></div>\n"
+            }
+         ],
+         "lastUpdated":"2024-09-00T22:16:10.275Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "birthday",
+            "short-blog"
+         ],
+         "displayItemType":"blog",
+         "__v":0
+      },
+      {
+         "_id":"6736111f3a5e91cf8bc0f070",
+         "title":"📦OldMartijntje's Toolkit",
+         "thumbnailImage":"https://i.imgur.com/6k9nhra.png",
+         "link":"https://oldmartijntje.github.io/localNodeBox/",
+         "infoPages":[
+            {
+               "title":"Introduction",
+               "content":"<h1>📦OldMartijntje's Toolkit</h1>\n<p>Welcome to <strong>📦OldMartijntje's Toolkit</strong>, a collection of various tools that range from handy utilities to just-for-fun experiments. It's an online Node.js package that you can host yourself for access to even more advanced tools and features. Think of it as your own digital Swiss Army knife, packed with everything from chatrooms to file patchers.</p>\n<p>Want to explore further? Feel free to browse through each tool below. If you're looking for a quick start, dive right into our <a href=\"https://oldmartijntje.github.io/localNodeBox/\" target=\"_blank\">Easy Navmap</a> and find the tool that suits your needs.</p>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/fHQoIzk.png\" alt=\"Screenshot\">\n    <sub>Track the weeks you’ve lived and compare them to different activities.</sub>\n</div>\n\n<p>This toolkit has something for everyone. Hosted online, it offers a quick and accessible experience, but you can also host it locally to unlock additional features.</p>\n<p>Let’s dive into the tools available in the toolkit!</p>\n"
+            },
+            {
+               "title":"Fun & Reflective Tools",
+               "content":"<h1>📦OldMartijntje's Toolkit - Fun & Reflective Tools</h1>\n<p>This page explores some of the more engaging tools in the Toolkit. Whether you’re calculating your lived weeks or joining a chatroom, there’s something to pique your curiosity.</p>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/fHQoIzk.png\" alt=\"Weeks Lived Tracker\">\n    <sub>Weeks Lived Tracker: Reflect on your past weeks, and even add notes for each week to revisit memories. It’s also fun to see how many times you could’ve cycled from London to Amsterdam!</sub>\n</div>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/cw5y6ET.png\" alt=\"Chatroom with MQTT\">\n    <sub>Chatroom with MQTT: Chat in real-time with others, join or create rooms, and check out past contacts.</sub>\n</div>\n\n<p>These tools are designed for reflection and connection, giving you ways to look back, share thoughts, or chat with others in real-time.</p>\n"
+            },
+            {
+               "title":"Utility Tools",
+               "content":"<h1>📦OldMartijntje's Toolkit - Utility Tools</h1>\n<p>On this page, we’ll highlight some of the practical tools you might find useful for various tasks, from file comparisons to markdown conversions.</p>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/UjVdVGE.png\" alt=\"MQTT Receiver\">\n    <sub>MQTT Receiver: Monitor MQTT traffic, mimic or automate messages, and analyze message frequency when hosted offline.</sub>\n</div>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/9p4bpno.png\" alt=\"Character Replacement Tool\">\n    <sub>Character Replacement Tool: Swap characters in text to create puzzles or experiment with variations.</sub>\n</div>\n\n<div class=\"imgDiv\">\n    <img src=\"https://i.imgur.com/QXOroZh.png\" alt=\"Markdown to Word Converter\">\n    <sub>Markdown to Word Converter: Quickly convert markdown text into formatted Word documents.</sub>\n</div>\n\n<p>Additional tools include:</p>\n<ul>\n    <li><strong>File Patcher:</strong> Insert two files and get a patch showing the differences. Useful for code versioning.</li>\n    <li><strong>Character Counter:</strong> Detect invisible or unusual characters for a quick quality check.</li>\n</ul>\n\n<p>These tools make tasks easier, faster, and more accessible, especially when hosted locally for enhanced capabilities.</p>\n"
+            }
+         ],
+         "lastUpdated":"2024-11-21T10:21:36.339Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "my-code",
+            "website",
+            "tools"
+         ],
+         "displayItemType":"Project",
+         "__v":0
+      },
+      {
+         "_id":"6812086df6adc742ada928dd",
+         "title":"Pic dump 📸",
+         "thumbnailImage":"",
+         "description":"I started taking a lil cam with me wherever I go :3",
+         "link":"",
+         "infoPages":[
+            {
+               "title":"April 2025",
+               "content":"<h1>April pics📸</h1>\n\n<div class=\"polaroid-gallery permanent-marker-regular\">\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/HhmkGQ5.jpeg\" alt=\"Geese\"/>\n    <div class=\"polaroid-caption\">The geese are here</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/0523HwB.jpeg\" alt=\"idk\"/>\n    <div class=\"polaroid-caption\">Sadly you can see the train light :/</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/zIerGEd.jpeg\" alt=\"orange house\"/>\n    <div class=\"polaroid-caption\">orange :3</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/mZgrunh.jpeg\" alt=\"Solar panels that look remotely like amongus\"/>\n    <div class=\"polaroid-caption\">mogus :c</div>\n  </div>\n</div>\n<style>\n.polaroid-gallery {\n  display: flex;\n  justify-content: center;\n  flex-wrap: wrap;\n  gap: 20px;\n  margin-top: 20px;\n}\n\n.permanent-marker-regular {\n  font-family: \"Permanent Marker\", cursive;\n  font-weight: 400;\n  font-style: normal;\n}\n\n.polaroid-container {\n  width: 220px;  /* 10% bigger than before */\n  padding: 10px 10px 30px 10px;\n  background: white;\n  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);\n  border: 1px solid #ccc;\n  margin: 0;\n  transform: rotate(-1deg);\n  transition: transform 0.2s ease;\n  text-align: center;\n}\n\n.polaroid-container:hover {\n  transform: rotate(1deg) scale(1.03);\n}\n\n.polaroid {\n  width: 100%;\n  display: block;\n}\n\n.polaroid-caption {\n  margin-top: 8px;\n  font-size: 1.2em;\n  color: #333;\n}\n</style>\n"
+            }
+         ],
+         "lastUpdated":"2025-04-30T12:28:35.519Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "pictures",
+            "short-blog"
+         ],
+         "displayItemType":"blog",
+         "__v":0
+      },
+      {
+         "_id":"682e4e27c2a1188261a853dc",
+         "title":"Linux go brr",
+         "thumbnailImage":"",
+         "description":"I have switched to Linux",
+         "link":"",
+         "infoPages":[
+            {
+               "title":"Hello World!",
+               "content":"<p>I has switched to Linux!<br/>\nI mean, I still have Windows on my PC and as a small partition on my laptop as a backup. But it is a start :3</p>\n<img src=\"https://i.imgur.com/AJCvzbf.png\"/>"
+            }
+         ],
+         "lastUpdated":"2025-05-21T22:05:27.164Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "linux",
+            "short-blog"
+         ],
+         "displayItemType":"blog",
+         "__v":0
+      },
+      {
+         "_id":"689cb6d560691b9dff21c453",
+         "title":"SkinForge - Minecraft Skin Layerer",
+         "thumbnailImage":"https://i.imgur.com/trj7EHq.png",
+         "link":"https://oldmartijntje.github.io/skinforge/",
+         "infoPages":[
+            {
+               "title":"Intro",
+               "content":"<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay a { color: #4fd1c5; text-decoration: underline; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n.gif_button {width: 88px !important;margin:0px!important;border-radius:0px!important;height:31px;}\n</style>\n<div class=\"blog-overlay\">\n  <h2>Welcome to SkinForge!</h2>\n  <img src=\"https://i.imgur.com/8QXztR0.png\" alt=\"SkinForge Overview\">\n  <p>\n    <b>SkinForge</b> is a Minecraft skin layerer I made to make remixing, customizing, and creating skins fun and effortless. No more tedious pixel editing—just pick, preview, and export!\n  </p>\n  <p>\n    You can add layers, reorder them, toggle visibility, and instantly see your changes in both 2D and 3D. The built-in library and easy import options make it simple to get started.\n  </p>\n  <p>\n    Want to know how it works? Check out the next tab!\n  </p>\n  <p class=\"text-end\" style=\"font-size:0.95em;\">\n    I made <a href=\"https://oldmartijntje.github.io/skinforge/\" target=\"_blank\">this project</a> for everyone who loves Minecraft.\n  </p>\n<br/><br/><br/>\n<p>\n    It is not made for phones (yet?)\n  </p>\n<div style=\"display:flex; align-items:start\">\n<img src=\"https://i.imgur.com/UWQm7nP.gif\" alt=\"Don't be a phone chump, get a computer.\" class=\"gif_button\">\n<img src=\"https://i.imgur.com/G3uPD1w.gif\" alt=\"Best viewed with a computer\" class=\"gif_button\">\n<a href=\"https://github.com/oldmartijntje/skinforge\" target=\"_blank\"><img src=\"https://i.imgur.com/9RSohUM.gif\" alt=\"Github\" class=\"gif_button\"></a>\n<a href=\"https://cyber.dabamos.de/88x31/\" target=\"_blank\"><img src=\"https://i.imgur.com/GJDtodo.gif\" alt=\"88x31 buttons\" class=\"gif_button\"></a>\n<img src=\"https://i.imgur.com/gFtHEE5.gif\" alt=\"Page contains Javascript\" class=\"gif_button\">\n</div>\n</div>"
+            },
+            {
+               "title":"How it works",
+               "content":"<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 380px; height: auto; margin: 1.2em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay .step { margin-bottom: 2em; }\n.blog-overlay .caption { color: #aaa; font-size: 0.95em; text-align: center; margin-top: -1em; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n<div class=\"blog-overlay\">\n  <h2>How Does SkinForge Work?</h2>\n  <div class=\"step\">\n    <img src=\"https://i.imgur.com/ZdFOZe8.png\" alt=\"Default Steve Skin and Layers\">\n    <div class=\"caption\">Start with a base skin and add layers from the library or your own files.</div>\n    <p>\n      Simply pick a base (like Steve), then add faces, hair, accessories, and more. Drag layers to reorder, toggle them on/off, or adjust opacity. You can even upload your own PNG layers with the gray button below the layers.\n    </p>\n  </div>\n  <div class=\"step\">\n    <img src=\"https://i.imgur.com/5LHTjRu.png\" alt=\"Steve without Beard\">\n    <div class=\"caption\">Toggle layers to instantly see the difference—here, Steve's beard is hidden.</div>\n  </div>\n  <div class=\"step\">\n    <img src=\"https://i.imgur.com/7BFulxo.png\" alt=\"Steve with 50% Hair Opacity\">\n    <div class=\"caption\">Adjust opacity for creative effects—Steve's hair is now half transparent!</div>\n  </div>\n  <p>\n    When you're happy, export your skin as a Minecraft PNG, or save your progress for later. It's all instant, in your browser.\n  </p>\n</div>"
+            },
+            {
+               "title":"Library",
+               "content":"<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 340px; height: auto; margin: 1em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay .gallery { display: flex; flex-wrap: wrap; gap: 1em; justify-content: center; }\n.blog-overlay .gallery img { width: 140px; height: auto; margin: 0; }\n.blog-overlay .caption { color: #aaa; font-size: 0.95em; text-align: center; margin-top: -1em; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img, .blog-overlay .gallery img { width: 98vw; } }\n</style>\n<div class=\"blog-overlay\">\n  <h2>Explore the SkinForge Library</h2>\n  <img src=\"https://i.imgur.com/lCSYgkW.png\" alt=\"Hair Tab of Library\">\n  <div class=\"caption\">Browse hundreds of layers—hair, faces, accessories, suits, and more.</div>\n<img src=\"https://i.imgur.com/YrZx9vi.png\" alt=\"Accessories Tab\">\n  <div class=\"caption\">Switch categories or use the search bar to find exactly what you want. The library is always fast and easy to use!</div>\n  <p>\n    Just click to add any layer to your skin. All items are credited to their creators, so you can discover new artists and styles.\n  </p>\n  <p class=\"text-end\" style=\"font-size:0.95em;\">\n    Try it out <a href=\"https://oldmartijntje.github.io/skinforge/\" target=\"_blank\">here</a>.\n  </p>\n</div>"
+            },
+            {
+               "title":"Customization Examples",
+               "content":"<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 340px; height: auto; margin: 1em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay .caption { color: #aaa; font-size: 0.95em; text-align: center; margin-top: -1em; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n<div class=\"blog-overlay\">\n  <h2>Pick &amp; Choose: Endless Customization</h2>\n  <img src=\"https://i.imgur.com/bcs22Dz.png\" alt=\"Customized Steve\">\n  <div class=\"caption\">Mix and match: new hair, new face, cat ears, gloves, headphones—just click to add!</div>\n  <img src=\"https://i.imgur.com/SjXhMJ0.png\" alt=\"Steve in Hazmat Suit\">\n  <div class=\"caption\">Layers blend together—add a suit, adjust opacity, and your skin is instantly unique.</div>\n  <p>\n    With SkinForge, you can create anything: from classic Steve to wild new looks. Every change is instant, and you can always undo or tweak your layers.\n  </p>\n</div>"
+            },
+            {
+               "title":"Import & Export",
+               "content":"<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 340px; height: auto; margin: 1em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay .caption { color: #aaa; font-size: 0.95em; text-align: center; margin-top: -1em; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n<div class=\"blog-overlay\">\n  <h2>Export, Save, and Credit Creators</h2>\n  <img src=\"https://i.imgur.com/pcp0P1s.png\" alt=\"Export Credits Screen\">\n  <div class=\"caption\">When you export, SkinForge shows credits for every creator whose work you used.</div>\n  <img src=\"https://i.imgur.com/w9KB7nA.png\" alt=\"Import/Export Options\">\n  <div class=\"caption\">Save your progress as a .skinforge file, or export a PNG for Minecraft. Embedded saves ensure your skin stays the same, even if the library updates.</div>\n  <p>\n    You can always come back and edit your skin later. Old save files are supported, and you can choose to embed custom layers for perfect preservation.\n  </p>\n  <p class=\"text-end\" style=\"font-size:0.95em;\">\n    See it in action <a href=\"https://oldmartijntje.github.io/skinforge/\" target=\"_blank\">here</a>.\n  </p>\n</div>"
+            }
+         ],
+         "lastUpdated":"2025-08-13T18:56:52.495Z",
+         "hidden":false,
+         "spoiler":false,
+         "nsfw":false,
+         "tags":[
+            "website",
+            "favourite",
+            "minecraft"
+         ],
+         "displayItemType":"Project",
+         "__v":0
+      }
+   ]
+}
