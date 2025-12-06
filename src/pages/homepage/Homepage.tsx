@@ -35,12 +35,12 @@ function setSeededRandom(seed: number) {
 }
 
 
-function getOfflineProjects(): any[] {
-    let chachedProjects = sessionStorage.getItem('cached-projects');
-    if (chachedProjects) {
-        return JSON.parse(chachedProjects);
+function getOfflineProjects(): ItemDisplay[] {
+    let cachedProjects = sessionStorage.getItem('cached-projects');
+    if (cachedProjects) {
+        return JSON.parse(cachedProjects);
     } else {
-        return offlineProjects; // Show offline projects
+        return offlineProjects.displayItems as unknown as ItemDisplay[]; // Show offline projects
     }
 
 }
@@ -68,7 +68,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                 return seededRandom() - 0.5;
             }),
             title: 'Website Projects',
-            appliedFilters: ['website', 'my-code']
+            appliedFilters: ['website']
         },
         {
             dataList: [...mainBlog],
@@ -77,8 +77,8 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         },
         {
             dataList: [...mainProjects],
-            title: 'My Games',
-            appliedFilters: ['game', 'my-code']
+            title: 'Games etc.',
+            appliedFilters: ['game']
         },
         {
             dataList: [...mainWebposts],
