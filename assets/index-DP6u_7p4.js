@@ -484,7 +484,7 @@ Error generating stack: `+a.message+`
 
 <p style="font-size: 0.95em; margin-top: 2em;">
   <a href="https://oldmartijntje.nl/" target="_blank">Visit the website →</a>
-</p>`}],lastUpdated:"2025-12-06T12:30:17.369Z",hidden:!1,spoiler:!1,nsfw:!1,tags:["website","favourite","my-code","react","bootstrap","typescript","backend","node"],displayItemType:"Project",thumbnailImage:"https://i.imgur.com/fpyjbKy.png"},{_id:"66d82b1dd6e1c56f368cd094",title:"Project Betacraft Explorer",link:"https://oldmartijntje.github.io/Project-Betacraft-Explorer/",infoPages:[{title:"Main",content:`<img src="https://i.imgur.com/BGJ3LHk.png" alt="Screenshot of the Minecraft game">
+</p>`}],lastUpdated:"2025-12-06T12:30:17.369Z",hidden:!1,spoiler:!1,nsfw:!1,tags:["website","favourite","my-code","react","bootstrap","typescript","backend","node"],displayItemType:"Project",thumbnailImage:"https://i.imgur.com/pv51rL6.png"},{_id:"66d82b1dd6e1c56f368cd094",title:"Project Betacraft Explorer",link:"https://oldmartijntje.github.io/Project-Betacraft-Explorer/",infoPages:[{title:"Main",content:`<img src="https://i.imgur.com/BGJ3LHk.png" alt="Screenshot of the Minecraft game">
 <p>Project Betacraft Explorer is a unique Minecraft playthrough where I start from Alpha v1.0.1_01 and progress through the game's versions. Here's how it works:</p>
 <ol>
     <li>I use Betacraft to play older versions of Minecraft.</li>
