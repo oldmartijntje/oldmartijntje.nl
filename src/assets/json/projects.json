@@ -128,14 +128,15 @@
                     "content": "<img src=\"https://i.imgur.com/BGJ3LHk.png\" alt=\"Screenshot of the Minecraft game\">\n<p>Project Betacraft Explorer is a unique Minecraft playthrough where I start from Alpha v1.0.1_01 and progress through the game's versions. Here's how it works:</p>\n<ol>\n    <li>I use Betacraft to play older versions of Minecraft.</li>\n    <li>Every time I reopen Minecraft, I update the game by one minor version (excluding April Fools versions).</li>\n    <li>If I die, I restart the game in a newer version.</li>\n    <li>I log my progress for each version in a diary.</li>\n    <li>Each version is played for a maximum of 30 minutes (until we reach the official releases).</li>\n    <li>If I'm watching YouTube while playing, I switch versions when I need to find a new video (or based on the above rules if the video is longer).</li>\n</ol>\n<p>To keep track of my progress and ensure I don't lose any data, I've set up an automatic backup system:</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/ga83SjL.png\" alt=\"Screenshot of me wearing a chest plate on my head, and pants on my chest.\"><sub>An interesting bug discovery during the playthrough.</sub></div>\n<p>I created a Python script to automatically commit changes to a Git repository. The script uses Git LFS (Large File Storage) to handle the potentially large world files efficiently. You can find the script in my <a href=\"https://github.com/oldmartijntje/Python-toolkit\" target=\"_blank\">Python toolkit repository</a>.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/YYmXZZ7.png\" alt=\"Screenshot of a time where my Minecraft crashed\"><sub>Screenshot of a time where my Minecraft crashed.</sub></div>\n<p>Throughout this project, I've encountered various interesting situations, from game crashes to unusual glitches. For example, in version 13w02a-1613, my game crashed because my pickaxe broke while I was digging a tunnel.</p>\n<div class=\"imgDiv\"><img src=\"https://i.imgur.com/Fv7Aq2Z.png\" alt=\"Screenshot of finding diamonds in Minecraft\"><sub>The exciting moment of finding my first diamonds!</sub></div>\n<p>As of the latest entry (1.5), I've made significant progress, including finding my first diamonds and completing a major excavation project. It is fun to play through this nostalgic trip and see how much Minecraft has changed over time. I still have a long way to go, Cause Minecraft is at 1.21.2 at the time of this post.</p>"
                 }
             ],
-            "lastUpdated": "2024-08-30T13:34:21.999Z",
+            "lastUpdated": "2025-12-06T08:55:39.354Z",
             "hidden": false,
             "spoiler": true,
             "nsfw": false,
             "tags": [
                 "minecraft",
                 "game",
-                "side-project"
+                "side-project",
+                "playthrough"
             ],
             "displayItemType": "Project",
             "thumbnailImage": "https://i.imgur.com/YYmXZZ7.png"
