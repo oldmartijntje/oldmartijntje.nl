@@ -13,6 +13,7 @@ interface UserPageProps {
 
 const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<ItemDisplay[]>([]);
+    const [displayItemTypeFilter, setDisplayItemTypeFilter] = useState(getSearchFilters('DisplayItemType') || '');
     const [newProject, setNewProject] = useState<ItemDisplay>({
         title: '',
         thumbnailImage: '',
@@ -76,24 +77,38 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
     };
 
     const doesThisProjectMatchSearch = (project: ItemDisplay) => {
+        if (displayItemTypeFilter) {
+            if (
+                !project.displayItemType
+                    .toLowerCase()
+                    .includes(displayItemTypeFilter.toLowerCase())
+            ) {
+                return false;
+            }
+        }
+
         if (!searchFilter) {
             return true;
         }
+
         let fitsSearch = true;
         const search = searchFilter.toLowerCase();
         const allQueryWords = search.split(' ');
         allQueryWords.forEach((queryWord: any) => {
-            let keywordFits = true
-            let inverse = false
+            let keywordFits = true;
+            let inverse = false;
             if (queryWord[0] == "!") {
                 if (queryWord.length < 2) {
-                    return
+                    return;
                 }
-                inverse = true
-                queryWord = queryWord.substring(1)
+                inverse = true;
+                queryWord = queryWord.substring(1);
             }
 
-            if ('hidden'.includes(queryWord) || 'shown'.includes(queryWord)) {
+            if (
+                'hidden'.includes(queryWord) ||
+                'shown'.includes(queryWord)
+            ) {
                 if (project.hidden && 'hidden'.includes(queryWord)) {
                     keywordFits = true;
                 } else if (!project.hidden && 'shown'.includes(queryWord)) {
@@ -101,15 +116,18 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                 } else {
                     fitsSearch = false;
                 }
-
             } else if (project.spoiler && 'spoiler'.includes(queryWord)) {
                 keywordFits = true;
             } else if (project.nsfw && 'nsfw'.includes(queryWord)) {
                 keywordFits = true;
-            } else if (!project.title.toLowerCase().includes(queryWord) &&
-                !JSON.stringify(project.infoPages).toLowerCase().includes(queryWord) &&
-                !project.tags?.some((tag) => tag.toLowerCase().includes(queryWord)) &&
-                !project.displayItemType.toLowerCase().includes(queryWord) &&
+            } else if (
+                !project.title.toLowerCase().includes(queryWord) &&
+                !JSON.stringify(project.infoPages)
+                    .toLowerCase()
+                    .includes(queryWord) &&
+                !project.tags?.some((tag) =>
+                    tag.toLowerCase().includes(queryWord)
+                ) &&
                 !project.description?.toLowerCase().includes(queryWord) &&
                 !project.link?.toLowerCase().includes(queryWord)
             ) {
@@ -123,7 +141,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
             }
         });
         return fitsSearch;
-    }
+    };
 
     const previewableCheck = () => {
         let previewable = false
@@ -535,6 +553,19 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         setSearchFilter(value);
                                     }}
                                     placeholder='Search by title, info, visibility or tags'
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-light">Display Item Type</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Filter by type (e.g., Project)"
+                                    value={displayItemTypeFilter}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        setSearchFilters('DisplayItemType', value);
+                                        setDisplayItemTypeFilter(value)
+                                    }}
                                 />
                             </Form.Group>
                             {projects.map((project) => (doesThisProjectMatchSearch(project) &&
