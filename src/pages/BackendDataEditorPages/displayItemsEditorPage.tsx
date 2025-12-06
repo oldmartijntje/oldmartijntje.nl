@@ -13,6 +13,7 @@ interface UserPageProps {
 
 const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [projects, setProjects] = useState<ItemDisplay[]>([]);
+    const [sortNewestFirst, setSortNewestFirst] = useState(false);
     const [displayItemTypeFilter, setDisplayItemTypeFilter] = useState(getSearchFilters('DisplayItemType') || '');
     const [newProject, setNewProject] = useState<ItemDisplay>({
         title: '',
@@ -557,63 +558,78 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label className="text-light">Display Item Type</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Filter by type (e.g., Project)"
-                                    value={displayItemTypeFilter}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        setSearchFilters('DisplayItemType', value);
-                                        setDisplayItemTypeFilter(value)
-                                    }}
-                                />
+                                <div className="d-flex gap-2">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Filter by type (e.g., Project)"
+                                        value={displayItemTypeFilter}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            setSearchFilters('DisplayItemType', value);
+                                            setDisplayItemTypeFilter(value);
+                                        }}
+                                    />
+                                    <Button
+                                        variant={sortNewestFirst ? 'primary' : 'secondary'}
+                                        onClick={() => setSortNewestFirst(!sortNewestFirst)}
+                                    >
+                                        {sortNewestFirst ? 'Newest' : 'Oldest'}
+                                    </Button>
+                                </div>
                             </Form.Group>
-                            {projects.map((project) => (doesThisProjectMatchSearch(project) &&
-                                <Card key={project._id} className="mb-2">
-                                    <Card.Body className="card text-bg-dark">
-                                        <Card.Title>{project.title}</Card.Title>
-                                        <Card.Text>
-                                            <strong>Description:</strong> {project.description || 'N/A'}<br />
-                                            <strong>Link:</strong> {project.link || 'N/A'}<br />
-                                            <strong>DisplayItemType:</strong> {project.displayItemType}<br />
-                                            <strong>Info Pages:</strong> {project.infoPages.length}<br />
-                                            <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
-                                            <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
-                                            <strong>Spoiler:</strong> {project.spoiler ? 'Yes' : 'No'}<br />
-                                            <strong>NSFW:</strong> {project.nsfw ? 'Yes' : 'No'}<br />
-                                            <strong>Tags:</strong> {project.tags.join(', ') || 'N/A'}<br />
-                                            <strong>Id:</strong> {project._id}
-                                        </Card.Text>
-                                        <div className="btn-group" role="group" aria-label="Basic example">
-                                            <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
-                                                Edit
-                                            </Button>
-                                            <Button variant="secondary" size="sm" onClick={() => {
-                                                setEditingProject(null);
-                                                setNewProject({ ...project, _id: undefined });
-                                            }}>
-                                                Duplicate
-                                            </Button>
-                                            <Button variant="info" size="sm" onClick={() => {
-                                                setPreviewProject(project);
-                                                showProjectDetails();
-                                            }}>
-                                                Preview
-                                            </Button>
-                                            {userProfile.clearanceLevel >= 6 && (
-                                                <Button variant="danger" size="sm" onClick={() => {
-                                                    if (confirm("Are you sure you want to proceed?")) {
-                                                        // Code to execute if the user clicks "OK"
-                                                        handleDelete(project._id!)
-                                                    }
-                                                }}>
-                                                    Delete
-                                                </Button>
-                                            )}
-                                        </div>
-                                    </Card.Body>
-                                </Card>
-                            ))}
+                            {projects
+                                .sort((a, b) => {
+                                    const dateA = new Date(a.lastUpdated || 0).getTime();
+                                    const dateB = new Date(b.lastUpdated || 0).getTime();
+                                    return sortNewestFirst ? dateB - dateA : dateA - dateB;
+                                })
+                                .map((project) =>
+                                    doesThisProjectMatchSearch(project) && (
+                                        <Card key={project._id} className="mb-2">
+                                            <Card.Body className="card text-bg-dark">
+                                                <Card.Title>{project.title}</Card.Title>
+                                                <Card.Text>
+                                                    <strong>Description:</strong> {project.description || 'N/A'}<br />
+                                                    <strong>Link:</strong> {project.link || 'N/A'}<br />
+                                                    <strong>DisplayItemType:</strong> {project.displayItemType}<br />
+                                                    <strong>Info Pages:</strong> {project.infoPages.length}<br />
+                                                    <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
+                                                    <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
+                                                    <strong>Spoiler:</strong> {project.spoiler ? 'Yes' : 'No'}<br />
+                                                    <strong>NSFW:</strong> {project.nsfw ? 'Yes' : 'No'}<br />
+                                                    <strong>Tags:</strong> {project.tags.join(', ') || 'N/A'}<br />
+                                                    <strong>Id:</strong> {project._id}
+                                                </Card.Text>
+                                                <div className="btn-group" role="group" aria-label="Basic example">
+                                                    <Button variant="primary" size="sm" onClick={() => handleEdit(project)}>
+                                                        Edit
+                                                    </Button>
+                                                    <Button variant="secondary" size="sm" onClick={() => {
+                                                        setEditingProject(null);
+                                                        setNewProject({ ...project, _id: undefined });
+                                                    }}>
+                                                        Duplicate
+                                                    </Button>
+                                                    <Button variant="info" size="sm" onClick={() => {
+                                                        setPreviewProject(project);
+                                                        showProjectDetails();
+                                                    }}>
+                                                        Preview
+                                                    </Button>
+                                                    {userProfile.clearanceLevel >= 6 && (
+                                                        <Button variant="danger" size="sm" onClick={() => {
+                                                            if (confirm("Are you sure you want to proceed?")) {
+                                                                // Code to execute if the user clicks "OK"
+                                                                handleDelete(project._id!)
+                                                            }
+                                                        }}>
+                                                            Delete
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    ))}
                         </Card.Body>
                     </Card>
                 </Col>
