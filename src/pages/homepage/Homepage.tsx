@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
-const MAX_DISPLAY_ITEMS_PER_ROW = 10;
+const MAX_DISPLAY_ITEMS_PER_ROW = 32;
 
 interface HomepageProps {
     data?: any;
@@ -78,7 +78,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         {
             dataList: [...mainProjects],
             title: 'Games etc.',
-            appliedFilters: ['game']
+            appliedFilters: ['game', '!playthrough']
         },
         {
             dataList: [...mainWebposts],
@@ -128,22 +128,20 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         setRandomPosts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'random'));
     }
 
-    const filterProjects = (projects: ItemDisplay[], filters: string[]): ItemDisplay[] => {
-        let filteredProjects: ItemDisplay[] = [];
-        projects.forEach((project) => {
-            let doesHaveAllFilters = true;
-            filters.forEach((filter) => {
-                if (!project.tags?.includes(filter)) {
-                    doesHaveAllFilters = false;
+    const filterProjects = (
+        projects: ItemDisplay[],
+        filters: string[]
+    ): ItemDisplay[] => {
+        return projects.filter((project) => {
+            return filters.every((filter) => {
+                if (filter.startsWith("!")) {
+                    const excludeTag = filter.slice(1);
+                    return !project.tags?.includes(excludeTag);
                 }
+                return project.tags?.includes(filter);
             });
-            if (doesHaveAllFilters) {
-                filteredProjects.push(project);
-            }
         });
-
-        return filteredProjects
-    }
+    };
 
     const fetchProjects = async () => {
         const rateLimit = localStorage.getItem('rateLimit')
