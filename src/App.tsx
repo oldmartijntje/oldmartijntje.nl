@@ -17,6 +17,7 @@ import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
 import ConsoleApp from './pages/easterEggs/ConsoleApp';
 import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManagerPage';
+import SecurityFlagsPage from './pages/BackendDataEditorPages/securityFlagsPage';
 import Events from './pages/events/Events';
 
 interface RouteData {
@@ -129,6 +130,12 @@ const App: React.FC = () => {
         {
             path: '/api/projectDataManager',
             element: ProjectDataManager,
+            isPrivate: true,
+            clearanceLevelNeeded: 5
+        },
+        {
+            path: '/api/security-flags',
+            element: SecurityFlagsPage,
             isPrivate: true,
             clearanceLevelNeeded: 5
         },
