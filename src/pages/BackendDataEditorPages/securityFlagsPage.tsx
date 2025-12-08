@@ -48,6 +48,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
     // Query parameters state - load from localStorage
     const [riskLevel, setRiskLevel] = useState<number | null>(getSearchFilters('securityFlags_riskLevel') || null);
+    const [minRiskLevel, setMinRiskLevel] = useState<boolean>(getSearchFilters('securityFlags_minRiskLevel') || false);
     const [resolved, setResolved] = useState<boolean | null>(() => {
         const saved = getSearchFilters('securityFlags_resolved');
         return saved === '' ? null : saved === 'true';
@@ -103,6 +104,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
             if (enableRiskLevel && riskLevel !== null) {
                 queryParams.riskLevel = riskLevel.toString();
+                queryParams.minRiskLevel = minRiskLevel.toString();
             }
 
             if (enableResolved && resolved !== null) {
@@ -183,6 +185,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const saveFiltersToStorage = () => {
         setSearchFilters('securityFlags_riskLevel', riskLevel);
+        setSearchFilters('securityFlags_minRiskLevel', minRiskLevel);
         setSearchFilters('securityFlags_resolved', resolved?.toString() || '');
         setSearchFilters('securityFlags_limit', limit);
         setSearchFilters('securityFlags_descriptionFilter', descriptionFilter);
@@ -203,6 +206,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
 
     const clearAllFilters = () => {
         setRiskLevel(null);
+        setMinRiskLevel(false);
         setResolved(null);
         setLimit(30);
         setDescriptionFilter('');
@@ -221,10 +225,10 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
         setEnableDateTimeFilter(false);
         setSkip(0);
         setCurrentPage(1);
-
+        
         // Clear from localStorage
         const filterKeys = [
-            'securityFlags_riskLevel', 'securityFlags_resolved', 'securityFlags_limit',
+            'securityFlags_riskLevel', 'securityFlags_minRiskLevel', 'securityFlags_resolved', 'securityFlags_limit',
             'securityFlags_descriptionFilter', 'securityFlags_userFilter', 'securityFlags_ipFilter',
             'securityFlags_fileFilter', 'securityFlags_additionalDataFilter', 'securityFlags_dateTimeFilter',
             'securityFlags_enableRiskLevel', 'securityFlags_enableResolved', 'securityFlags_enableDescriptionFilter',
@@ -232,9 +236,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
             'securityFlags_enableAdditionalDataFilter', 'securityFlags_enableDateTimeFilter'
         ];
         filterKeys.forEach(key => setSearchFilters(key, ''));
-    };
-
-    const resolveFlag = async (flagId: string) => {
+    };    const resolveFlag = async (flagId: string) => {
         try {
             const userData = ServerConnector.getUserData();
             if (!userData.sessionToken) {
@@ -321,6 +323,15 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                     min="1"
                                     max="10"
                                     className={!enableRiskLevel ? 'text-muted bg-dark border-secondary opacity-50' : ''}
+                                />
+                                <Form.Check
+                                    type="checkbox"
+                                    id="min-risk-level"
+                                    label="Use as minimum risk level"
+                                    checked={minRiskLevel}
+                                    onChange={(e) => setMinRiskLevel(e.target.checked)}
+                                    disabled={!enableRiskLevel}
+                                    className={`mt-2 ${!enableRiskLevel ? 'opacity-50' : ''}`}
                                 />
                             </Form.Group>
                         </Col>
