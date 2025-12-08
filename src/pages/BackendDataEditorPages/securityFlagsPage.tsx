@@ -225,7 +225,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
         setEnableDateTimeFilter(false);
         setSkip(0);
         setCurrentPage(1);
-        
+
         // Clear from localStorage
         const filterKeys = [
             'securityFlags_riskLevel', 'securityFlags_minRiskLevel', 'securityFlags_resolved', 'securityFlags_limit',
@@ -236,7 +236,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
             'securityFlags_enableAdditionalDataFilter', 'securityFlags_enableDateTimeFilter'
         ];
         filterKeys.forEach(key => setSearchFilters(key, ''));
-    };    const resolveFlag = async (flagId: string) => {
+    }; const resolveFlag = async (flagId: string) => {
         try {
             const userData = ServerConnector.getUserData();
             if (!userData.sessionToken) {
