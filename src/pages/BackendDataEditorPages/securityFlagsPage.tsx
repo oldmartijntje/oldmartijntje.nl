@@ -47,6 +47,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const [enableRiskLevel, setEnableRiskLevel] = useState(false);
     const [enableResolved, setEnableResolved] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [resolvingFlags, setResolvingFlags] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         fetchSecurityFlags();
@@ -129,6 +130,57 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
         if (level <= 2) return 'success';
         if (level <= 4) return 'warning';
         return 'danger';
+    };
+
+    const resolveFlag = async (flagId: string) => {
+        try {
+            const userData = ServerConnector.getUserData();
+            if (!userData.sessionToken) {
+                setError('No session token found. Please log in again.');
+                return;
+            }
+
+            setResolvingFlags(prev => new Set(prev).add(flagId));
+
+            const serverConnector = new ServerConnector();
+
+            await serverConnector.fetchData(
+                `https://api.oldmartijntje.nl/security-flags/${flagId}/resolve`,
+                'PUT',
+                JSON.stringify({ sessionToken: userData.sessionToken }),
+                (response: any) => {
+                    console.log('Flag resolved successfully:', response);
+                    // Update the flag in the local state
+                    setSecurityFlags(prev =>
+                        prev.map(flag =>
+                            flag._id === flagId
+                                ? { ...flag, resolved: true }
+                                : flag
+                        )
+                    );
+                    setResolvingFlags(prev => {
+                        const newSet = new Set(prev);
+                        newSet.delete(flagId);
+                        return newSet;
+                    });
+                },
+                (error: any) => {
+                    setError(`Failed to resolve flag: ${error.message || 'Unknown error'}`);
+                    setResolvingFlags(prev => {
+                        const newSet = new Set(prev);
+                        newSet.delete(flagId);
+                        return newSet;
+                    });
+                }
+            );
+        } catch (err) {
+            setError(`Error resolving flag: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            setResolvingFlags(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(flagId);
+                return newSet;
+            });
+        }
     };
 
     return (
@@ -277,6 +329,7 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <th>File</th>
                                             <th>Status</th>
                                             <th>Additional Data</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -323,6 +376,24 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                                         </details>
                                                     ) : (
                                                         <span className="text-light opacity-75">No additional data</span>
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    {!flag.resolved ? (
+                                                        <Button
+                                                            variant="success"
+                                                            size="sm"
+                                                            onClick={() => resolveFlag(flag._id)}
+                                                            disabled={resolvingFlags.has(flag._id)}
+                                                        >
+                                                            {resolvingFlags.has(flag._id) ? (
+                                                                <Spinner animation="border" size="sm" />
+                                                            ) : (
+                                                                'Resolve'
+                                                            )}
+                                                        </Button>
+                                                    ) : (
+                                                        <span className="text-success">✓ Resolved</span>
                                                     )}
                                                 </td>
                                             </tr>
