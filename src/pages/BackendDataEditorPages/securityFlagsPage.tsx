@@ -74,6 +74,14 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [resolvingFlags, setResolvingFlags] = useState<Set<string>>(new Set());
     const [appliedFilters, setAppliedFilters] = useState<any>(null);
+    const [deletingResolved, setDeletingResolved] = useState(false);
+    const [deleteBeforeDate, setDeleteBeforeDate] = useState<string>(() => {
+        // Default to 2 days ago
+        const date = new Date();
+        date.setDate(date.getDate() - 2);
+        return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+    });
+    const [showDeleteSection, setShowDeleteSection] = useState(false);
 
     useEffect(() => {
         fetchSecurityFlags();
@@ -284,6 +292,58 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 newSet.delete(flagId);
                 return newSet;
             });
+        }
+    };
+
+    const deleteResolvedFlags = async () => {
+        if (!window.confirm(`Are you sure you want to delete all resolved security flags from before ${deleteBeforeDate}? This action cannot be undone.`)) {
+            return;
+        }
+
+        try {
+            const userData = ServerConnector.getUserData();
+            if (!userData.sessionToken) {
+                setError('No session token found. Please log in again.');
+                return;
+            }
+
+            setDeletingResolved(true);
+            setError('');
+
+            // Convert the date to ISO string with time set to midnight
+            const dateTime = new Date(deleteBeforeDate + 'T00:00:00.000Z').toISOString();
+
+            const queryParams = {
+                sessionToken: userData.sessionToken,
+                dateTime: dateTime
+            };
+
+            const url = ServerConnector.encodeQueryData(queryParams, 'https://api.oldmartijntje.nl/security-flags/resolved');
+
+            const serverConnector = new ServerConnector();
+
+            await serverConnector.fetchData(
+                url,
+                'DELETE',
+                '{}',
+                (response: any) => {
+                    console.log('Resolved flags deleted successfully:', response);
+                    if (response.success && response.data) {
+                        alert(`Successfully deleted ${response.data.deletedCount} resolved security flag(s) from before ${deleteBeforeDate}`);
+                        // Refresh the list to show updated data
+                        fetchSecurityFlags();
+                        setShowDeleteSection(false);
+                    }
+                    setDeletingResolved(false);
+                },
+                (error: any) => {
+                    setError(`Failed to delete resolved flags: ${error.message || 'Unknown error'}`);
+                    setDeletingResolved(false);
+                }
+            );
+        } catch (err) {
+            setError(`Error deleting resolved flags: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            setDeletingResolved(false);
         }
     };
 
@@ -570,17 +630,75 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </OverlayTrigger>
                             )}
                         </div>
-                        <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={fetchSecurityFlags}
-                            disabled={loading}
-                        >
-                            Refresh
-                        </Button>
+                        <div className="d-flex gap-2">
+                            <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() => setShowDeleteSection(!showDeleteSection)}
+                                disabled={loading}
+                            >
+                                {showDeleteSection ? 'Cancel Delete' : 'Delete Resolved'}
+                            </Button>
+                            <Button
+                                variant="outline-primary"
+                                size="sm"
+                                onClick={fetchSecurityFlags}
+                                disabled={loading}
+                            >
+                                Refresh
+                            </Button>
+                        </div>
                     </div>
                 </Card.Header>
                 <Card.Body>
+                    {showDeleteSection && (
+                        <Card className="mb-3 bg-secondary text-light border-danger">
+                            <Card.Header className="bg-danger text-light">
+                                <h6 className="mb-0">⚠️ Delete Resolved Security Flags</h6>
+                            </Card.Header>
+                            <Card.Body>
+                                <Form>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Delete resolved flags before this date:</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            value={deleteBeforeDate}
+                                            onChange={(e) => setDeleteBeforeDate(e.target.value)}
+                                            disabled={deletingResolved}
+                                            max={new Date().toISOString().split('T')[0]}
+                                        />
+                                        <Form.Text className="text-light opacity-75">
+                                            This will permanently delete all resolved security flags with a date/time before {deleteBeforeDate} 00:00:00 UTC
+                                        </Form.Text>
+                                    </Form.Group>
+                                    <div className="d-flex gap-2">
+                                        <Button
+                                            variant="danger"
+                                            onClick={deleteResolvedFlags}
+                                            disabled={deletingResolved || !deleteBeforeDate}
+                                        >
+                                            {deletingResolved ? (
+                                                <>
+                                                    <Spinner animation="border" size="sm" className="me-2" />
+                                                    Deleting...
+                                                </>
+                                            ) : (
+                                                'Confirm Delete'
+                                            )}
+                                        </Button>
+                                        <Button
+                                            variant="outline-info"
+                                            onClick={() => setShowDeleteSection(false)}
+                                            disabled={deletingResolved}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    )}
+
                     {loading ? (
                         <div className="text-center py-4">
                             <Spinner animation="border" role="status">
