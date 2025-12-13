@@ -83,6 +83,22 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
     });
     const [showDeleteSection, setShowDeleteSection] = useState(false);
 
+    // Log download state
+    const [showLogDownloadSection, setShowLogDownloadSection] = useState(false);
+    const [logStartDate, setLogStartDate] = useState<string>(() => {
+        // Default to 2 months ago
+        const date = new Date();
+        date.setMonth(date.getMonth() - 2);
+        return date.toISOString().split('T')[0];
+    });
+    const [logEndDate, setLogEndDate] = useState<string>(() => {
+        // Default to tomorrow
+        const date = new Date();
+        date.setDate(date.getDate() + 1);
+        return date.toISOString().split('T')[0];
+    });
+    const [downloadingLogs, setDownloadingLogs] = useState(false);
+
     useEffect(() => {
         fetchSecurityFlags();
     }, []);
@@ -344,6 +360,41 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
         } catch (err) {
             setError(`Error deleting resolved flags: ${err instanceof Error ? err.message : 'Unknown error'}`);
             setDeletingResolved(false);
+        }
+    };
+
+    const downloadLogs = async () => {
+        try {
+            const userData = ServerConnector.getUserData();
+            if (!userData.sessionToken) {
+                setError('No session token found. Please log in again.');
+                return;
+            }
+
+            setDownloadingLogs(true);
+            setError('');
+
+            const queryParams = {
+                sessionToken: userData.sessionToken,
+                startDate: logStartDate,
+                endDate: logEndDate
+            };
+
+            const url = ServerConnector.encodeQueryData(queryParams, 'https://api.oldmartijntje.nl/logs/download');
+
+            // Create a temporary anchor element to trigger download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `logs_${logStartDate}_to_${logEndDate}.zip`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setDownloadingLogs(false);
+            setShowLogDownloadSection(false);
+        } catch (err) {
+            setError(`Error downloading logs: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            setDownloadingLogs(false);
         }
     };
 
@@ -632,6 +683,14 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                         </div>
                         <div className="d-flex gap-2">
                             <Button
+                                variant="outline-info"
+                                size="sm"
+                                onClick={() => setShowLogDownloadSection(!showLogDownloadSection)}
+                                disabled={loading}
+                            >
+                                {showLogDownloadSection ? 'Cancel Download' : 'Download Logs'}
+                            </Button>
+                            <Button
                                 variant="outline-danger"
                                 size="sm"
                                 onClick={() => setShowDeleteSection(!showDeleteSection)}
@@ -651,6 +710,67 @@ const SecurityFlagsPage: React.FC<UserPageProps> = ({ userProfile }) => {
                     </div>
                 </Card.Header>
                 <Card.Body>
+                    {showLogDownloadSection && (
+                        <Card className="mb-3 bg-secondary text-light border-info">
+                            <Card.Header className="bg-info text-dark">
+                                <h6 className="mb-0">📥 Download Log Files</h6>
+                            </Card.Header>
+                            <Card.Body>
+                                <Form>
+                                    <Row>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Start Date:</Form.Label>
+                                                <Form.Control
+                                                    type="date"
+                                                    value={logStartDate}
+                                                    onChange={(e) => setLogStartDate(e.target.value)}
+                                                    disabled={downloadingLogs}
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>End Date:</Form.Label>
+                                                <Form.Control
+                                                    type="date"
+                                                    value={logEndDate}
+                                                    onChange={(e) => setLogEndDate(e.target.value)}
+                                                    disabled={downloadingLogs}
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+                                    <Form.Text className="text-light opacity-75 d-block mb-3">
+                                        This will download a ZIP file containing all log files from {logStartDate} to {logEndDate}
+                                    </Form.Text>
+                                    <div className="d-flex gap-2">
+                                        <Button
+                                            variant="info"
+                                            onClick={downloadLogs}
+                                            disabled={downloadingLogs || !logStartDate || !logEndDate}
+                                        >
+                                            {downloadingLogs ? (
+                                                <>
+                                                    <Spinner animation="border" size="sm" className="me-2" />
+                                                    Downloading...
+                                                </>
+                                            ) : (
+                                                'Download Logs'
+                                            )}
+                                        </Button>
+                                        <Button
+                                            variant="outline-secondary"
+                                            onClick={() => setShowLogDownloadSection(false)}
+                                            disabled={downloadingLogs}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    )}
                     {showDeleteSection && (
                         <Card className="mb-3 bg-secondary text-light border-danger">
                             <Card.Header className="bg-danger text-light">
