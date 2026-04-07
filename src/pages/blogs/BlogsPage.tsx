@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Button, Card, Container, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RssPopup from '../../components/overlay/RssPopup';
+import StructuredDataScript from '../../components/overlay/StructuredDataScript';
 import ServerConnector from '../../services/ServerConnector';
+import { buildBlogListStructuredData, STRUCTURED_DATA_DEFAULTS } from '../../helpers/structuredData';
 
 interface BlogListItem {
     _id: string;
@@ -14,7 +16,6 @@ interface BlogListItem {
 }
 
 const BLOGS_PER_PAGE = 10;
-const BLOG_RSS_URL = 'https://api.oldmartijntje.nl/getData/blogs/rss.xml';
 
 const BlogsPage: React.FC = () => {
     const [blogs, setBlogs] = useState<BlogListItem[]>([]);
@@ -59,11 +60,18 @@ const BlogsPage: React.FC = () => {
         fetchBlogs(currentPage);
     }, [currentPage]);
 
+    const blogListStructuredData = useMemo(() => buildBlogListStructuredData({
+        blogs,
+        currentPage,
+        totalPages,
+    }), [blogs, currentPage, totalPages]);
+
     return (
         <Container className="py-5">
+            <StructuredDataScript id="blogs-list" data={blogListStructuredData} />
             <div className="d-flex align-items-center justify-content-between gap-3 mb-4">
                 <h1 className="text-light mb-0">Blogs</h1>
-                <RssPopup rssUrl={BLOG_RSS_URL} />
+                <RssPopup rssUrl={STRUCTURED_DATA_DEFAULTS.rssUrl} />
             </div>
 
             {isLoading && (

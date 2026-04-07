@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Card, Container, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import RssPopup from '../../components/overlay/RssPopup';
+import StructuredDataScript from '../../components/overlay/StructuredDataScript';
 import ServerConnector from '../../services/ServerConnector';
+import { buildBlogArticleStructuredData, STRUCTURED_DATA_DEFAULTS } from '../../helpers/structuredData';
 
 interface BlogData {
     _id: string;
@@ -26,8 +28,6 @@ const formatBlogDate = (dateValue: string) => {
 
     return date.toLocaleString();
 };
-
-const BLOG_RSS_URL = 'https://api.oldmartijntje.nl/getData/blogs/rss.xml';
 
 const BlogViewPage: React.FC = () => {
     const { blogKey } = useParams<{ blogKey: string }>();
@@ -62,12 +62,28 @@ const BlogViewPage: React.FC = () => {
         );
     }, [blogKey]);
 
+    const blogStructuredData = useMemo(() => {
+        if (!blog) {
+            return null;
+        }
+
+        return buildBlogArticleStructuredData({
+            title: blog.title,
+            description: blog.description,
+            content: blog.content,
+            blogIdentifier: blog.blogIdentifier,
+            pubDate: blog.pubDate,
+            editDate: blog.editDate,
+        });
+    }, [blog]);
+
     return (
         <Container className="py-5">
+            {blogStructuredData && <StructuredDataScript id="blog-article" data={blogStructuredData} />}
             <div className="d-flex flex-wrap gap-2 mb-3">
                 <Link to="/" className="btn btn-outline-primary">Back Home</Link>
                 <Link to="/blogs" className="btn btn-outline-secondary">View All Blogs</Link>
-                <RssPopup rssUrl={BLOG_RSS_URL} />
+                <RssPopup rssUrl={STRUCTURED_DATA_DEFAULTS.rssUrl} />
             </div>
 
             {isLoading && (

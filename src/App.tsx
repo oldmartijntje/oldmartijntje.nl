@@ -1,6 +1,6 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { useKonamiDebug } from './helpers/konamiDebug';
 
 import Sidebar from './components/sidebar/Sidebar';
@@ -22,6 +22,8 @@ import Events from './pages/events/Events';
 import BlogsEditorPage from './pages/BackendDataEditorPages/blogsEditorPage';
 import BlogViewPage from './pages/blogs/BlogViewPage';
 import BlogsPage from './pages/blogs/BlogsPage';
+import StructuredDataScript from './components/overlay/StructuredDataScript';
+import { getHardcodedPageStructuredData } from './helpers/structuredData';
 
 interface RouteData {
     path: string;
@@ -32,6 +34,17 @@ interface RouteData {
 }
 
 const randomnessSeed = Math.random() * 10000
+
+const AppStructuredData: React.FC = () => {
+    const location = useLocation();
+
+    if (location.pathname.startsWith('/blogs')) {
+        return null;
+    }
+
+    const structuredData = getHardcodedPageStructuredData(location.pathname);
+    return <StructuredDataScript id="route-page" data={structuredData} />;
+};
 
 const App: React.FC = () => {
     const [isEventActive, setEventStatus] = useState(false);
@@ -178,6 +191,7 @@ const App: React.FC = () => {
 
     return (
         <Router>
+            <AppStructuredData />
             <div className="app-container">
                 <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} userProfile={userProfile} isEventActive={isEventActive}></Sidebar>
                 <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
