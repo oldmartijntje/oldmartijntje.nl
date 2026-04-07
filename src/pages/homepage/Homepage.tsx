@@ -75,11 +75,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             title: 'Blog Posts',
             appliedFilters: []
         },
-        {
-            dataList: [...mainBlog],
-            title: 'Short Messages',
-            appliedFilters: []
-        },
+        // {
+        //     dataList: [...mainBlog],
+        //     title: 'Short Messages',
+        //     appliedFilters: []
+        // },
         {
             dataList: [...mainProjects],
             title: 'Games etc.',
