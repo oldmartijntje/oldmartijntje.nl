@@ -51,6 +51,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     let fetched = false;
     const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
     const [mainBlog, setBlog] = useState<ItemDisplay[]>([]);
+    const [justPosts, setPosts] = useState<ItemDisplay[]>([]);
     const [mainWebposts, setWebposts] = useState<ItemDisplay[]>([]);
     const [mainRandomPosts, setRandomPosts] = useState<ItemDisplay[]>([]);
     const [showModal, setShowModal] = useState(false);
@@ -74,13 +75,13 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
         {
             dataList: [...mainBlog],
             title: 'Blog Posts',
-            appliedFilters: []
+            appliedFilters: [],
         },
-        // {
-        //     dataList: [...mainBlog],
-        //     title: 'Short Messages',
-        //     appliedFilters: []
-        // },
+        {
+            dataList: [...justPosts],
+            title: 'Updates',
+            appliedFilters: ['update']
+        },
         {
             dataList: [...mainProjects],
             title: 'Games etc.',
@@ -90,6 +91,11 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             dataList: [...mainWebposts],
             title: 'Weblinks',
             appliedFilters: []
+        },
+        {
+            dataList: [...justPosts],
+            title: 'General Posts',
+            appliedFilters: ['!update']
         },
         {
             dataList: [...mainProjects],
@@ -131,6 +137,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
             return dateB - dateA;
         });
         setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));
+        setPosts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'post'));
         setBlog(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'blog'));
         setWebposts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'url'));
         setRandomPosts(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'random'));
