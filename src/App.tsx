@@ -21,6 +21,7 @@ import SecurityFlagsPage from './pages/BackendDataEditorPages/securityFlagsPage'
 import Events from './pages/events/Events';
 import BlogsEditorPage from './pages/BackendDataEditorPages/blogsEditorPage';
 import BlogViewPage from './pages/blogs/BlogViewPage';
+import BlogsPage from './pages/blogs/BlogsPage';
 
 interface RouteData {
     path: string;
@@ -150,6 +151,11 @@ const App: React.FC = () => {
         {
             path: '/blogs/:blogKey',
             element: BlogViewPage,
+            isPrivate: false
+        },
+        {
+            path: '/blogs',
+            element: BlogsPage,
             isPrivate: false
         },
         {
