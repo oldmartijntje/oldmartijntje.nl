@@ -71,6 +71,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const [blogs, setBlogs] = useState<BlogItem[]>([]);
     const [editingBlog, setEditingBlog] = useState<BlogItem | null>(null);
     const [formData, setFormData] = useState<BlogFormData>(createEmptyFormState());
+    const [useCustomEditDate, setUseCustomEditDate] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -146,6 +147,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const clearForm = () => {
         setEditingBlog(null);
         setFormData(createEmptyFormState());
+        setUseCustomEditDate(false);
     };
 
     const handleEdit = (blog: BlogItem) => {
@@ -160,9 +162,10 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
             blogIdentifier: blog.blogIdentifier,
             baseURL: blog.baseURL || '',
             pubDate: toDateInputValue(blog.pubDate),
-            editDate: toDateInputValue(blog.editDate),
+            editDate: '',
             hidden: !!blog.hidden,
         });
+        setUseCustomEditDate(false);
 
         const queryParams: { [key: string]: string } = {};
         if (includeHidden) {
@@ -242,7 +245,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 payload.pubDate = fromDateInputValue(formData.pubDate);
             }
 
-            if (formData.editDate) {
+            if (useCustomEditDate && formData.editDate) {
                 payload.editDate = fromDateInputValue(formData.editDate);
             }
         } else {
@@ -253,7 +256,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                 payload.pubDate = fromDateInputValue(formData.pubDate);
             }
 
-            if (formData.editDate) {
+            if (useCustomEditDate && formData.editDate) {
                 payload.editDate = fromDateInputValue(formData.editDate);
             }
         }
@@ -375,14 +378,31 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="text-light">Edit Date</Form.Label>
-                                    <Form.Control
-                                        type="datetime-local"
-                                        value={formData.editDate}
-                                        onChange={(e) => setFormData({ ...formData, editDate: e.target.value })}
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Use Custom Edit Date"
+                                        checked={useCustomEditDate}
+                                        onChange={(e) => {
+                                            setUseCustomEditDate(e.target.checked);
+                                            if (!e.target.checked) {
+                                                setFormData({ ...formData, editDate: '' });
+                                            }
+                                        }}
+                                        className="text-light"
                                     />
-                                    <Form.Text className="text-secondary">If omitted during update, server automatically sets editDate to now.</Form.Text>
                                 </Form.Group>
+
+                                {useCustomEditDate && (
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Edit Date</Form.Label>
+                                        <Form.Control
+                                            type="datetime-local"
+                                            value={formData.editDate}
+                                            onChange={(e) => setFormData({ ...formData, editDate: e.target.value })}
+                                        />
+                                        <Form.Text className="text-secondary">Leave disabled to let the server set editDate automatically.</Form.Text>
+                                    </Form.Group>
+                                )}
 
                                 <Form.Group className="mb-3">
                                     <Form.Check
@@ -398,7 +418,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                     <Button variant="primary" type="submit" disabled={!canCreate || (!!editingBlog && !canEditOrDelete)}>
                                         {editingBlog ? 'Update Blog' : 'Create Blog'}
                                     </Button>
-                                    {(editingBlog || formData.title || formData.description || formData.content || formData.blogIdentifier || formData.baseURL || formData.pubDate || formData.editDate || formData.hidden) && (
+                                    {(editingBlog || formData.title || formData.description || formData.content || formData.blogIdentifier || formData.baseURL || formData.pubDate || formData.editDate || formData.hidden || useCustomEditDate) && (
                                         <Button variant="secondary" onClick={clearForm}>
                                             {editingBlog ? 'Deselect Blog' : 'Clear'}
                                         </Button>
