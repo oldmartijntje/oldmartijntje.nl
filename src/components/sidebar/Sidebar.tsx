@@ -50,11 +50,12 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/discovery">Discovery</Link></li>
+                        <li><Link to="/blogs">Blogs</Link></li>
                         <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <li><Link to="/user">Account</Link></li>
                         {/* <li><Link to="/events">Events</Link></li> */}
                         {!isMobile && (
-                            <li><Link to="/console">M.A.R.A. OS</Link></li>
+                            <li><span style={{ color: "#0ac800" }}> // to be deleted:</span><br></br><Link to="/console">M.A.R.A. OS</Link></li>
                         )}
                         <li>
                             <a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">
