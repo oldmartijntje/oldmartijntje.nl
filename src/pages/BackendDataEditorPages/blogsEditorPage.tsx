@@ -12,6 +12,7 @@ interface BlogItem {
     _id: string;
     title: string;
     description: string;
+    content?: string;
     blogIdentifier: string;
     baseURL: string | null;
     pubDate: string;
@@ -23,6 +24,7 @@ interface BlogFormData {
     _id?: string;
     title: string;
     description: string;
+    content: string;
     blogIdentifier: string;
     baseURL: string;
     pubDate: string;
@@ -38,6 +40,7 @@ const getDefaultBaseURL = () => {
 const createEmptyFormState = (): BlogFormData => ({
     title: '',
     description: '',
+    content: '',
     blogIdentifier: '',
     baseURL: getDefaultBaseURL(),
     pubDate: '',
@@ -153,11 +156,36 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
             _id: blog._id,
             title: blog.title,
             description: blog.description,
+            content: blog.content || '',
             blogIdentifier: blog.blogIdentifier,
             baseURL: blog.baseURL || '',
             pubDate: toDateInputValue(blog.pubDate),
             editDate: toDateInputValue(blog.editDate),
             hidden: !!blog.hidden,
+        });
+
+        const queryParams: { [key: string]: string } = {};
+        if (includeHidden) {
+            queryParams.hidden = 'true';
+            queryParams.sessionToken = sessionToken;
+        }
+
+        const encodedId = encodeURIComponent(blog._id);
+        const endpoint = `https://api.oldmartijntje.nl/getData/blogs/${encodedId}`;
+        const url = Object.keys(queryParams).length > 0
+            ? ServerConnector.encodeQueryData(queryParams, endpoint)
+            : endpoint;
+
+        const serverConnector = new ServerConnector();
+        serverConnector.fetchData(url, 'GET', '{}', (response: any) => {
+            const loadedBlog = response?.data;
+            if (!loadedBlog) return;
+            setFormData((previousFormData) => ({
+                ...previousFormData,
+                content: loadedBlog.content || previousFormData.content,
+            }));
+        }, () => {
+            // Keep current values if loading full content fails.
         });
     };
 
@@ -198,6 +226,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
             sessionToken,
             title: formData.title,
             description: formData.description,
+            content: formData.content,
             hidden: !!formData.hidden,
         };
 
@@ -301,6 +330,18 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">Content</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={10}
+                                        value={formData.content}
+                                        onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                                        placeholder="Markdown-friendly blog content"
+                                        required
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
                                     <Form.Label className="text-light">Blog Identifier</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -354,10 +395,10 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
 
                                 <div className="btn-group" role="group">
-                                    <Button variant="primary" type="submit" disabled={!canCreate || (editingBlog && !canEditOrDelete)}>
+                                    <Button variant="primary" type="submit" disabled={!canCreate || (!!editingBlog && !canEditOrDelete)}>
                                         {editingBlog ? 'Update Blog' : 'Create Blog'}
                                     </Button>
-                                    {(editingBlog || formData.title || formData.description || formData.blogIdentifier || formData.baseURL || formData.pubDate || formData.editDate || formData.hidden) && (
+                                    {(editingBlog || formData.title || formData.description || formData.content || formData.blogIdentifier || formData.baseURL || formData.pubDate || formData.editDate || formData.hidden) && (
                                         <Button variant="secondary" onClick={clearForm}>
                                             {editingBlog ? 'Deselect Blog' : 'Clear'}
                                         </Button>
