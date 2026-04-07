@@ -19,6 +19,7 @@ import ConsoleApp from './pages/easterEggs/ConsoleApp';
 import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManagerPage';
 import SecurityFlagsPage from './pages/BackendDataEditorPages/securityFlagsPage';
 import Events from './pages/events/Events';
+import BlogsEditorPage from './pages/BackendDataEditorPages/blogsEditorPage';
 
 interface RouteData {
     path: string;
@@ -138,6 +139,12 @@ const App: React.FC = () => {
             element: SecurityFlagsPage,
             isPrivate: true,
             clearanceLevelNeeded: 5
+        },
+        {
+            path: '/api/blogs',
+            element: BlogsEditorPage,
+            isPrivate: true,
+            clearanceLevelNeeded: 4
         },
         {
             path: "signup",
