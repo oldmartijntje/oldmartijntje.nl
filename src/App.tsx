@@ -20,6 +20,7 @@ import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManage
 import SecurityFlagsPage from './pages/BackendDataEditorPages/securityFlagsPage';
 import Events from './pages/events/Events';
 import BlogsEditorPage from './pages/BackendDataEditorPages/blogsEditorPage';
+import BlogViewPage from './pages/blogs/BlogViewPage';
 
 interface RouteData {
     path: string;
@@ -145,6 +146,11 @@ const App: React.FC = () => {
             element: BlogsEditorPage,
             isPrivate: true,
             clearanceLevelNeeded: 4
+        },
+        {
+            path: '/blogs/:blogKey',
+            element: BlogViewPage,
+            isPrivate: false
         },
         {
             path: "signup",

@@ -3,7 +3,7 @@ import { Container, Col, Card, Button, Popover, OverlayTrigger } from 'react-boo
 import offlineProjects from '../../assets/json/projects.json';
 import './Homepage.css';
 import ServerConnector from '../../services/ServerConnector';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 
@@ -46,6 +46,7 @@ function getOfflineProjects(): ItemDisplay[] {
 }
 
 const Homepage: React.FC<HomepageProps> = ({ data }) => {
+    const navigate = useNavigate();
     const discovery = data?.title === 'Discovery';
     let fetched = false;
     const [mainProjects, setProjects] = useState<ItemDisplay[]>([]);
@@ -214,7 +215,13 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                                             {(project.infoPages.length > 0 && <Button
                                                 variant="outline-primary"
                                                 className="mt-auto"
-                                                onClick={() => showProjectDetails(project)}
+                                                onClick={() => {
+                                                    if (project.blogkey) {
+                                                        navigate(`/blogs/${encodeURIComponent(project.blogkey)}`);
+                                                        return;
+                                                    }
+                                                    showProjectDetails(project);
+                                                }}
                                             >
                                                 More Info
                                             </Button>) || (project.link && <Button
