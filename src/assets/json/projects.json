@@ -129,7 +129,7 @@
                     "content": "<style>\n.tab-pane { background: #23252b; color: #eee; }\n.tab-pane h2 { color: #4fd1c5; margin-bottom: 1em; }\n.tab-pane h3 { color: #4fd1c5; margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.1em; }\n.tab-pane img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; margin-bottom: 1rem; }\n.tab-pane a { color: #4fd1c5; text-decoration: underline; }\n.tab-pane p { line-height: 1.6; margin-bottom: 1em; }\n.tab-pane code { background: #1a1c22; padding: 2px 6px; border-radius: 3px; color: #4fd1c5; font-size: 0.85em; }\n@media (max-width: 600px) { .tab-pane img { width: 98vw; } }\n</style>\n\n<h2>Managing Content</h2>\n<p>\n  This website also serves as my content management system. I can edit the displayed projects and blog posts directly from here, which makes updating everything super convenient.\n</p>\n\n<img src=\"https://i.imgur.com/cSM4KMY.png\" alt=\"Editing interface\">\n<p style=\"text-align: center; margin-top: -1em; font-size: 0.9em; color: #aaa;\">The editing interface - functional over fancy</p>\n\n<h3>Fun Data Endpoints</h3>\n<p>\n  I also manage data for a couple of fun endpoints:\n</p>\n<ul style=\"margin-left: 1.5em; margin-bottom: 1em;\">\n  <li><b>Picture Album</b> - stores all the pictures I've taken with my little camera</li>\n  <li><b>Random News Messages</b> - inspired by <a href=\"https://ivark.github.io/\" target=\"_blank\">Antimatter Dimensions</a>, these are random funny messages</li>\n</ul>\n\n<p>\n  You can actually see the random news messages in action in my unfinished <a href=\"https://www.roblox.com/games/100380909601251/Randomizer-Tycoon\" target=\"_blank\">Roblox game</a>. They just pop up and add some personality to whatever project I throw them into.\n</p>\n\n<p>\n  There are big plans for this website. But we'll see if they happen or not :3\n</p>\n\n<p style=\"font-size: 0.95em; margin-top: 2em;\">\n  <a href=\"https://oldmartijntje.nl/\" target=\"_blank\">Visit the website →</a>\n</p>"
                 }
             ],
-            "lastUpdated": "2025-12-06T12:30:17.369Z",
+            "lastUpdated": "2025-12-06T12:32:49.571Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
@@ -204,15 +204,16 @@
                     "content": "<p>I just added this blog system today. <br/>\nWell... this system already existed for Projects, but now this can also do more, like BLOGGS!!</p>\n<img src=\"https://i.imgur.com/dbWdoGc.png\"/>"
                 }
             ],
-            "lastUpdated": "2024-09-04T22:14:23.733Z",
+            "lastUpdated": "2026-04-07T21:28:44.596Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
             "tags": [
                 "first",
-                "short-blog"
+                "short-blog",
+                "update"
             ],
-            "displayItemType": "blog",
+            "displayItemType": "post",
             "__v": 0
         },
         {
@@ -231,29 +232,15 @@
                     "content": "WOW! you found the second page on this ultra super duper cool hidden (not really)  second page. OwO"
                 }
             ],
-            "lastUpdated": "2024-09-04T16:00:00.000Z",
+            "lastUpdated": "2026-04-07T21:28:56.357Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
             "tags": [
-                "short-blog"
+                "short-blog",
+                "update"
             ],
-            "displayItemType": "blog",
-            "__v": 0
-        },
-        {
-            "_id": "66d8a4a4a329ffc0d655be3a",
-            "title": "My Youtube Channel.",
-            "thumbnailImage": "https://oldmartijntje.nl/assets/mii-rpD35z7m.png",
-            "description": "",
-            "link": "https://www.youtube.com/channel/UCd9_pxx4m9KP13s1-TncLcQ/",
-            "infoPages": [],
-            "lastUpdated": "2024-09-04T18:26:48.021Z",
-            "hidden": false,
-            "spoiler": false,
-            "nsfw": false,
-            "tags": [],
-            "displayItemType": "URL",
+            "displayItemType": "post",
             "__v": 0
         },
         {
@@ -286,6 +273,28 @@
                 "image"
             ],
             "displayItemType": "random",
+            "__v": 0
+        },
+        {
+            "_id": "66d9f5a77987427b3624824c",
+            "title": "M.A.R.A. OS",
+            "thumbnailImage": "https://i.imgur.com/nbtlY1w.png",
+            "description": "",
+            "link": "",
+            "infoPages": [
+                {
+                    "title": "Title",
+                    "content": "<img src=\"https://i.imgur.com/nbtlY1w.png\" alt=\"Screenshot\"><p>This webpage is the M.A.R.A. OS Console. It feels like any other console app, but designed like it's for an organisation like S.H.I.E.L.D.<br/>Don't be suprised if there are a lot of CLASSIFIED things there.</p>"
+                }
+            ],
+            "lastUpdated": "2025-06-23T12:20:08.987Z",
+            "hidden": true,
+            "spoiler": false,
+            "nsfw": false,
+            "tags": [
+                "webpage"
+            ],
+            "displayItemType": "project",
             "__v": 0
         },
         {
@@ -331,7 +340,7 @@
                     "content": "<h1>April pics📸</h1>\n\n<div class=\"polaroid-gallery permanent-marker-regular\">\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/HhmkGQ5.jpeg\" alt=\"Geese\"/>\n    <div class=\"polaroid-caption\">The geese are here</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/0523HwB.jpeg\" alt=\"idk\"/>\n    <div class=\"polaroid-caption\">Sadly you can see the train light :/</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/zIerGEd.jpeg\" alt=\"orange house\"/>\n    <div class=\"polaroid-caption\">orange :3</div>\n  </div>\n\n  <div class=\"polaroid-container\">\n    <img class=\"polaroid\" src=\"https://i.imgur.com/mZgrunh.jpeg\" alt=\"Solar panels that look remotely like amongus\"/>\n    <div class=\"polaroid-caption\">mogus :c</div>\n  </div>\n</div>\n<style>\n.polaroid-gallery {\n  display: flex;\n  justify-content: center;\n  flex-wrap: wrap;\n  gap: 20px;\n  margin-top: 20px;\n}\n\n.permanent-marker-regular {\n  font-family: \"Permanent Marker\", cursive;\n  font-weight: 400;\n  font-style: normal;\n}\n\n.polaroid-container {\n  width: 220px;  /* 10% bigger than before */\n  padding: 10px 10px 30px 10px;\n  background: white;\n  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);\n  border: 1px solid #ccc;\n  margin: 0;\n  transform: rotate(-1deg);\n  transition: transform 0.2s ease;\n  text-align: center;\n}\n\n.polaroid-container:hover {\n  transform: rotate(1deg) scale(1.03);\n}\n\n.polaroid {\n  width: 100%;\n  display: block;\n}\n\n.polaroid-caption {\n  margin-top: 8px;\n  font-size: 1.2em;\n  color: #333;\n}\n</style>\n"
                 }
             ],
-            "lastUpdated": "2025-04-30T12:28:35.519Z",
+            "lastUpdated": "2026-04-07T21:30:25.600Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
@@ -339,7 +348,7 @@
                 "pictures",
                 "short-blog"
             ],
-            "displayItemType": "blog",
+            "displayItemType": "post",
             "__v": 0
         },
         {
@@ -354,7 +363,7 @@
                     "content": "<p>I has switched to Linux!<br/>\nI mean, I still have Windows on my PC and as a small partition on my laptop as a backup. But it is a start :3</p>\n<img src=\"https://i.imgur.com/AJCvzbf.png\"/>"
                 }
             ],
-            "lastUpdated": "2025-05-21T22:05:27.164Z",
+            "lastUpdated": "2026-04-07T21:30:38.588Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
@@ -362,7 +371,7 @@
                 "linux",
                 "short-blog"
             ],
-            "displayItemType": "blog",
+            "displayItemType": "post",
             "__v": 0
         },
         {
@@ -413,7 +422,7 @@
             "infoPages": [
                 {
                     "title": "Intro",
-                    "content": "<style>\n.tab-pane img { margin-bottom: 1rem; }\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay h3 { color: #4fd1c5; margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay a { color: #4fd1c5; text-decoration: underline; }\n.blog-overlay p { line-height: 1.6; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n\n<h2>QuartzForums</h2>\n<p>\n  So I was using <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> to organize my brain, then I hosted it with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz</a>, and one day I thought: <i>\"wouldn't it be cool if people could discuss stuff on each page?\"</i>\n</p>\n<p>\n  That's how <b>QuartzForums</b> was born. It's a forum system that lives beneath your articles. No moderation from me, no control—just pure community discussion.\n</p>\n\n<img src=\"https://i.imgur.com/LLHtjVb.png\" alt=\"QuartzForums discussion example\">\n\n<h3>The idea</h3>\n<p>\n  I built a plugin for <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz</a> that adds a discussion section to every article in my vault. Then I made it universal so literally anyone could use it on their own Quartz site (or eventually, anywhere else).\n</p>\n<p>\n  Head over to <a href=\"https://docs.oldmartijntje.nl/\" target=\"_blank\">🌵OldMartijntje's Basement</a> and scroll to the bottom of any article. You'll see a little disclaimer, hit proceed, and boom—forums unlocked.\n</p>\n\n<img src=\"https://i.imgur.com/z7JIEOh.png\" alt=\"QuartzForums disclaimer\">"
+                    "content": "<style>\n.tab-pane img { margin-bottom: 1rem; }\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay h3 { color: #4fd1c5; margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay a { color: #4fd1c5; text-decoration: underline; }\n.blog-overlay p { line-height: 1.6; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n<div class=\"callout-discontinued\">\n  <strong>⚠️ Discontinued:</strong> QuartzForums is no longer displayed on the docs.oldmartijntje website.\n</div>\n<h2>QuartzForums</h2>\n<p>\n  So I was using <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> to organize my brain, then I hosted it with <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz</a>, and one day I thought: <i>\"wouldn't it be cool if people could discuss stuff on each page?\"</i>\n</p>\n<p>\n  That's how <b>QuartzForums</b> was born. It's a forum system that lives beneath your articles. No moderation from me, no control—just pure community discussion.\n</p>\n\n<img src=\"https://i.imgur.com/LLHtjVb.png\" alt=\"QuartzForums discussion example\">\n\n<h3>The idea</h3>\n<p>\n  I built a plugin for <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz</a> that adds a discussion section to every article in my vault. Then I made it universal so literally anyone could use it on their own Quartz site (or eventually, anywhere else).\n</p>\n<p>\n  Head over to <a href=\"https://docs.oldmartijntje.nl/\" target=\"_blank\">🌵OldMartijntje's Basement</a> and scroll to the bottom of any article. You'll see a little disclaimer, hit proceed, and boom—forums unlocked.\n</p>\n\n<img src=\"https://i.imgur.com/z7JIEOh.png\" alt=\"QuartzForums disclaimer\">"
                 },
                 {
                     "title": "How to Use",
@@ -424,14 +433,13 @@
                     "content": "<style>\n.tab-pane img { margin-bottom: 1rem; }\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay h3 { color: #4fd1c5; margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay a { color: #4fd1c5; text-decoration: underline; }\n.blog-overlay p { line-height: 1.6; margin-bottom: 1em; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n\n<h2>Browsing All Forums</h2>\n<p>\n  Want to see what people are discussing? Head to <a href=\"https://api.oldmartijntje.nl/quartzforums/\" target=\"_blank\">api.oldmartijntje.nl/quartzforums</a>\n</p>\n\n<img src=\"https://i.imgur.com/K33pZOs.png\" alt=\"QuartzForums homepage\">\n\n<p>\n  You can:\n</p>\n<ul style=\"margin-left: 1.5em; margin-bottom: 1em;\">\n  <li>Browse <b>all recent discussions</b></li>\n  <li>Filter by <b>website</b> (future-proofing for when this gets embedded elsewhere)</li>\n  <li>Check out <b>other users' profiles</b> and their activity</li>\n  <li>Delete your own messages (they'll show as <code style=\"color: #aaa;\">[Deleted User]</code>)</li>\n</ul>\n\n<img src=\"https://i.imgur.com/ARXhGe5.png\" alt=\"Recent discussions view\">\n\n<h3>A Quick Note</h3>\n<p>\n  If an article gets renamed or moved in <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a>, its forum is archived but still viewable at the old location (which might be a 404 now). It's a quirk of the system, but it keeps discussions safe.\n</p>\n<p style=\"font-size: 0.95em; margin-top: 2em;\">\n  <a href=\"https://docs.oldmartijntje.nl/200-Zettelkasten/QuartzForums\" target=\"_blank\">Read my full write-up on QuartzForums →</a>\n</p>"
                 }
             ],
-            "lastUpdated": "2025-12-05T11:12:00.000Z",
+            "lastUpdated": "2026-04-07T19:04:04.026Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
             "tags": [
                 "website",
                 "documentation",
-                "favourite",
                 "my-code",
                 "api",
                 "mongodb",
@@ -558,15 +566,17 @@
             "infoPages": [
                 {
                     "title": "",
-                    "content": "I keep forgetting to update this website with my newest projects. Slowly but surely I'll add my backlog of 6 projects. <br/>\nThis is a backlog of about 12 months of creation? And this excludes projects that I stopped with halfway through.<br/>\n <br/>\n <br/>Progress: 4/6"
+                    "content": "I keep forgetting to update this website with my newest projects. Slowly but surely I'll add my backlog of 6 projects. <br/>\nThis is a backlog of about 12 months of creation? And this excludes projects that I stopped with halfway through.<br/>\n <br/>\n <br/>Progress: 6/6"
                 }
             ],
-            "lastUpdated": "2025-12-05T12:44:44.738Z",
+            "lastUpdated": "2026-04-07T21:31:40.461Z",
             "hidden": false,
             "spoiler": false,
             "nsfw": false,
-            "tags": [],
-            "displayItemType": "blog",
+            "tags": [
+                "update"
+            ],
+            "displayItemType": "post",
             "__v": 0
         },
         {
@@ -703,6 +713,76 @@
                 "game"
             ],
             "displayItemType": "Project",
+            "__v": 0
+        },
+        {
+            "_id": "693470df9e32fca56199173a",
+            "title": "My First Open Source PR",
+            "thumbnailImage": "",
+            "description": "Fixing a Quartz annoyance with my first PR.",
+            "link": "",
+            "infoPages": [
+                {
+                    "title": "index",
+                    "content": "<style>\n.blog-overlay { background: #23252b; color: #eee; padding: 2em; border-radius: 12px; max-width: 700px; margin: 2em auto; box-shadow: 0 4px 32px #0008; }\n.blog-overlay h2 { color: #4fd1c5; margin-bottom: 1em; }\n.blog-overlay h3 { color: #4fd1c5; margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.1em; }\n.blog-overlay img { display: block; max-width: 100%; width: 420px; height: auto; margin: 1.5em auto; border-radius: 8px; box-shadow: 0 2px 12px #0004; }\n.blog-overlay a { color: #4fd1c5; text-decoration: underline; }\n.blog-overlay p { line-height: 1.6; margin-bottom: 1em; }\n.blog-overlay code { background: #1a1c22; padding: 2px 6px; border-radius: 4px; color: #a8d8d8; }\n@media (max-width: 600px) { .blog-overlay { padding: 1em; } .blog-overlay img { width: 98vw; } }\n</style>\n\n<h2>My First Open Source PR</h2>\n<p>\n  I got annoyed. Like, <i>really</i> annoyed.\n</p>\n<p>\n  See, I use <a href=\"https://quartz.jzhao.xyz/\" target=\"_blank\">Quartz</a> to host my <a href=\"https://obsidian.md/\" target=\"_blank\">Obsidian</a> vault at <a href=\"https://docs.oldmartijntje.nl/\" target=\"_blank\">🌵OldMartijntje's Basement</a>. In Obsidian, you can set image width using their markdown syntax: <code>![300](image.jpg)</code>. But when Quartz renders it, this didn't work. My images just stayed full-width, looking weird.\n</p>\n<p>\n  The workaround? Embedding raw HTML: <code>&lt;img src=\"\" style=\"width:300px\"/&gt;</code>. Annoying, right?\n</p>\n\n<h3>The Fix</h3>\n<p>\n  I realized I could modify Quartz's <code>links.ts</code> file to support both the Obsidian syntax (<code>![alt|300]()</code>) and plain numbers (<code>![300]()</code>). So I did. Then I thought... why not submit this as a PR?\n</p>\n<p>\n  Turns out there was already an <a href=\"https://github.com/jackyzha0/quartz/issues/625\" target=\"_blank\">open issue</a> about this exact thing. Perfect.\n</p>\n\n<h3>The Moment</h3>\n<p>\n  I forked the repo, added the code, tested it, and submitted <a href=\"https://github.com/jackyzha0/quartz/pull/2239\" target=\"_blank\">my first real pull request</a> to a project I'm not part of. No big deal, just fixing something that was mildly infuriating me.\n</p>\n<p>\n  If you're using Quartz and want to try it out, check the PR. And hey, if you've got a small annoyance in an open source project, maybe it's worth fixing too.\n</p>"
+                }
+            ],
+            "lastUpdated": "2025-12-06T18:09:38.638Z",
+            "hidden": false,
+            "spoiler": false,
+            "nsfw": false,
+            "tags": [
+                "git",
+                "pull-request",
+                "obsidian"
+            ],
+            "displayItemType": "blog",
+            "__v": 0
+        },
+        {
+            "_id": "69d5687bea8293ebb806eed4",
+            "title": "My new blog system",
+            "thumbnailImage": "",
+            "description": "How I decided to revamp my website because I got annoyed",
+            "link": "",
+            "infoPages": [
+                {
+                    "title": "",
+                    "content": ""
+                }
+            ],
+            "lastUpdated": "2026-04-07T21:32:17.263Z",
+            "hidden": true,
+            "spoiler": false,
+            "nsfw": false,
+            "tags": [
+                "blog",
+                " update"
+            ],
+            "displayItemType": "blog",
+            "blogkey": "the-new-blog-system",
+            "__v": 0
+        },
+        {
+            "_id": "69d578d7f3c9a40c2ae46281",
+            "title": "A new blog system",
+            "thumbnailImage": "",
+            "description": "Something is incoming...",
+            "link": "",
+            "infoPages": [
+                {
+                    "title": "",
+                    "content": "I am not going to spoil how, what and why. But there is a new blog system incoming, and it will have something to do with <a href=\"https://www.w3schools.com/xml/xml_rss.asp\" target=\"_blank\">this</a>. That is all the info that I will share rn."
+                }
+            ],
+            "lastUpdated": "2026-04-07T21:36:23.545Z",
+            "hidden": false,
+            "spoiler": false,
+            "nsfw": false,
+            "tags": [
+                "update"
+            ],
+            "displayItemType": "post",
             "__v": 0
         }
     ]

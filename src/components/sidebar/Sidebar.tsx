@@ -15,6 +15,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, isEventActive }) => {
     const [isMobile, setIsMobile] = useState(false);
     const location = useLocation();
+    const currentYear = new Date().getFullYear();
 
     const navToEvents = () => {
         window.location.href = "#/events";
@@ -49,11 +50,13 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                     <ul className="sidebar-menu">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/discovery">Discovery</Link></li>
+                        <li><Link to="/blogs">Blogs</Link></li>
                         <AdminPathsPopup userProfile={userProfile} title="Admin"></AdminPathsPopup>
                         <li><Link to="/user">Account</Link></li>
                         {/* <li><Link to="/events">Events</Link></li> */}
                         {!isMobile && (
-                            <li><Link to="/console">M.A.R.A. OS</Link></li>
+                            <></>
+
                         )}
                         <li>
                             <a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">
@@ -64,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                     </ul>
                     <p style={{ flexGrow: 2 }} />
                     <footer>
-                        <a href='https://ko-fi.com/K3K6162QIR' target='_blank'><img height='36' style={{ border: "0px", height: " 36px" }} src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                        <p className="text-primary">oldmartijntje © {currentYear}</p>
                     </footer>
                 </div>
             </div>
