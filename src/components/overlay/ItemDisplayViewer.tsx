@@ -27,8 +27,7 @@ const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, 
                     >
                         {previewProject?.title}
                     </Modal.Title>
-                    <Button variant="close" className="btn btn-primary" onClick={() => setShowModal(false)}
-                        style={{ backgroundColor: '#2a75fe' }}></Button>
+                    <Button variant="close" className="btn btn-primary btn bg-danger" onClick={() => setShowModal(false)}></Button>
                 </Modal.Header>
                 <Modal.Body>
                     {previewProject && previewProject.infoPages.length > 1 && <Tabs

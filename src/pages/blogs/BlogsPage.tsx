@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Card, Container, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import RssPopup from '../../components/overlay/RssPopup';
 import ServerConnector from '../../services/ServerConnector';
 
 interface BlogListItem {
@@ -13,6 +14,7 @@ interface BlogListItem {
 }
 
 const BLOGS_PER_PAGE = 10;
+const BLOG_RSS_URL = 'https://api.oldmartijntje.nl/getData/blogs/rss.xml';
 
 const BlogsPage: React.FC = () => {
     const [blogs, setBlogs] = useState<BlogListItem[]>([]);
@@ -59,7 +61,10 @@ const BlogsPage: React.FC = () => {
 
     return (
         <Container className="py-5">
-            <h1 className="text-light mb-4">Blogs</h1>
+            <div className="d-flex align-items-center justify-content-between gap-3 mb-4">
+                <h1 className="text-light mb-0">Blogs</h1>
+                <RssPopup rssUrl={BLOG_RSS_URL} />
+            </div>
 
             {isLoading && (
                 <div className="d-flex align-items-center gap-2 text-light mb-3">

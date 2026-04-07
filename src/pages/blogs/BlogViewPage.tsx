@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Card, Container, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import RssPopup from '../../components/overlay/RssPopup';
 import ServerConnector from '../../services/ServerConnector';
 
 interface BlogData {
@@ -25,6 +26,8 @@ const formatBlogDate = (dateValue: string) => {
 
     return date.toLocaleString();
 };
+
+const BLOG_RSS_URL = 'https://api.oldmartijntje.nl/getData/blogs/rss.xml';
 
 const BlogViewPage: React.FC = () => {
     const { blogKey } = useParams<{ blogKey: string }>();
@@ -61,7 +64,11 @@ const BlogViewPage: React.FC = () => {
 
     return (
         <Container className="py-5">
-            <Link to="/" className="btn btn-outline-primary mb-3">Back Home</Link>
+            <div className="d-flex flex-wrap gap-2 mb-3">
+                <Link to="/" className="btn btn-outline-primary">Back Home</Link>
+                <Link to="/blogs" className="btn btn-outline-secondary">View All Blogs</Link>
+                <RssPopup rssUrl={BLOG_RSS_URL} />
+            </div>
 
             {isLoading && (
                 <div className="d-flex align-items-center gap-2 text-light">
