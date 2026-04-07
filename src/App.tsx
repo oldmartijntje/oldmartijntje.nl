@@ -15,7 +15,6 @@ import ServerConnector from './services/ServerConnector';
 import { allEvents } from './services/EventsSystem';
 import './App.css';
 import SignupPage from './pages/loginPage/SignupPage';
-import ConsoleApp from './pages/easterEggs/ConsoleApp';
 import ProjectDataManager from './pages/BackendDataEditorPages/projectDataManagerPage';
 import SecurityFlagsPage from './pages/BackendDataEditorPages/securityFlagsPage';
 import Events from './pages/events/Events';
@@ -174,11 +173,6 @@ const App: React.FC = () => {
         {
             path: "signup",
             element: SignupPage,
-            isPrivate: false
-        },
-        {
-            path: "console",
-            element: ConsoleApp,
             isPrivate: false
         },
         {

@@ -55,8 +55,8 @@ const Sidebar: React.FC<SidebarProps> = ({ userProfile, isOpen, toggleSidebar, i
                         <li><Link to="/user">Account</Link></li>
                         {/* <li><Link to="/events">Events</Link></li> */}
                         {!isMobile && (
-                            // TODO: delete MARA
-                            <li><span style={{ color: "#0ac800" }}> // to be deleted:</span><br></br><Link to="/console">M.A.R.A. OS</Link></li>
+                            <></>
+
                         )}
                         <li>
                             <a href="https://github.com/oldmartijntje" target="_blank" className="icon-link">
