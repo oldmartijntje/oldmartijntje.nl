@@ -94,23 +94,24 @@ const BlogViewPage: React.FC = () => {
             )}
 
             {!isLoading && error && <Alert variant="danger">{error}</Alert>}
-
-            {!isLoading && !error && blog && (
-                <Card className="bg-dark text-white">
-                    <Card.Body>
-                        <Card.Title><h1>{blog.title}</h1></Card.Title>
-                        <div className="text-secondary small mb-3">
-                            Published {formatBlogDate(blog.pubDate)}
-                        </div>
-                        <div className="border-top border-secondary pt-3" style={{ minHeight: '60svh' }}>
-                            <ReactMarkdown>{blog.content}</ReactMarkdown>
-                        </div>
-                        <div className="border-top border-secondary mt-4 pt-3 text-secondary small">
-                            Edited {formatBlogDate(blog.editDate)}
-                        </div>
-                    </Card.Body>
-                </Card>
-            )}
+            <article>
+                {!isLoading && !error && blog && (
+                    <Card className="bg-dark text-white">
+                        <Card.Body>
+                            <Card.Title><h1>{blog.title}</h1></Card.Title>
+                            <div className="text-secondary small mb-3">
+                                Published {formatBlogDate(blog.pubDate)}
+                            </div>
+                            <div className="border-top border-secondary pt-3" style={{ minHeight: '60svh' }}>
+                                <ReactMarkdown>{blog.content}</ReactMarkdown>
+                            </div>
+                            <div className="border-top border-secondary mt-4 pt-3 text-secondary small">
+                                Edited {formatBlogDate(blog.editDate)}
+                            </div>
+                        </Card.Body>
+                    </Card>
+                )}
+            </article>
         </Container>
     );
 };
