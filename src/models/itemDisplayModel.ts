@@ -11,6 +11,7 @@ export interface ItemDisplay {
     nsfw: boolean;
     tags: string[];
     displayItemType: string;
+    blogkey?: string;
 }
 
 export interface ProjectData {

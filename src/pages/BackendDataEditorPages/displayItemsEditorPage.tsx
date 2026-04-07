@@ -20,6 +20,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
         thumbnailImage: '',
         description: '',
         link: '',
+        blogkey: '',
         infoPages: [{ title: '', content: '' }],
         hidden: false,
         spoiler: false,
@@ -215,6 +216,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                     displayItemType: '',
                     spoiler: false,
                     nsfw: false,
+                    blogkey: '',
                 });
 
                 setErrorMessage('');
@@ -336,6 +338,17 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                         value={newProject.link || ''}
                                         onChange={(e) => {
                                             setNewProject({ ...newProject, link: e.target.value })
+                                        }}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">Blog Key</Form.Label>
+                                    <Form.Control
+                                        placeholder='Optional blog key'
+                                        type="text"
+                                        value={newProject.blogkey || ''}
+                                        onChange={(e) => {
+                                            setNewProject({ ...newProject, blogkey: e.target.value })
                                         }}
                                     />
                                 </Form.Group>
@@ -522,6 +535,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             thumbnailImage: '',
                                             description: '',
                                             link: '',
+                                            blogkey: '',
                                             infoPages: [{ title: '', content: '' }],
                                             hidden: false,
                                             spoiler: false,
