@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Card, Container, Spinner } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import RssPopup from '../../components/overlay/RssPopup';
 import StructuredDataScript from '../../components/overlay/StructuredDataScript';
@@ -17,6 +17,7 @@ interface BlogData {
     pubDate: string;
     editDate: string;
     hidden: boolean;
+    views?: number;
 }
 
 const formatBlogDate = (dateValue: string) => {
@@ -31,9 +32,19 @@ const formatBlogDate = (dateValue: string) => {
 
 const BlogViewPage: React.FC = () => {
     const { blogKey } = useParams<{ blogKey: string }>();
+    const location = useLocation();
     const [blog, setBlog] = useState<BlogData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const adminAccess = useMemo(() => {
+        const params = new URLSearchParams(location.search);
+
+        return {
+            fromAdminDashboard: params.get('fromAdminDashboard') === 'true',
+            sessionToken: params.get('sessionToken') || '',
+        };
+    }, [location.search]);
 
     useEffect(() => {
         if (!blogKey) {
@@ -47,8 +58,19 @@ const BlogViewPage: React.FC = () => {
 
         const serverConnector = new ServerConnector();
         const encodedBlogIdentifier = encodeURIComponent(blogKey);
+        const queryParams: { [key: string]: string } = {};
+
+        if (adminAccess.fromAdminDashboard && adminAccess.sessionToken) {
+            queryParams.sessionToken = adminAccess.sessionToken;
+            queryParams.hidden = "true";
+        }
+
+        const blogDataUrl = Object.keys(queryParams).length > 0
+            ? ServerConnector.encodeQueryData(queryParams, `https://api.oldmartijntje.nl/getData/blogs/${encodedBlogIdentifier}`)
+            : `https://api.oldmartijntje.nl/getData/blogs/${encodedBlogIdentifier}`;
+
         serverConnector.fetchData(
-            `https://api.oldmartijntje.nl/getData/blogs/${encodedBlogIdentifier}`,
+            blogDataUrl,
             'GET',
             '{}',
             (response: any) => {
@@ -60,7 +82,7 @@ const BlogViewPage: React.FC = () => {
                 setIsLoading(false);
             }
         );
-    }, [blogKey]);
+    }, [adminAccess.fromAdminDashboard, adminAccess.sessionToken, blogKey]);
 
     const blogStructuredData = useMemo(() => {
         if (!blog) {
@@ -101,6 +123,7 @@ const BlogViewPage: React.FC = () => {
                             <Card.Title><h1>{blog.title}</h1></Card.Title>
                             <div className="text-secondary small mb-3">
                                 Published {formatBlogDate(blog.pubDate)}
+                                {typeof blog.views === 'number' && <span> · Views {blog.views}</span>}
                             </div>
                             <div className="border-top border-secondary pt-3" style={{ minHeight: '60svh' }}>
                                 <ReactMarkdown>{blog.content}</ReactMarkdown>

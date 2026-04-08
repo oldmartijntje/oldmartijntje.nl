@@ -18,6 +18,7 @@ interface BlogItem {
     pubDate: string;
     editDate: string;
     hidden: boolean;
+    views?: number;
 }
 
 interface BlogFormData {
@@ -85,6 +86,24 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const sessionToken = userProfile?.sessionToken || '';
     const canCreate = clearanceLevel >= 4;
     const canEditOrDelete = clearanceLevel >= 5;
+
+    const buildBlogViewUrl = (blog: BlogItem) => {
+        if (!blog.baseURL?.trim()) {
+            return '';
+        }
+
+        const baseURL = blog.baseURL.trim().endsWith('/') ? blog.baseURL.trim() : `${blog.baseURL.trim()}/`;
+        const blogUrl = `${baseURL}${encodeURIComponent(blog.blogIdentifier)}`;
+
+        if (!sessionToken) {
+            return blogUrl;
+        }
+
+        return ServerConnector.encodeQueryData({
+            fromAdminDashboard: 'true',
+            sessionToken,
+        }, blogUrl);
+    };
 
     useEffect(() => {
         fetchBlogs();
@@ -504,12 +523,22 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                             <strong>Identifier:</strong> {blog.blogIdentifier}<br />
                                             <strong>ID:</strong> {blog._id}<br />
                                             <strong>Hidden:</strong> {blog.hidden ? 'Yes' : 'No'}<br />
+                                            <strong>Views:</strong> {blog.views ?? 'n/a'}<br />
                                             <strong>Publish Date:</strong> {new Date(blog.pubDate).toLocaleString()}<br />
                                             <strong>Edit Date:</strong> {new Date(blog.editDate).toLocaleString()}<br />
                                             <strong>Base URL:</strong> {blog.baseURL || 'null'}<br />
                                             <strong>Description:</strong> {blog.description}
                                         </Card.Text>
                                         <div className="btn-group" role="group">
+                                            {blog.baseURL && (
+                                                <Button
+                                                    as="a"
+                                                    href={buildBlogViewUrl(blog)}
+                                                    variant="info"
+                                                >
+                                                    View Blog
+                                                </Button>
+                                            )}
                                             <Button variant="secondary" onClick={() => handleEdit(blog)} disabled={!canEditOrDelete}>
                                                 Edit
                                             </Button>

@@ -13,6 +13,7 @@ interface BlogListItem {
     blogIdentifier: string;
     pubDate: string;
     editDate: string;
+    views?: number;
 }
 
 const BLOGS_PER_PAGE = 10;
@@ -94,6 +95,7 @@ const BlogsPage: React.FC = () => {
                         <Card.Text>{blog.description}</Card.Text>
                         <Card.Text className="text-secondary mb-3">
                             Published: {new Date(blog.pubDate).toLocaleString()}
+                            {typeof blog.views === 'number' && <span> · Views: {blog.views}</span>}
                         </Card.Text>
                         <Link
                             className="btn btn-outline-primary"
