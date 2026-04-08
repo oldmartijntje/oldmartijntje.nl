@@ -1,0 +1,25 @@
+.all-items-grid {
+    min-height: 100vh;
+}
+
+.all-items-grid .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.all-items-grid .itemCard {
+    margin-bottom: 1rem;
+}
+
+.all-items-grid .project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.all-items-grid .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.all-items-grid .clickable {
+    cursor: pointer;
+}

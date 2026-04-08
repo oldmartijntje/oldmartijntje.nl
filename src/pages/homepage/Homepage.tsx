@@ -6,32 +6,12 @@ import ServerConnector from '../../services/ServerConnector';
 import { Link, useNavigate } from 'react-router-dom';
 import { ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
+import { getDiscoveryRows, setSeededRandom, DiscoveryDisplay } from '../../helpers/discoveryRowsConfig';
 
-const MAX_DISPLAY_ITEMS_PER_ROW = 32;
+const MAX_DISPLAY_ITEMS_PER_ROW = 5;
 
 interface HomepageProps {
     data?: any;
-}
-
-interface DiscoveryDisplay {
-    dataList: ItemDisplay[];
-    title: string;
-    appliedFilters: string[];
-}
-
-let seedRotations = Math.random() * 10000;
-function seededRandom(): number {
-    const a = 1664525;
-    const c = 1013904223;
-    const m = 2 ** 32;
-    seedRotations = (seedRotations * a + c) % m;
-    const answer = seedRotations / m;
-    seedRotations = (seedRotations * 9301 + 49297) % 233280
-    return answer;
-}
-
-function setSeededRandom(seed: number) {
-    seedRotations = seed;
 }
 
 
@@ -59,69 +39,7 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
     const [offline, setOfflineModeModal] = useState(false);
     const serverConnector = new ServerConnector();
     setSeededRandom(data.randomnessSeed);
-    let discoveryRows: DiscoveryDisplay[] = [
-        {
-            dataList: [...mainProjects],
-            title: 'Top Picks',
-            appliedFilters: ['favourite']
-        },
-        {
-            dataList: [...mainProjects].sort(() => {
-                return seededRandom() - 0.5;
-            }),
-            title: 'Website Projects',
-            appliedFilters: ['website']
-        },
-        {
-            dataList: [...mainBlog],
-            title: 'Blog Posts',
-            appliedFilters: [],
-        },
-        {
-            dataList: [...justPosts],
-            title: 'Updates',
-            appliedFilters: ['update']
-        },
-        {
-            dataList: [...mainProjects],
-            title: 'Games etc.',
-            appliedFilters: ['game', '!playthrough']
-        },
-        {
-            dataList: [...mainWebposts],
-            title: 'Weblinks',
-            appliedFilters: []
-        },
-        {
-            dataList: [...justPosts],
-            title: 'General Posts',
-            appliedFilters: ['!update']
-        },
-        {
-            dataList: [...mainProjects],
-            title: 'Side Projects',
-            appliedFilters: ['side-project']
-        },
-        {
-            dataList: [...mainProjects].sort((a: ItemDisplay, b: ItemDisplay) => {
-                const dateA = new Date(a.lastUpdated || 0).getTime();
-                const dateB = new Date(b.lastUpdated || 0).getTime();
-                return dateB - dateA;
-            }),
-            title: 'All Projects',
-            appliedFilters: []
-        },
-        {
-            dataList: [...mainRandomPosts].sort(() => {
-                return seededRandom() - 0.5;
-            }),
-            title: 'Random Things',
-            appliedFilters: []
-        }
-    ];
-    if (!discovery) {
-        discoveryRows = [discoveryRows[0], discoveryRows[2]];
-    }
+    let discoveryRows: DiscoveryDisplay[] = getDiscoveryRows(mainProjects, mainBlog, justPosts, mainWebposts, mainRandomPosts);
 
     useEffect(() => {
         if (!fetched) {
@@ -199,60 +117,83 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
                 </Container>
             </header>
             <main className="py-5">
-                {discoveryRows.map((row, index) => (
-                    <Container key={index} style={{ marginBottom: "1rem" }}>
-                        <h2 className="text-primary">{row.title} {offline && (<OverlayTrigger trigger="click" placement="top" overlay={popover}>
-                            <Button variant="danger">Offline</Button>
-                        </OverlayTrigger>
-                        )}</h2>
-                        <div className="g-4 scrollBar">
-                            {filterProjects(row.dataList, row.appliedFilters).slice(0, MAX_DISPLAY_ITEMS_PER_ROW).map((project, index) => (
-                                <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
-                                    <Card className="h-100 project-card bg-dark text-white">
-                                        {project.thumbnailImage && <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
-                                            if (project?.link) {
-                                                window.open(project.link, '_blank');
-                                            }
-                                        }} className={
-                                            (project?.link ? 'clickable' : '')
-                                        } />}
-                                        <Card.Body className="d-flex flex-column">
-                                            <Card.Title>{project.title}</Card.Title>
-                                            {!project.thumbnailImage && project.description && <Card.Text>{project.description}</Card.Text>}
-                                            {(project.infoPages.length > 0 && <Button
-                                                variant="outline-primary"
-                                                className="mt-auto"
-                                                onClick={() => {
-                                                    if (project.blogkey) {
-                                                        navigate(`/blogs/${encodeURIComponent(project.blogkey)}`);
-                                                        return;
-                                                    }
-                                                    showProjectDetails(project);
-                                                }}
-                                            >
-                                                More Info
-                                            </Button>) || (project.link && <Button
-                                                variant="outline-primary"
-                                                className="mt-auto"
-                                                onClick={() => {
-                                                    if (project?.link) {
-                                                        window.open(project.link, '_blank');
-                                                    }
-                                                }}
-                                            > Visit</Button>) || (project.description && project.thumbnailImage && <span className="mt-auto">{project.description}</span>)
-                                            }
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </div>
-                    </Container>))}
+                {discoveryRows.map((row, index) => {
+                    if (!discovery && !row.showOnHome) return;
+                    const filteredProjects = filterProjects(row.dataList, row.appliedFilters);
+                    const hasMoreItems = filteredProjects.length > MAX_DISPLAY_ITEMS_PER_ROW;
+
+                    return (
+                        <Container key={index} style={{ marginBottom: "1rem" }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                <h2 className="text-primary" style={{ margin: 0 }}>{row.title}</h2>
+                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                    {hasMoreItems && (
+                                        <Link
+                                            to="/all-items"
+                                            state={{ rowIndex: index }}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <Button variant="outline-secondary" size="sm">
+                                                View All ({filteredProjects.length})
+                                            </Button>
+                                        </Link>
+                                    )}
+                                    {offline && (
+                                        <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+                                            <Button variant="danger">Offline</Button>
+                                        </OverlayTrigger>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="g-4 scrollBar">
+                                {filteredProjects.slice(0, MAX_DISPLAY_ITEMS_PER_ROW).map((project, index) => (
+                                    <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
+                                        <Card className="h-100 project-card bg-dark text-white">
+                                            {project.thumbnailImage && <Card.Img variant="top" src={project?.thumbnailImage} alt={project.title} title={project?.thumbnailImage} onClick={() => {
+                                                if (project?.link) {
+                                                    window.open(project.link, '_blank');
+                                                }
+                                            }} className={
+                                                (project?.link ? 'clickable' : '')
+                                            } />}
+                                            <Card.Body className="d-flex flex-column">
+                                                <Card.Title>{project.title}</Card.Title>
+                                                {!project.thumbnailImage && project.description && <Card.Text>{project.description}</Card.Text>}
+                                                {(project.infoPages.length > 0 && <Button
+                                                    variant="outline-primary"
+                                                    className="mt-auto"
+                                                    onClick={() => {
+                                                        if (project.blogkey) {
+                                                            navigate(`/blogs/${encodeURIComponent(project.blogkey)}`);
+                                                            return;
+                                                        }
+                                                        showProjectDetails(project);
+                                                    }}
+                                                >
+                                                    More Info
+                                                </Button>) || (project.link && <Button
+                                                    variant="outline-primary"
+                                                    className="mt-auto"
+                                                    onClick={() => {
+                                                        if (project?.link) {
+                                                            window.open(project.link, '_blank');
+                                                        }
+                                                    }}
+                                                > Visit</Button>) || (project.description && project.thumbnailImage && <span className="mt-auto">{project.description}</span>)
+                                                }
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                ))}
+                            </div>
+                        </Container>
+                    );
+                })}
                 {!discovery && (
                     <Container style={{ marginBottom: "1rem" }}>
                         <Link type="button" className="btn btn-info" to="/discovery">View Discovery</Link>
                     </Container>
-                )
-                }
+                )}
             </main>
 
             <ItemDisplayViewer previewProject={selectedProject} showModal={showModal} setShowModal={function (bool: boolean): void {

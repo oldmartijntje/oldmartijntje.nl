@@ -23,6 +23,7 @@ import BlogViewPage from './pages/blogs/BlogViewPage';
 import BlogsPage from './pages/blogs/BlogsPage';
 import StructuredDataScript from './components/overlay/StructuredDataScript';
 import { getHardcodedPageStructuredData } from './helpers/structuredData';
+import AllItemsGridPage from './pages/allItemsGrid/AllItemsGridPage';
 
 interface RouteData {
     path: string;
@@ -119,6 +120,7 @@ const App: React.FC = () => {
     const routesData: RouteData[] = [
         { path: '/', element: Homepage, isPrivate: false, extraData: { title: 'Home', randomnessSeed: randomnessSeed } },
         { path: '/discovery', element: Homepage, isPrivate: false, extraData: { title: 'Discovery', randomnessSeed: randomnessSeed } },
+        { path: '/all-items', element: AllItemsGridPage, isPrivate: false },
         {
             path: '/api-test',
             element: ApiTestComponent,
