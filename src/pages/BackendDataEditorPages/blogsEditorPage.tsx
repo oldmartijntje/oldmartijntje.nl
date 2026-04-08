@@ -100,8 +100,7 @@ const BlogsEditorPage: React.FC<UserPageProps> = ({ userProfile }) => {
         }
 
         return ServerConnector.encodeQueryData({
-            fromAdminDashboard: 'true',
-            sessionToken,
+            adminView: 'true'
         }, blogUrl);
     };
 

@@ -86,6 +86,7 @@ const App: React.FC = () => {
         if (savedData && savedData.username && savedData.sessionToken) {
             serverConnector.loginRequest(savedData.username, savedData.sessionToken, false, (data: any) => {
                 if (data.status === 200) {
+                    allEvents.emit("sessionToken-login", true)
                     data.data.sessionToken = savedData.sessionToken;
                     setIsAuthenticated(true);
                     setClearanceLevel(data.data.clearanceLevel);

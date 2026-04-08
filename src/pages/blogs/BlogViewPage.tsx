@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Card, Container, Spinner } from 'react-bootstrap';
+import { Alert, Badge, Card, Container, Spinner } from 'react-bootstrap';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import RssPopup from '../../components/overlay/RssPopup';
 import StructuredDataScript from '../../components/overlay/StructuredDataScript';
 import ServerConnector from '../../services/ServerConnector';
 import { buildBlogArticleStructuredData, STRUCTURED_DATA_DEFAULTS } from '../../helpers/structuredData';
+
+interface UserPageProps {
+    userProfile?: any;
+}
 
 interface BlogData {
     _id: string;
@@ -30,7 +34,7 @@ const formatBlogDate = (dateValue: string) => {
     return date.toLocaleString();
 };
 
-const BlogViewPage: React.FC = () => {
+const BlogViewPage: React.FC<UserPageProps> = ({ userProfile }) => {
     const { blogKey } = useParams<{ blogKey: string }>();
     const location = useLocation();
     const [blog, setBlog] = useState<BlogData | null>(null);
@@ -41,7 +45,7 @@ const BlogViewPage: React.FC = () => {
         const params = new URLSearchParams(location.search);
 
         return {
-            fromAdminDashboard: params.get('fromAdminDashboard') === 'true',
+            adminView: params.get('adminView') === 'true',
             sessionToken: params.get('sessionToken') || '',
         };
     }, [location.search]);
@@ -53,6 +57,14 @@ const BlogViewPage: React.FC = () => {
             return;
         }
 
+        const sessionToken = userProfile?.sessionToken || adminAccess.sessionToken;
+
+        if (adminAccess.adminView && !sessionToken) {
+            setIsLoading(true);
+            setError('');
+            return;
+        }
+
         setIsLoading(true);
         setError('');
 
@@ -60,8 +72,8 @@ const BlogViewPage: React.FC = () => {
         const encodedBlogIdentifier = encodeURIComponent(blogKey);
         const queryParams: { [key: string]: string } = {};
 
-        if (adminAccess.fromAdminDashboard && adminAccess.sessionToken) {
-            queryParams.sessionToken = adminAccess.sessionToken;
+        if (adminAccess.adminView && sessionToken) {
+            queryParams.sessionToken = sessionToken;
             queryParams.hidden = "true";
         }
 
@@ -82,7 +94,7 @@ const BlogViewPage: React.FC = () => {
                 setIsLoading(false);
             }
         );
-    }, [adminAccess.fromAdminDashboard, adminAccess.sessionToken, blogKey]);
+    }, [adminAccess.adminView, adminAccess.sessionToken, blogKey, userProfile?.sessionToken]);
 
     const blogStructuredData = useMemo(() => {
         if (!blog) {
@@ -120,7 +132,14 @@ const BlogViewPage: React.FC = () => {
                 {!isLoading && !error && blog && (
                     <Card className="bg-dark text-white">
                         <Card.Body>
-                            <Card.Title><h1>{blog.title}</h1></Card.Title>
+                            <Card.Title>
+                                <div className="d-flex flex-wrap align-items-center gap-2">
+                                    <h1 className="mb-0">{blog.title}</h1>
+                                    {blog.hidden && (
+                                        <Badge bg="warning" text="dark">Hidden Blog</Badge>
+                                    )}
+                                </div>
+                            </Card.Title>
                             <div className="text-secondary small mb-3">
                                 Published {formatBlogDate(blog.pubDate)}
                                 {typeof blog.views === 'number' && <span> · Views {blog.views}</span>}
