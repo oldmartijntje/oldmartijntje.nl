@@ -5,7 +5,7 @@ import { ItemDisplay } from '../../models/itemDisplayModel';
 import ItemDisplayViewer from '../../components/overlay/ItemDisplayViewer';
 import ServerConnector from '../../services/ServerConnector';
 import offlineProjects from '../../assets/json/projects.json';
-import { getDiscoveryRows, setSeededRandom, DiscoveryDisplay } from '../../helpers/discoveryRowsConfig';
+import { getDiscoveryRows, DiscoveryDisplay } from '../../helpers/discoveryRowsConfig';
 import './AllItemsGridPage.css';
 
 function getOfflineProjects(): ItemDisplay[] {
@@ -74,12 +74,15 @@ const AllItemsGridPage: React.FC = () => {
         });
     };
 
-    setSeededRandom(Math.random() * 10000);
-
     const discoveryRows: DiscoveryDisplay[] = getDiscoveryRows(mainProjects, mainBlog, justPosts, mainWebposts, mainRandomPosts);
 
     const currentRow = discoveryRows[rowIndex];
     const filteredData = currentRow ? filterProjects(currentRow.dataList, currentRow.appliedFilters) : [];
+    const sortedData = [...filteredData].sort((a: ItemDisplay, b: ItemDisplay) => {
+        const dateA = new Date(a.lastUpdated || 0).getTime();
+        const dateB = new Date(b.lastUpdated || 0).getTime();
+        return dateB - dateA;
+    });
     const title = currentRow?.title || 'All Items';
 
     if (loading) {
@@ -99,7 +102,7 @@ const AllItemsGridPage: React.FC = () => {
         );
     }
 
-    if (!filteredData || filteredData.length === 0) {
+    if (!sortedData || sortedData.length === 0) {
         return (
             <div className="all-items-grid">
                 <header className="header text-center text-white py-5">
@@ -131,7 +134,7 @@ const AllItemsGridPage: React.FC = () => {
             <header className="header text-center text-white py-5">
                 <Container>
                     <h1 className="display-4">{title}</h1>
-                    <p className="lead">{filteredData.length} items</p>
+                    <p className="lead">{sortedData.length} items</p>
                 </Container>
             </header>
             <main className="py-5">
@@ -144,7 +147,7 @@ const AllItemsGridPage: React.FC = () => {
                 </Container>
                 <Container>
                     <Row className="g-4">
-                        {filteredData.map((project: ItemDisplay, index: number) => (
+                        {sortedData.map((project: ItemDisplay, index: number) => (
                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="itemCard">
                                 <Card className="h-100 project-card bg-dark text-white">
                                     {project.thumbnailImage && (
