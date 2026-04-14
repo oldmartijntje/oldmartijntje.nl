@@ -6,6 +6,7 @@ export interface ItemDisplay {
     link?: string;
     infoPages: InfoPage[];
     lastUpdated?: Date;
+    publishDate?: Date;
     hidden: boolean;
     spoiler: boolean;
     nsfw: boolean;

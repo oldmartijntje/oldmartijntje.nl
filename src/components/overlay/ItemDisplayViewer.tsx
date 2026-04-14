@@ -45,7 +45,7 @@ const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, 
                     )}
 
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{ display: "flex", }}>
                     {previewProject?.link && (
                         <p className="btn btn-primary">
                             <a href={previewProject.link} target="_blank" rel="noopener noreferrer" className="text-light">
@@ -53,11 +53,16 @@ const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, 
                             </a>
                         </p>
                     )}
-                    {previewProject?.lastUpdated && (
+                    {previewProject?.publishDate && (
+                        <p className="text-muted">
+                            <small className="text-secondary">Publish date: {new Date(previewProject.publishDate).toLocaleDateString()}</small>
+                        </p>
+                    )}
+                    {/* {previewProject?.lastUpdated && (
                         <p className="text-muted">
                             <small className="text-secondary">Last article update: {new Date(previewProject.lastUpdated).toLocaleDateString()}</small>
                         </p>
-                    )}
+                    )} */}
                 </Modal.Footer>
             </Modal>
         </>

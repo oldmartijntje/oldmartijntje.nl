@@ -50,8 +50,8 @@ const Homepage: React.FC<HomepageProps> = ({ data }) => {
 
     const formatProjects = (projects: any) => {
         const sortedProjects = projects.sort((a: ItemDisplay, b: ItemDisplay) => {
-            const dateA = new Date(a.lastUpdated || 0).getTime();
-            const dateB = new Date(b.lastUpdated || 0).getTime();
+            const dateA = new Date(a.publishDate || 0).getTime();
+            const dateB = new Date(b.publishDate || 0).getTime();
             return dateB - dateA;
         });
         setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));

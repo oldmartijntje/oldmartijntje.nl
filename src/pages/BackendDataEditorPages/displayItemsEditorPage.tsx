@@ -35,6 +35,8 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
     const [previewProject, setPreviewProject] = useState<ItemDisplay | null>(null);
     const [useCustomDatetime, setUseCustomDatetime] = useState(false);
     const [datetimeInput, setDatetimeInput] = useState('');
+    const [useCustomPublishDatetime, setUseCustomPublishDatetime] = useState(false);
+    const [publishDatetimeInput, setPublishDatetimeInput] = useState('');
 
     useEffect(() => {
         fetchProjects();
@@ -191,6 +193,14 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
         setNewProject({ ...newProject, lastUpdated: newDate });
     };
 
+    // Update publish datetime input when date changes
+    const handlePublishDatetimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const dtString = e.target.value;
+        setPublishDatetimeInput(dtString);
+        const newDate = new Date(dtString);
+        setNewProject({ ...newProject, publishDate: newDate });
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const serverConnector = new ServerConnector();
@@ -201,6 +211,11 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
         // Clear lastUpdated if custom datetime is disabled
         if (!useCustomDatetime) {
             projectData.lastUpdated = null;
+        }
+
+        // Clear publishDate if custom publish datetime is disabled
+        if (!useCustomPublishDatetime) {
+            projectData.publishDate = null;
         }
 
         projectData.sessionToken = userProfile.sessionToken;
@@ -494,6 +509,18 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
+                                    <Form.Label className="text-light">Publish Date</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        readOnly
+                                        value={newProject.publishDate ?
+                                            new Date(newProject.publishDate).toLocaleString() :
+                                            'Publish Date'}
+                                        className="text-dark text-bg-secondary"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
                                     <Form.Check
                                         type="checkbox"
                                         label="Use Custom Datetime"
@@ -515,6 +542,32 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                             type="datetime-local"
                                             value={datetimeInput}
                                             onChange={handleDatetimeChange}
+                                        />
+                                    </Form.Group>
+                                )}
+
+                                <Form.Group className="mb-3">
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Use Custom Publish Datetime"
+                                        checked={useCustomPublishDatetime}
+                                        onChange={(e) => {
+                                            setUseCustomPublishDatetime(e.target.checked);
+                                            if (!e.target.checked) {
+                                                setNewProject({ ...newProject, publishDate: undefined });
+                                            }
+                                        }}
+                                        className="text-light"
+                                    />
+                                </Form.Group>
+
+                                {useCustomPublishDatetime && (
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="text-light">Select Publish Date & Time</Form.Label>
+                                        <Form.Control
+                                            type="datetime-local"
+                                            value={publishDatetimeInput}
+                                            onChange={handlePublishDatetimeChange}
                                         />
                                     </Form.Group>
                                 )}
@@ -593,8 +646,8 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                             </Form.Group>
                             {projects
                                 .sort((a, b) => {
-                                    const dateA = new Date(a.lastUpdated || 0).getTime();
-                                    const dateB = new Date(b.lastUpdated || 0).getTime();
+                                    const dateA = new Date(a.publishDate || 0).getTime();
+                                    const dateB = new Date(b.publishDate || 0).getTime();
                                     return sortNewestFirst ? dateB - dateA : dateA - dateB;
                                 })
                                 .map((project) =>
@@ -608,6 +661,7 @@ const DisplayItemsManager: React.FC<UserPageProps> = ({ userProfile }) => {
                                                     <strong>DisplayItemType:</strong> {project.displayItemType}<br />
                                                     <strong>Info Pages:</strong> {project.infoPages.length}<br />
                                                     <strong>Last Updated:</strong> {project.lastUpdated ? new Date(project.lastUpdated).toLocaleString() : 'N/A'}<br />
+                                                    <strong>Publish Date:</strong> {project.publishDate ? new Date(project.publishDate).toLocaleString() : 'N/A'}<br />
                                                     <strong>Visibility:</strong> {project.hidden ? 'Hidden' : 'Shown'}<br />
                                                     <strong>Spoiler:</strong> {project.spoiler ? 'Yes' : 'No'}<br />
                                                     <strong>NSFW:</strong> {project.nsfw ? 'Yes' : 'No'}<br />

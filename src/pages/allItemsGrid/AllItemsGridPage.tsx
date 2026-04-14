@@ -38,8 +38,8 @@ const AllItemsGridPage: React.FC = () => {
 
     const formatProjects = (projects: any) => {
         const sortedProjects = projects.sort((a: ItemDisplay, b: ItemDisplay) => {
-            const dateA = new Date(a.lastUpdated || 0).getTime();
-            const dateB = new Date(b.lastUpdated || 0).getTime();
+            const dateA = new Date(a.publishDate || 0).getTime();
+            const dateB = new Date(b.publishDate || 0).getTime();
             return dateB - dateA;
         });
         setProjects(sortedProjects.filter((project: ItemDisplay) => project.displayItemType.toLocaleLowerCase() === 'project'));
@@ -79,8 +79,8 @@ const AllItemsGridPage: React.FC = () => {
     const currentRow = discoveryRows[rowIndex];
     const filteredData = currentRow ? filterProjects(currentRow.dataList, currentRow.appliedFilters) : [];
     const sortedData = [...filteredData].sort((a: ItemDisplay, b: ItemDisplay) => {
-        const dateA = new Date(a.lastUpdated || 0).getTime();
-        const dateB = new Date(b.lastUpdated || 0).getTime();
+        const dateA = new Date(a.publishDate || 0).getTime();
+        const dateB = new Date(b.publishDate || 0).getTime();
         return dateB - dateA;
     });
     const title = currentRow?.title || 'All Items';

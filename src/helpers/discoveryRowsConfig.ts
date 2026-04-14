@@ -83,8 +83,8 @@ export function getDiscoveryRows(
         },
         {
             dataList: [...mainProjects].sort((a: ItemDisplay, b: ItemDisplay) => {
-                const dateA = new Date(a.lastUpdated || 0).getTime();
-                const dateB = new Date(b.lastUpdated || 0).getTime();
+                const dateA = new Date(a.publishDate || 0).getTime();
+                const dateB = new Date(b.publishDate || 0).getTime();
                 return dateB - dateA;
             }),
             title: 'All Projects',
