@@ -12,6 +12,12 @@ interface SidebarProps {
 // UserPage component
 const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, setShowModal }) => {
     const [activeTab, setActiveTab] = useState(0);
+    const dutchDateFormatter = new Intl.DateTimeFormat('nl-NL', {
+        timeZone: 'Europe/Amsterdam',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
 
     return (
         <>
@@ -55,7 +61,7 @@ const ItemDisplayViewer: React.FC<SidebarProps> = ({ previewProject, showModal, 
                     )}
                     {previewProject?.publishDate && (
                         <p className="text-muted">
-                            <small className="text-secondary">Publish date: {new Date(previewProject.publishDate).toLocaleDateString()}</small>
+                            <small className="text-secondary">Publish date: {dutchDateFormatter.format(new Date(previewProject.publishDate))}</small>
                         </p>
                     )}
                     {/* {previewProject?.lastUpdated && (
