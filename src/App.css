@@ -234,3 +234,7 @@ a:hover {
     color: white !important;
     border: none !important;
 }
+
+p img {
+    max-width: 100%;
+}
