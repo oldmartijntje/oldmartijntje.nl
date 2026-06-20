@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Badge, Card, Container, Spinner } from 'react-bootstrap';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import RssPopup from '../../components/overlay/RssPopup';
 import StructuredDataScript from '../../components/overlay/StructuredDataScript';
 import ServerConnector from '../../services/ServerConnector';
@@ -145,7 +146,7 @@ const BlogViewPage: React.FC<UserPageProps> = ({ userProfile }) => {
                                 {typeof blog.views === 'number' && <span> · Views {blog.views}</span>}
                             </div>
                             <div className="border-top border-secondary pt-3" style={{ minHeight: '60svh' }}>
-                                <ReactMarkdown>{blog.content}</ReactMarkdown>
+                                <ReactMarkdown rehypePlugins={[rehypeRaw]}>{blog.content}</ReactMarkdown>
                             </div>
                             <div className="border-top border-secondary mt-4 pt-3 text-secondary small">
                                 Edited {formatBlogDate(blog.editDate)}
